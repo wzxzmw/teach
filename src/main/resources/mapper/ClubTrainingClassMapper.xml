@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.ClubTrainingClassMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.ClubTrainingClass" id="clubTrainingClass" >
+		<result property="classId" column="class_id"/>
+		<result property="clubId" column="club_id"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="createTime" column="create_time"/>
+		<result property="title" column="title"/>
+		<result property="introduce" column="introduce"/>
+		<result property="imageId" column="image_id"/>
+		<result property="costType" column="cost_type"/>
+		<result property="costAmount" column="cost_amount"/>
+		<result property="studentNum" column="student_num"/>
+		<result property="isBuyOfficial" column="is_buy_official"/>
+		<result property="isDelete" column="is_delete"/>
+		<result property="courseNum" column="course_num"/>
+	</resultMap>
+	
+	<sql id="queryConditionClubTrainingClass">
+		<where>
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="clubId != null"> and club_id = #{clubId} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="title != null"> and title = #{title} </if>
+			<if test="introduce != null"> and introduce = #{introduce} </if>
+			<if test="imageId != null"> and image_id = #{imageId} </if>
+			<if test="costType != null"> and cost_type = #{costType} </if>
+			<if test="costAmount != null"> and cost_amount = #{costAmount} </if>
+			<if test="studentNum != null"> and student_num = #{studentNum} </if>
+			<if test="isBuyOfficial != null"> and is_buy_official = #{isBuyOfficial} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+			<if test="courseNum != null"> and course_num = #{courseNum} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyClubTrainingClass">
+		where class_id = #{classId}
+	</sql>
+	
+	<insert id="insertClubTrainingClass" parameterType="com.seentao.stpedu.common.entity.ClubTrainingClass">
+		insert into club_training_class(
+		class_id
+		<if test="clubId != null"> ,club_id</if>
+		<if test="createUserId != null"> ,create_user_id</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="title != null"> ,title</if>
+		<if test="introduce != null"> ,introduce</if>
+		<if test="imageId != null"> ,image_id</if>
+		<if test="costType != null"> ,cost_type</if>
+		<if test="costAmount != null"> ,cost_amount</if>
+		<if test="studentNum != null"> ,student_num</if>
+		<if test="isBuyOfficial != null"> ,is_buy_official</if>
+		<if test="isDelete != null"> ,is_delete </if>
+		<if test="courseNum != null">,course_num</if>
+		)
+		values(
+		nextval('club_training_class_class_id_seq')
+		<if test="clubId != null"> ,#{clubId}</if>
+		<if test="createUserId != null"> ,#{createUserId}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="title != null"> ,#{title}</if>
+		<if test="introduce != null"> ,#{introduce}</if>
+		<if test="imageId != null"> ,#{imageId}</if>
+		<if test="costType != null"> ,#{costType}</if>
+		<if test="costAmount != null"> ,#{costAmount}</if>
+		<if test="studentNum != null"> ,#{studentNum}</if>
+		<if test="isBuyOfficial != null"> ,#{isBuyOfficial}</if>
+		<if test="isDelete != null"> ,#{isDelete} </if>
+		<if test="courseNum != null"> , #{courseNum} </if>
+		)
+	</insert>
+	
+	<insert id="returninsertClubTrainingClass" parameterType="com.seentao.stpedu.common.entity.ClubTrainingClass">
+		<selectKey resultType="java.lang.Integer"  order="AFTER" keyProperty="classId" >
+	        SELECT currval('club_training_class_class_id_seq') AS class_id   
+	    </selectKey>
+		insert into club_training_class(
+		class_id
+		<if test="clubId != null"> ,club_id</if>
+		<if test="createUserId != null"> ,create_user_id</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="title != null"> ,title</if>
+		<if test="introduce != null"> ,introduce</if>
+		<if test="imageId != null"> ,image_id</if>
+		<if test="costType != null"> ,cost_type</if>
+		<if test="costAmount != null"> ,cost_amount</if>
+		<if test="studentNum != null"> ,student_num</if>
+		<if test="isBuyOfficial != null"> ,is_buy_official</if>
+		<if test="isDelete != null">,is_delete  </if>
+		<if test="courseNum != null">,course_num  </if>
+		)
+		values(
+		nextval('club_training_class_class_id_seq')
+		<if test="clubId != null"> ,#{clubId}</if>
+		<if test="createUserId != null"> ,#{createUserId}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="title != null"> ,#{title}</if>
+		<if test="introduce != null"> ,#{introduce}</if>
+		<if test="imageId != null"> ,#{imageId}</if>
+		<if test="costType != null"> ,#{costType}</if>
+		<if test="costAmount != null"> ,#{costAmount}</if>
+		<if test="studentNum != null"> ,#{studentNum}</if>
+		<if test="isBuyOfficial != null"> ,#{isBuyOfficial}</if>
+		<if test="isDelete != null"> , #{isDelete} </if>
+		<if test="courseNum != null"> , #{courseNum} </if>
+		)
+	</insert>
+	
+	
+	<delete id="deleteClubTrainingClass">
+		delete from club_training_class
+		<include refid="queryConditionClubTrainingClass"/>
+	</delete>
+	
+	<update id="updateClubTrainingClassByKey" parameterType="com.seentao.stpedu.common.entity.ClubTrainingClass">
+		update club_training_class 
+		<set>
+			<if test="classId != null">class_id = #{classId},</if>
+			<if test="clubId != null"> club_id = #{clubId}, </if>
+			<if test="createUserId != null"> create_user_id = #{createUserId}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="title != null"> title = #{title}, </if>
+			<if test="introduce != null"> introduce = #{introduce}, </if>
+			<if test="imageId != null"> image_id = #{imageId}, </if>
+			<if test="costType != null"> cost_type = #{costType}, </if>
+			<if test="costAmount != null"> cost_amount = #{costAmount}, </if>
+			<if test="studentNum != null"> student_num = #{studentNum}, </if>
+			<if test="isBuyOfficial != null"> is_buy_official = #{isBuyOfficial}, </if>
+			<if test="isDelete != null">is_delete = #{isDelete} </if>
+			<if test="courseNum != null"> course_num = #{courseNum} </if>
+		</set>
+		<include refid="queryByKeyClubTrainingClass"/>
+	</update>
+	<update id="updateClubTrainingClassNum"  parameterType="com.seentao.stpedu.common.entity.ClubTrainingClass">
+	  	update club_training_class set student_num = student_num - #{studentNum} where class_id = #{classId}
+	</update>
+	<select id="selectSingleClubTrainingClass" resultMap="clubTrainingClass">
+		select 
+		class_id
+		,club_id
+		,create_user_id
+		,create_time
+		,title
+		,introduce
+		,image_id
+		,cost_type
+		,cost_amount
+		,student_num
+		,is_buy_official
+		,is_delete
+		,course_num
+		from club_training_class 
+		<include refid="queryConditionClubTrainingClass"/>
+	</select>
+	
+	<select id="selectAllClubTrainingClass" resultMap="clubTrainingClass">
+		select 
+		class_id
+		,club_id
+		,create_user_id
+		,create_time
+		,title
+		,introduce
+		,image_id
+		,cost_type
+		,cost_amount
+		,student_num
+		,is_buy_official
+		,is_delete
+		,course_num
+		from club_training_class
+	</select>
+	<select id="queryClubClassCount" resultType="java.lang.Integer">
+		select count(*) from club_training_class where club_id = #{clubId} and is_delete = #{isDelete}
+		<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+	</select>
+	<select id="queryClubClassByPage" resultMap="clubTrainingClass" parameterType="HashMap">
+		select 
+		class_id
+		,club_id
+		,create_user_id
+		,create_time
+		,title
+		,introduce
+		,image_id
+		,cost_type
+		,cost_amount
+		,student_num
+		,is_buy_official
+		,is_delete
+		,course_num
+		from club_training_class where club_id = #{clubId} and is_delete = #{isDelete}
+		<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+		 ORDER BY class_id  DESC
+		 limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="queryClubClassCountAll" resultType="java.lang.Integer">
+		select count(*) from club_training_class where is_delete = #{isDelete}
+	</select>
+	<select id="queryClubClassByPageAll" resultMap="clubTrainingClass" parameterType="HashMap">
+		select 
+		class_id
+		,club_id
+		,create_user_id
+		,create_time
+		,title
+		,introduce
+		,image_id
+		,cost_type
+		,cost_amount
+		,student_num
+		,is_buy_official
+		,is_delete
+		,course_num
+		from club_training_class where  is_delete = #{isDelete}
+		 ORDER BY class_id  DESC
+		 limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="getClassByCourseType"  parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select 
+		class_id
+		from club_training_class where class_id=#{classType}
+	</select>
+	
+	<update id="updateClubTrainingClassNumByKey"  parameterType="com.seentao.stpedu.common.entity.ClubTrainingClass">
+	  	update club_training_class set course_num = course_num + #{courseNum} where class_id = #{classId}
+	</update>
+	
+	<select id="queryMyTrainClassCount" resultType="java.lang.Integer">
+		select count(*) from club_training_class 
+		where is_delete = #{isDelete}
+		 and class_id in(select class_id from  club_join_training where user_id=#{userId})
+	</select>
+	<select id="queryMyTrainClassByPage" resultMap="clubTrainingClass" parameterType="HashMap">
+		select 
+		class_id
+		,club_id
+		,create_user_id
+		,create_time
+		,title
+		,introduce
+		,image_id
+		,cost_type
+		,cost_amount
+		,student_num
+		,is_buy_official
+		,is_delete
+		,course_num
+		from club_training_class 
+		where  is_delete = #{isDelete}
+		and class_id in(select class_id from  club_join_training where user_id=#{userId})
+		 ORDER BY class_id  ASC
+		 limit #{limit} offset #{offset}
+	</select>
+	
+</mapper>
+	

@@ -1,0 +1,26 @@
+{
+	"getVoteOptions":{
+		"request":{
+		"0":"userId",
+		"1":"voteId",
+		"2":"start",
+		"3":"limit",
+		"4":"inquireType"
+		},
+		"result": {
+        	"returnCount":"returnCount",
+        	"allPage":"allPage",
+        	"currentPage": "currentPage",
+        	"isShowingVoteOptionCount":"isShowingVoteOptionCount",
+        	"voteOptions": "voteOptions"
+        },
+        "voteOptions":{
+        "voteOptionId":"voteOptionId",
+        "voteOptionTitle":"voteOptionTitle",
+        "voteOptionLogo":"voteOptionLogo",
+        "voteOptionDesc":"voteOptionDesc",
+        "voteOptionTotalCount":"voteOptionTotalCount",
+        "canVote":"canVote"
+        }
+	}
+}

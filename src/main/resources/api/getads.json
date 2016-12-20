@@ -1,0 +1,44 @@
+{
+    "getAds": {
+        "request": {
+            "0": "userId",
+            "1": "start",
+            "2": "limit",
+            "3": "adsType"
+        },
+        "result": {
+            "returnCount": "returnCount",
+            "allPage": "allPage",
+            "currentPage": "currentPage",
+            "ads": "ads"
+        },
+        "ads": {
+            "adsImgLink": "adsImgLink",
+            "adsTitle": "title",
+            "adsGotoType": "adsGotoType",
+            "adsMainId": "adMainId",
+            "adsUrl": "linkUrl"
+        }
+    },
+    "getAdsForMobile": {
+        "request": {
+            "0": "userId",
+            "1": "start",
+            "2": "limit",
+            "3": "adsType"
+        },
+        "result": {
+            "returnCount": "returnCount",
+            "allPage": "allPage",
+            "currentPage": "currentPage",
+            "ads": "ads"
+        },
+        "ads": {
+            "adsImgLink": "adsImgLink",
+            "adsTitle": "title",
+            "adsGotoType": "adsGotoType",
+            "adsMainId": "adMainId",
+            "adsUrl": "linkUrl"
+        }
+    }
+}

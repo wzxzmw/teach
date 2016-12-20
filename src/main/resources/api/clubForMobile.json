@@ -1,0 +1,51 @@
+{
+    "getTopics": {
+        "request": {
+            "0": "userId",
+            "1": "memberId",
+            "2": "clubId",
+            "3": "topicId",
+            "4": "startDate",
+            "5": "endDate",
+            "6": "searchWord",
+            "7": "start",
+            "8": "limit",
+            "9": "inquireType"
+        },
+        "result": {
+        	"returnCount": "returnCount",
+        	"allPage": "allPage",
+        	"currentPage": "currentPage",
+        	"topics": "topics"
+        },
+        "topics": {
+            "topicId": "topicId",
+            "tCreaterId": "tCreaterId",
+            "tCreaterName": "tCreaterName",
+            "tCreaterNickname": "tCreaterNickname",
+            "topicTitle": "topicTitle",
+            "tCreateDate": "tCreateDate",
+            "supportCount": "supportCount",
+            "commentCount": "commentCount",
+            "isTop": "isTop",
+            "topicContentFilterHtml": "topicContentFilterHtml",
+            "topicContentForM": "topicContentForM",
+            "links": "links",
+            "imgs": "imgs",
+        },
+        "links": {
+            "linkId": "linkId",
+            "ref": "ref",
+            "title": "title",
+            "type": "type",
+            "href": "href"
+        },
+        "imgs": {
+            "ref": "ref",
+            "pixel": "pixel",
+            "alt": "alt",
+            "src": "src",
+            "photosetId": "photosetId"
+        }
+    }
+}

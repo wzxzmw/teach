@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.ClubMemberMoodMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.ClubMemberMood" id="clubMemberMood" >
+		<result property="moodId" column="mood_id"/>
+		<result property="clubId" column="club_id"/>
+		<result property="content" column="content"/>
+		<result property="createTime" column="create_time"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="praiseNum" column="praise_num"/>
+		<result property="againstNum" column="against_num"/>
+		<result property="isFrozen" column="is_frozen"/>
+	</resultMap>
+	
+	<sql id="queryConditionClubMemberMood">
+		<where>
+			<if test="moodId != null"> and mood_id = #{moodId} </if>
+			<if test="clubId != null"> and club_id = #{clubId} </if>
+			<if test="content != null"> and content = #{content} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="praiseNum != null"> and praise_num = #{praiseNum} </if>
+			<if test="againstNum != null"> and against_num = #{againstNum} </if>
+			<if test="isFrozen != null"> and is_frozen = #{isFrozen} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyClubMemberMood">
+		where mood_id = #{moodId}
+	</sql>
+	
+	<insert id="insertClubMemberMood" parameterType="com.seentao.stpedu.common.entity.ClubMemberMood">
+		insert into club_member_mood(
+		<if test="clubId != null">club_id</if>
+		<if test="content != null"> ,content</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="createUserId != null"> ,create_user_id</if>
+		<if test="praiseNum != null"> ,praise_num</if>
+		<if test="againstNum != null"> ,against_num</if>
+		<if test="isFrozen != null"> ,is_frozen</if>
+		)
+		values(
+		<if test="clubId != null"> #{clubId}</if>
+		<if test="content != null"> ,#{content}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="createUserId != null"> ,#{createUserId}</if>
+		<if test="praiseNum != null"> ,#{praiseNum}</if>
+		<if test="againstNum != null"> ,#{againstNum}</if>
+		<if test="isFrozen != null"> ,#{isFrozen}</if>
+		)
+	</insert>
+	
+	<delete id="deleteClubMemberMood">
+		delete from club_member_mood
+		<include refid="queryConditionClubMemberMood"/>
+	</delete>
+	
+	<update id="updateClubMemberMoodByKey" parameterType="com.seentao.stpedu.common.entity.ClubMemberMood">
+		update club_member_mood 
+		<set>
+			<if test="moodId != null"> mood_id = #{moodId}, </if>
+			<if test="clubId != null"> club_id = #{clubId}, </if>
+			<if test="content != null"> content = #{content}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="createUserId != null"> create_user_id = #{createUserId}, </if>
+			<if test="praiseNum != null"> praise_num = #{praiseNum}, </if>
+			<if test="againstNum != null"> against_num = #{againstNum}, </if>
+			<if test="isFrozen != null"> is_frozen = #{isFrozen}, </if>
+		</set>
+		<include refid="queryByKeyClubMemberMood"/>
+	</update>
+	<!-- 发布的俱乐部心情 冻结 -->
+	<update id="batchUpdateClubMemberMood">
+	update club_member_mood
+	set is_frozen = 1
+	where create_user_id =#{createUserId} and club_id = #{clubId}
+	</update>
+	<select id="selectSingleClubMemberMood" resultMap="clubMemberMood">
+		select 
+		mood_id
+		,club_id
+		,content
+		,create_time
+		,create_user_id
+		,praise_num
+		,against_num
+		,is_frozen
+		from club_member_mood 
+		<include refid="queryConditionClubMemberMood"/>
+	</select>
+	
+	<select id="selectAllClubMemberMood" resultMap="clubMemberMood">
+		select 
+		mood_id
+		,club_id
+		,content
+		,create_time
+		,create_user_id
+		,praise_num
+		,against_num
+		,is_frozen
+		from club_member_mood
+	</select>
+	<select id="queryCount" parameterType="HashMap" resultType="java.lang.Integer" >
+		select count(*) from club_member_mood 
+		<include refid="queryConditionClubMemberMood"/>
+	</select>
+	
+	<select id="queryEveryOneMoodCount" parameterType="HashMap" resultType="java.lang.Integer" >
+		select count(*) from club_member_mood 
+		where club_id = #{clubId} and create_time &gt; #{startTime} and create_time &lt; #{endTime}
+	</select>
+	<select id="selectEveryOneClubMemberMood" parameterType="HashMap" resultMap="clubMemberMood">
+		select 
+		mood_id
+		from club_member_mood 
+		where club_id = #{clubId} and create_time &gt; #{startTime} and create_time &lt; #{endTime}
+		order by create_time desc limit #{limit} offset #{offset}
+	</select>
+	
+	
+	<select id="queryMyMoodCount" parameterType="HashMap" resultType="java.lang.Integer" >
+		select count(*) from club_member_mood 
+		where club_id = #{clubId} and create_user_id = #{createUserId} and create_time &gt; #{startTime} and create_time &lt; #{endTime}
+	</select>
+	<select id="selectMyClubMemberMood" parameterType="HashMap" resultMap="clubMemberMood">
+		select 
+		mood_id
+		from club_member_mood 
+		where club_id = #{clubId} and create_user_id = #{createUserId} and create_time &gt; #{startTime} and create_time &lt; #{endTime}
+		order by create_time desc limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="queryMeMoodCount" parameterType="HashMap" resultType="java.lang.Integer" >
+		select count(*) from club_member_mood 
+		where create_user_id = #{createUserId}
+	</select>
+	<select id="selectMeClubMemberMood" parameterType="HashMap" resultMap="clubMemberMood">
+		select 
+		mood_id
+		from club_member_mood 
+		where create_user_id = #{createUserId}
+		order by create_time desc limit #{limit} offset #{offset}
+	</select>
+</mapper>
+	

@@ -1,0 +1,13 @@
+{
+    "submitHomeworkSolution": {
+    	"request": {
+            "0": "userId"
+           , "1": "homeworkId"
+           , "2": "hSolutionBody"
+           , "3": "homeworkFileIds"
+        },
+        "result": {
+             
+        }
+    }
+  }  

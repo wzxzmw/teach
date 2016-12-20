@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.TeachRelCourseAttachmentMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.TeachRelCourseAttachment" id="teachRelCourseAttachment" >
+		<result property="relId" column="rel_id"/>
+		<result property="courseId" column="course_id"/>
+		<result property="attaId" column="atta_id"/>
+	</resultMap>
+	
+	<sql id="queryConditionTeachRelCourseAttachment">
+		<where>
+			<if test="relId != null"> and rel_id = #{relId} </if>
+			<if test="courseId != null"> and course_id = #{courseId} </if>
+			<if test="attaId != null"> and atta_id = #{attaId} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyTeachRelCourseAttachment">
+		where rel_id = #{relId}
+	</sql>
+	
+	<insert id="insertTeachRelCourseAttachment" parameterType="com.seentao.stpedu.common.entity.TeachRelCourseAttachment">
+		<selectKey resultType="java.lang.Integer"  order="AFTER" keyProperty="relId" >
+	        SELECT currval('teach_rel_course_attachment_rel_id_seq') AS rel_id   
+	    </selectKey>
+		insert into teach_rel_course_attachment(
+		rel_id
+		<if test="courseId != null"> ,course_id</if>
+		<if test="attaId != null"> ,atta_id</if>
+		)
+		values(
+		nextval('teach_rel_course_attachment_rel_id_seq')
+		<if test="courseId != null"> ,#{courseId}</if>
+		<if test="attaId != null"> ,#{attaId}</if>
+		)
+	</insert>
+	
+	<delete id="deleteTeachRelCourseAttachment">
+		delete from teach_rel_course_attachment
+		<include refid="queryConditionTeachRelCourseAttachment"/>
+	</delete>
+	
+	<update id="updateTeachRelCourseAttachmentByKey" parameterType="com.seentao.stpedu.common.entity.TeachRelCourseAttachment">
+		update teach_rel_course_attachment 
+		<set>
+			<if test="relId != null"> rel_id = #{relId}, </if>
+			<if test="courseId != null"> course_id = #{courseId}, </if>
+			<if test="attaId != null"> atta_id = #{attaId}, </if>
+		</set>
+		<include refid="queryByKeyTeachRelCourseAttachment"/>
+	</update>
+	
+	<select id="selectSingleTeachRelCourseAttachment" resultMap="teachRelCourseAttachment">
+		select 
+		rel_id
+		,course_id
+		,atta_id
+		from teach_rel_course_attachment 
+		<include refid="queryConditionTeachRelCourseAttachment"/>
+	</select>
+	
+	<select id="selectAllTeachRelCourseAttachment" resultMap="teachRelCourseAttachment">
+		select 
+		rel_id
+		,course_id
+		,atta_id
+		from teach_rel_course_attachment
+	</select>
+	
+	<insert id="batchInsertTeachRelCourseAttachment" parameterType="ArrayList">
+		insert into teach_rel_course_attachment(
+		rel_id
+		,course_id
+		,atta_id
+		)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+			nextval('teach_rel_course_attachment_rel_id_seq')
+			,#{item.courseId}
+			,#{item.attaId}
+			)
+		</foreach>
+	</insert>
+	
+</mapper>
+	

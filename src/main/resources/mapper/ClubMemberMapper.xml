@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.ClubMemberMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.ClubMember" id="clubMember" >
+		<result property="memberId" column="member_id"/>
+		<result property="clubId" column="club_id"/>
+		<result property="userId" column="user_id"/>
+		<result property="memberStatus" column="member_status"/>
+		<result property="level" column="level"/>
+		<result property="rpSendNum" column="rp_send_num"/>
+		<result property="rpReceiveNum" column="rp_receive_num"/>
+		<result property="totalReceiveRp1" column="total_receive_rp_1"/>
+		<result property="totalReceiveRp2" column="total_receive_rp_2"/>
+		<result property="applyExplain" column="apply_explain"/>
+		<result property="isNewRemind" column="is_new_remind"/>
+		<result property="isNewNotice" column="is_new_notice"/>
+		<result property="isNewRedPacket" column="is_new_red_packet"/>
+		
+	</resultMap>
+	
+	<sql id="queryConditionClubMember">
+		<where>
+			<if test="memberId != null"> and member_id = #{memberId} </if>
+			<if test="clubId != null"> and club_id = #{clubId} </if>
+			<if test="userId != null"> and user_id = #{userId} </if>
+			<if test="memberStatus != null"> and member_status = #{memberStatus} </if>
+			<if test="level != null"> and level = #{level} </if>
+			<if test="rpSendNum != null"> and rp_send_num = #{rpSendNum} </if>
+			<if test="rpReceiveNum != null"> and rp_receive_num = #{rpReceiveNum} </if>
+			<if test="totalReceiveRp1 != null"> and total_receive_rp_1 = #{totalReceiveRp1} </if>
+			<if test="totalReceiveRp2 != null"> and total_receive_rp_2 = #{totalReceiveRp2} </if>
+			<if test="applyExplain != null"> and apply_explain = #{applyExplain} </if>
+			<if test="isNewRemind != null"> and is_new_remind = #{isNewRemind} </if>
+			<if test="isNewNotice != null"> and is_new_notice = #{isNewNotice} </if>
+			<if test="isNewRedPacket != null"> and is_new_red_packet = #{isNewRedPacket} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyClubMember">
+		where member_id = #{memberId}
+	</sql>
+	
+	<insert id="insertClubMember" parameterType="com.seentao.stpedu.common.entity.ClubMember">
+		<selectKey resultType="java.lang.Integer" keyProperty="memberId" order="AFTER" >
+	      SELECT currval('club_member_member_id_seq')as memberId
+		</selectKey> 
+		insert into club_member(
+		member_id
+		<if test="clubId != null"> ,club_id</if>
+		<if test="userId != null"> ,user_id</if>
+		<if test="memberStatus != null"> ,member_status</if>
+		<if test="level != null"> ,level</if>
+		<if test="rpSendNum != null"> ,rp_send_num</if>
+		<if test="rpReceiveNum != null"> ,rp_receive_num</if>
+		<if test="totalReceiveRp1 != null"> ,total_receive_rp_1</if>
+		<if test="totalReceiveRp2 != null"> ,total_receive_rp_2</if>
+		<if test="applyExplain != null"> ,apply_explain</if>
+		<if test="isNewRemind != null"> ,is_new_remind</if>
+		<if test="isNewNotice != null"> ,is_new_notice</if>
+		<if test="isNewRedPacket != null"> ,is_new_red_packet</if>
+		)
+		values(
+		nextval('club_member_member_id_seq')
+		<if test="clubId != null"> ,#{clubId}</if>
+		<if test="userId != null"> ,#{userId}</if>
+		<if test="memberStatus != null"> ,#{memberStatus}</if>
+		<if test="level != null"> ,#{level}</if>
+		<if test="rpSendNum != null"> ,#{rpSendNum}</if>
+		<if test="rpReceiveNum != null"> ,#{rpReceiveNum}</if>
+		<if test="totalReceiveRp1 != null"> ,#{totalReceiveRp1}</if>
+		<if test="totalReceiveRp2 != null"> ,#{totalReceiveRp2}</if>
+		<if test="applyExplain != null"> ,#{applyExplain}</if>
+		<if test="isNewRemind != null"> ,#{isNewRemind}</if>
+		<if test="isNewNotice != null"> ,#{isNewNotice}</if>
+		<if test="isNewRedPacket != null"> ,#{isNewRedPacket}</if>
+		)
+	</insert>
+	
+	<delete id="deleteClubMember">
+		delete from club_member
+		<include refid="queryConditionClubMember"/>
+	</delete>
+	
+	<update id="updateClubMemberByKey" parameterType="com.seentao.stpedu.common.entity.ClubMember">
+		update club_member 
+		<set>
+			<if test="memberId != null"> member_id = #{memberId}, </if>
+			<if test="clubId != null"> club_id = #{clubId}, </if>
+			<if test="userId != null"> user_id = #{userId}, </if>
+			<if test="memberStatus != null"> member_status = #{memberStatus}, </if>
+			<if test="level != null"> level = #{level}, </if>
+			<if test="rpSendNum != null"> rp_send_num = #{rpSendNum}, </if>
+			<if test="rpReceiveNum != null"> rp_receive_num = #{rpReceiveNum}, </if>
+			<if test="totalReceiveRp1 != null"> total_receive_rp_1 = #{totalReceiveRp1}, </if>
+			<if test="totalReceiveRp2 != null"> total_receive_rp_2 = #{totalReceiveRp2}, </if>
+			<if test="applyExplain != null"> apply_explain = #{applyExplain}, </if>
+			<if test="isNewRemind != null"> is_new_remind = #{isNewRemind}, </if>
+			<if test="isNewNotice != null"> is_new_notice = #{isNewNotice}, </if>
+			<if test="isNewRedPacket != null"> is_new_red_packet = #{isNewRedPacket} </if>
+		</set>
+		<include refid="queryByKeyClubMember"/>
+	</update>
+	
+	<!-- 根据主键id更新 -->
+	<update id="updateClubMemberById">
+	update club_member set member_status = #{memberStatus} where member_id = #{memberId}
+	
+	</update>
+	<select id="selectSingleClubMember" resultMap="clubMember">
+		select 
+		member_id
+		,club_id
+		,user_id
+		,member_status
+		,level
+		,rp_send_num
+		,rp_receive_num
+		,total_receive_rp_1
+		,total_receive_rp_2
+		,apply_explain
+		,is_new_remind
+		,is_new_notice
+		,is_new_red_packet
+		from club_member 
+		<include refid="queryConditionClubMember"/>
+	</select>
+	<!-- 根据用户id查询是否存在该俱乐部会员 member_status 3,4,null -->
+	<select id="selectOnlyClubMember" resultMap="clubMember">
+	select 
+		member_id
+		,club_id
+		,user_id
+		,member_status
+		,level
+		,rp_send_num
+		,rp_receive_num
+		,total_receive_rp_1
+		,total_receive_rp_2
+		,apply_explain
+		,is_new_remind
+		,is_new_notice
+		,is_new_red_packet
+		from club_member where member_status in (1,2) and user_id =#{userId} 
+	</select>
+	<!-- 根据用户userId和俱乐部clubId, -->
+	<select id="queryClubMemberByClubIdAndUserId" resultMap="clubMember">
+	select 
+		member_id
+		,club_id
+		,user_id
+		,member_status
+		,level
+		,rp_send_num
+		,rp_receive_num
+		,total_receive_rp_1
+		,total_receive_rp_2
+		,apply_explain
+		,is_new_remind
+		,is_new_notice
+		,is_new_red_packet
+		from club_member where member_status in (1,2) and user_id =#{userId} and club_id = #{clubId}
+	</select>
+	<!-- 判断用户是否加入俱乐部 -->
+	
+	<select id="selectAllClubMember" resultMap="clubMember">
+		select 
+		member_id
+		,club_id
+		,user_id
+		,member_status
+		,level
+		,rp_send_num
+		,rp_receive_num
+		,total_receive_rp_1
+		,total_receive_rp_2
+		,apply_explain
+		,is_new_remind
+		,is_new_notice
+		,is_new_red_packet
+		from club_member 
+	</select>
+	
+	<select id="queryCount" resultType="java.lang.Integer">
+		select count(*) from club_member
+		<include refid="queryConditionClubMember"/>
+	</select>
+	
+	
+	<select id="checkPresidentAndArenaCompetition" resultType="com.seentao.stpedu.common.entity.ClubMember" resultMap="clubMember">
+	
+		SELECT 
+			
+			members.member_id
+			,members.club_id
+			,members.user_id
+			,members.member_status
+			,members.level
+		FROM club_member AS members   
+		LEFT JOIN arena_competition AS comp ON members.club_id = comp.club_id
+		
+		<include refid="queryConditionClubMemberAppEntity"/>
+		
+	</select>
+	
+	
+	<select id="validatePresidentAndArenaCompetition"  parameterType="java.util.Map" resultType="int">
+	
+		SELECT 
+			count(members.member_id)
+		FROM club_member AS members
+		where members.level in (${levels}) and members.user_id=${userId} and members.club_id=${clubId}
+		
+		
+	</select>
+	
+	
+	
+	
+	
+	
+		<sql id="queryConditionClubMemberAppEntity">
+		<where>
+			<if test="memberId != null"> and members.member_id = #{memberId} </if>
+			<if test="clubId != null"> and members.club_id = #{clubId} </if>
+			<if test="userId != null"> and members.user_id = #{userId} </if>
+			<if test="memberStatus != null"> and members.member_status = #{memberStatus} </if>
+			<if test="level != null"> and members.level = #{level} </if>
+			<if test="start == 0"> and comp.club_id is null </if>	
+		</where>
+	</sql>
+	<select id="selectClubMemberByClubId" resultMap="clubMember">
+		select 
+		member_id
+		,user_id
+		from club_member 
+		where club_id = #{clubId} and user_id != #{userId} and member_status = #{memberStatus}
+	</select>
+	
+	<select id="getClubMemberCount" resultType="java.lang.Integer">
+		select 
+		count(*) from club_member members
+		<where>
+			<if test="clubId != null"> and members.club_id = #{clubId} </if>
+			<if test="memberStatus != null"> and member_status = #{memberStatus} </if>
+		</where>
+	</select>
+	
+	<select id="getClubMemberList" resultMap="clubMember">
+		SELECT
+			*
+		FROM
+			club_member dd
+		<where>
+			<if test="clubId != null"> and dd.club_id = #{clubId} </if>
+			<if test="memberStatus != null"> and member_status = #{memberStatus} </if>
+		</where>
+		ORDER BY
+			dd.total_receive_rp_2 DESC
+		limit #{limit} offset #{start}
+	</select>
+	
+	<update id="batchUpdateByUserIdAndClubId"  parameterType="java.util.List">
+          <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+                update club_member 
+                <set>
+                  rp_receive_num = rp_receive_num + 1,
+                  <if test="item.totalReceiveRp1 != null">
+                  	 total_receive_rp_1 = total_receive_rp_1 + ${item.totalReceiveRp1},
+                  </if>
+                  <if test="item.totalReceiveRp2 != null">
+                  	total_receive_rp_2 = total_receive_rp_2 + ${item.totalReceiveRp2},
+                  </if>
+                  is_new_red_packet = 1
+                </set>
+                where user_id = ${item.userId}
+         </foreach>
+    </update>
+    
+    <update id="updateByUserIdAndClubId" parameterType="com.seentao.stpedu.common.entity.ClubMember">
+		update club_member 
+		<set>
+			<if test="memberId != null"> member_id = #{memberId}, </if>
+			<if test="clubId != null"> club_id = #{clubId}, </if>
+			<if test="userId != null"> user_id = #{userId}, </if>
+			<if test="memberStatus != null"> member_status = #{memberStatus}, </if>
+			<if test="level != null"> level = #{level}, </if>
+			<if test="rpSendNum != null"> rp_send_num = rp_send_num+1, </if>
+			<if test="rpReceiveNum != null"> rp_receive_num = #{rpReceiveNum}, </if>
+			<if test="totalReceiveRp1 != null"> total_receive_rp_1 = #{totalReceiveRp1}, </if>
+			<if test="totalReceiveRp2 != null"> total_receive_rp_2 = #{totalReceiveRp2}, </if>
+			<if test="applyExplain != null"> apply_explain = #{applyExplain}, </if>
+			<if test="isNewRemind != null"> is_new_remind = #{isNewRemind}, </if>
+			<if test="isNewNotice != null"> is_new_notice = #{isNewNotice}, </if>
+			<if test="isNewRedPacket != null"> is_new_red_packet = #{isNewRedPacket}, </if>
+		</set>
+		<where>
+			<if test="clubId != null"> and club_id = #{clubId} </if>
+			<if test="userId != null"> and user_id = #{userId} </if>
+		</where>
+	</update>
+	
+	<select id="getClubMemberByStatus" resultMap="clubMember">
+		select
+			dd.*
+		from
+			club_member dd
+		join center_user cc on dd.user_id = cc.user_id
+		<where>
+			<if test="memberStatus != null">and dd.member_status = #{memberStatus}</if>
+			<if test="searchWord != null and searchWord !=''">and cc.nick_name like CONCAT('%','${searchWord}','%' ) </if>
+			<if test="clubId != null"> and dd.club_id = #{clubId}</if>
+			<if test="level != null"> and dd.level = #{level}</if>
+			<if test="userId != null">and dd.user_id != #{userId}</if>
+		</where>
+		order by
+			dd.level
+		limit #{limit} offset #{start}
+	</select>
+	
+	<select id="queryCountByStatus" resultType="java.lang.Integer" parameterType="com.seentao.stpedu.common.entity.ClubMember">
+		select count(*) from (
+			select
+				dd.*
+			from
+				club_member dd
+			join center_user cc on dd.user_id = cc.user_id
+			<where>
+				<if test="memberStatus != null">and dd.member_status = #{memberStatus}</if>
+				<if test="searchWord != null">and cc.nick_name like CONCAT('%','${searchWord}','%' ) </if>
+				<if test="clubId != null">and dd.club_id = #{clubId}</if>
+				<if test="level != null"> and dd.level = #{level}</if>
+				<if test="userId != null">and dd.user_id != #{userId}</if>
+			</where>
+		)a
+	</select>
+	<update id="updateClubmemerIsremoind">
+	  update club_member set is_new_remind = #{isNewRemind} where member_id = #{memberId}
+	</update>
+	<!-- selectClubMemberByUserIds -->
+	<select id="selectClubMemberByUserIds" parameterType="HashMap" resultMap="clubMember">
+		select 
+		member_id
+		,user_id
+		from club_member 
+		where club_id = #{clubId} and user_id in (${userIds})
+	</select>
+	<!-- updateIsNewRemindByUserIds -->
+	 <update id="updateIsNewRemindByUserIds" parameterType="HashMap">
+		update club_member 
+		set is_new_remind = #{isNewRemind}
+		where club_id = #{clubId} and user_id in (${userIds})
+	</update>
+	<!-- updateIsNewRemindByMemberIds -->
+	 <update id="updateIsNewRemindByMemberIds" parameterType="HashMap">
+		update club_member 
+		set is_new_remind = #{isNewRemind}
+		where member_id in (${memberIds})
+	</update>
+	<!-- updateIsNewNoticeByMemberIds -->
+	<update id="updateIsNewNoticeByMemberIds" parameterType="HashMap">
+		update club_member 
+		set is_new_notice = #{isNewNotice}
+		where member_id in (${memberIds})
+	</update>
+	<!-- 根据clubId,userId member_status -->
+	<select id="queryClubMemberSome" parameterType="Map" resultMap="clubMember">
+	select 
+		member_id
+		,club_id
+		,user_id
+		,member_status
+		,level
+		,rp_send_num
+		,rp_receive_num
+		,total_receive_rp_1
+		,total_receive_rp_2
+		,apply_explain
+		,is_new_remind
+		,is_new_notice
+		,is_new_red_packet
+		from club_member 
+		<where>
+		<if test="userId != null">
+		and user_id = #{userId}
+		</if>
+		<if test="clubId !=null">
+		and club_id =#{clubId}
+		</if>
+		and member_status in (1,2)
+		</where>
+	
+	</select>
+</mapper>
+	

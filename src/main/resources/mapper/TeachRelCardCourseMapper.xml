@@ -1,0 +1,270 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.TeachRelCardCourseMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.TeachRelCardCourse" id="teachRelCardCourse" >
+		<result property="relId" column="rel_id"/>
+		<result property="cardId" column="card_id"/>
+		<result property="courseId" column="course_id"/>
+		<result property="showType" column="show_type"/>
+		<result property="createTime" column="create_time"/>
+		<result property="planNum" column="plan_num"/>
+		<result property="actualNum" column="actual_num"/>
+		<result property="totalStudyNum" column="total_study_num"/>
+	</resultMap>
+	
+	<sql id="queryConditionTeachRelCardCourse">
+		<where>
+			<if test="relId != null"> and rel_id = #{relId} </if>
+			<if test="cardId != null"> and card_id = #{cardId} </if>
+			<if test="courseId != null"> and course_id = #{courseId} </if>
+			<if test="showType != null"> and show_type = #{showType} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="planNum != null"> and plan_num = #{planNum} </if>
+			<if test="actualNum != null"> and actual_num = #{actualNum} </if>
+			<if test="totalStudyNum != null"> and total_study_num = #{totalStudyNum} </if>
+			<if test="requestSide != null"> and show_type != ${requestSide} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyTeachRelCardCourse">
+		where rel_id = #{relId}
+	</sql>
+	
+	<insert id="insertTeachRelCardCourse" parameterType="com.seentao.stpedu.common.entity.TeachRelCardCourse">
+		insert into teach_rel_card_course(
+		rel_id
+		<if test="cardId != null"> ,card_id</if>
+		<if test="courseId != null"> ,course_id</if>
+		<if test="showType != null"> ,show_type</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="planNum != null"> ,plan_num</if>
+		<if test="actualNum != null"> ,actual_num</if>
+		<if test="totalStudyNum != null"> ,total_study_num</if>
+		)
+		values(
+		nextval('teach_rel_card_course_rel_id_seq')
+		<if test="cardId != null"> ,#{cardId}</if>
+		<if test="courseId != null"> ,#{courseId}</if>
+		<if test="showType != null"> ,#{showType}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="planNum != null"> ,#{planNum}</if>
+		<if test="actualNum != null"> ,#{actualNum}</if>
+		<if test="totalStudyNum != null"> ,#{totalStudyNum}</if>
+		)
+	</insert>
+	
+	<insert id="insertTeachRelCardCourseAlls" parameterType="java.util.List">
+		insert into teach_rel_card_course(
+		rel_id
+		,card_id
+		,course_id
+		,show_type
+		,create_time
+		,plan_num
+		,actual_num
+		,total_study_num
+		)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+				nextval('teach_rel_card_course_rel_id_seq')
+			 ,#{item.cardId,jdbcType=INTEGER}
+			 ,#{item.courseId,jdbcType=INTEGER}
+			 ,#{item.showType,jdbcType=INTEGER}
+			 ,#{item.createTime,jdbcType=INTEGER}
+			 ,#{item.planNum,jdbcType=INTEGER}
+			 ,#{item.actualNum,jdbcType=INTEGER}
+			 ,#{item.totalStudyNum,jdbcType=INTEGER}
+			)
+		</foreach>
+		
+	</insert>
+	
+	<delete id="deleteTeachRelCardCourse">
+		delete from teach_rel_card_course
+		<include refid="queryConditionTeachRelCardCourse"/>
+	</delete>
+	
+	<update id="updateTeachRelCardCourseByKey" parameterType="com.seentao.stpedu.common.entity.TeachRelCardCourse">
+		update teach_rel_card_course 
+		<set>
+			<if test="relId != null"> rel_id = #{relId}, </if>
+			<if test="cardId != null"> card_id = #{cardId}, </if>
+			<if test="courseId != null"> course_id = #{courseId}, </if>
+			<if test="showType != null"> show_type = #{showType}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="planNum != null"> plan_num = #{planNum}, </if>
+			<if test="actualNum != null"> actual_num = #{actualNum}, </if>
+			<if test="totalStudyNum != null"> total_study_num = total_study_num+1 , </if>
+			
+		</set>
+		<where>
+			<if test="relId != null"> and rel_id = #{relId} </if>
+			<if test="cardId != null"> and card_id = #{cardId} </if>
+			<if test="courseId != null"> and course_id = #{courseId} </if>
+		</where>
+	</update>
+	
+	<update id="updateTeachRelCardCoursePrivate" parameterType="com.seentao.stpedu.common.entity.TeachRelCardCourse">
+		update teach_rel_card_course 
+		<set>
+			<if test="relId != null"> rel_id = #{relId}, </if>
+			<if test="cardId != null"> card_id = #{cardId}, </if>
+			<if test="courseId != null"> course_id = #{courseId}, </if>
+			<if test="showType != null"> show_type = #{showType}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="planNum != null"> plan_num = #{planNum}, </if>
+			<if test="actualNum != null"> actual_num = #{actualNum}, </if>
+			<if test="totalStudyNum != null"> total_study_num = #{totalStudyNum} , </if>
+		</set>
+		<where>
+			<if test="cardId != null"> and card_id = #{cardId} </if>
+		</where>
+	</update>
+	
+	<update id="updateTeachRelCardCoursePrivateAlls" parameterType="ArrayList">
+	
+		 update teach_rel_card_course 
+		 
+			set  plan_num = plan_num + 1 
+		
+		where card_id in (${value})
+	</update>
+	
+	<update id="updateTeachRelCardCoursePrivateMinus" parameterType="ArrayList">
+	
+		 update teach_rel_card_course 
+		 
+			set  plan_num = plan_num - 1 
+		
+		where card_id in (${value})
+	</update>
+	
+	<select id="selectSingleTeachRelCardCourse" resultMap="teachRelCardCourse">
+		select 
+		rel_id
+		,card_id
+		,course_id
+		,show_type
+		,create_time
+		,plan_num
+		,actual_num
+		,total_study_num
+		from teach_rel_card_course 
+		<include refid="queryConditionTeachRelCardCourse"/>
+		 order by course_id  asc
+		 limit #{limit} offset #{start}
+	</select>
+	
+	<select id="selectAllTeachRelCardCourse" resultMap="teachRelCardCourse">
+		select 
+		rel_id
+		,card_id
+		,course_id
+		,show_type
+		,create_time
+		,plan_num
+		,actual_num
+		,total_study_num
+		from teach_rel_card_course
+	</select>
+	
+	<select id="getSingleTeachRelCardCourse" resultMap="teachRelCardCourse">
+		select 
+		rel_id
+		,card_id
+		,course_id
+		,show_type
+		,create_time
+		,plan_num
+		,actual_num
+		,total_study_num
+		from teach_rel_card_course 
+		<include refid="queryConditionTeachRelCardCourse"/>
+	</select>
+	
+	<select id="addActualnum" parameterType="java.lang.Integer" >
+	
+		UPDATE teach_rel_card_course 
+		
+			SET actual_num = actual_num + 1 
+		
+		WHERE course_id = #{courseId}
+	</select>
+	
+	<select id="queryCount" parameterType="HashMap" resultType="java.lang.Integer">
+		SELECT 
+		
+			count(*) 
+		
+		FROM teach_rel_card_course 	AS rel 
+		JOIN teach_course 			AS course 	ON rel.course_id = course.course_id
+		<where>
+			<if test="relId != null"> and rel.rel_id = #{relId} </if>
+			<if test="cardId != null"> and rel.card_id in(${cardId})</if>
+			<if test="courseId != null"> and rel.course_id = #{courseId} </if>
+			<if test="showType != null"> and rel.show_type = #{showType} </if>
+			<if test="showTypeApp != null"> and rel.show_type != ${showTypeApp} </if>
+			<if test="createTime != null"> and rel.create_time = #{createTime} </if>
+			<if test="planNum != null"> and rel.plan_num = #{planNum} </if>
+			<if test="actualNum != null"> and rel.actual_num = #{actualNum} </if>
+			<if test="totalStudyNum != null"> and rel.total_study_num = #{totalStudyNum} </if>
+			<if test="courseType != null"> and course.course_type = #{courseType} </if>
+			<if test="isDelete != null"> and course.is_delete = #{isDelete} </if>
+		</where>
+	</select>
+	
+	<select id="queryByPage" parameterType="HashMap" resultMap="teachRelCardCourse">
+		SELECT 
+		
+			rel.rel_id 				as rel_id
+			,rel.card_id			as card_id
+			,rel.course_id			as course_id
+			,rel.show_type			as show_type
+			,rel.create_time		as create_time
+			,rel.plan_num			as plan_num
+			,rel.actual_num			as actual_num
+			,rel.total_study_num	as total_study_num
+			
+		FROM teach_rel_card_course 	AS rel 
+		JOIN teach_course 			AS course 	ON rel.course_id = course.course_id
+		
+		<where>
+			<if test="relId != null"> and rel.rel_id = #{relId} </if>
+			<if test="cardId != null"> and rel.card_id in(${cardId})</if>
+			<if test="courseId != null"> and rel.course_id = #{courseId} </if>
+			<if test="showType != null"> and rel.show_type = #{showType} </if>
+			<if test="createTime != null"> and rel.create_time = #{createTime} </if>
+			<if test="planNum != null"> and rel.plan_num = #{planNum} </if>
+			<if test="actualNum != null"> and rel.actual_num = #{actualNum} </if>
+			<if test="totalStudyNum != null"> and rel.total_study_num = #{totalStudyNum} </if>
+			<if test="courseType != null"> and course.course_type = #{courseType} </if>
+			<if test="isDelete != null"> and course.is_delete = #{isDelete} </if>
+			<if test="showTypeApp != null"> and rel.show_type != ${showTypeApp} </if>
+		</where>
+		<if test="groupBy != null"> GROUP BY ${groupBy} </if>
+		ORDER BY course_id  DESC
+		
+		limit #{limit} offset #{offset}
+		
+		
+	</select>
+	<select id="getLastTeachRelCardCourseByCardId" resultMap="teachRelCardCourse">
+		select course_id from teach_rel_card_course where rel_id =(select 
+		max(rel_id) rel_id
+		from teach_rel_card_course where card_id = #{cardId}) 
+	</select>
+	
+	<select id="getStudyNumBycourseCardId" parameterType="java.lang.Integer" resultType="java.lang.Integer" >
+		SELECT
+			SUM (cc.total_study_num)
+		FROM
+			teach_rel_card_course cc
+		WHERE
+			cc.card_id = #{cardId}
+	</select>
+	
+</mapper>
+	

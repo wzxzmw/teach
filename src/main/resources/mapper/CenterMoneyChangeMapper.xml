@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.CenterMoneyChangeMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.CenterMoneyChange" id="centerMoneyChange" >
+		<result property="changeId" column="change_id"/>
+		<result property="accountId" column="account_id"/>
+		<result property="changeTime" column="change_time"/>
+		<result property="lockId" column="lock_id"/>
+		<result property="amount" column="amount"/>
+		<result property="changeType" column="change_type"/>
+		<result property="relObjetType" column="rel_objet_type"/>
+		<result property="relObjetId" column="rel_objet_id"/>
+		<result property="serialNumber" column="serial_number"/>
+		<result property="status" column="status"/>
+	</resultMap>
+	
+	<sql id="queryConditionCenterMoneyChange">
+		<where>
+			<if test="changeId != null"> and change_id = #{changeId} </if>
+			<if test="accountId != null"> and account_id = #{accountId} </if>
+			<if test="changeTime != null"> and change_time = #{changeTime} </if>
+			<if test="lockId != null"> and lock_id = #{lockId} </if>
+			<if test="amount != null"> and amount = #{amount} </if>
+			<if test="changeType != null"> and change_type = #{changeType} </if>
+			<if test="relObjetType != null"> and rel_objet_type = #{relObjetType} </if>
+			<if test="relObjetId != null"> and rel_objet_id = #{relObjetId} </if>
+			<if test="serialNumber != null"> and serial_number = #{serialNumber} </if>
+			<if test="status != null"> and status = #{status} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyCenterMoneyChange">
+		where change_id = #{changeId}
+	</sql>
+	
+	<insert id="insertCenterMoneyChange" parameterType="com.seentao.stpedu.common.entity.CenterMoneyChange">
+		insert into center_money_change(
+		change_id
+		<if test="accountId != null"> ,account_id</if>
+		<if test="changeTime != null"> ,change_time</if>
+		<if test="lockId != null"> ,lock_id</if>
+		<if test="amount != null"> ,amount</if>
+		<if test="changeType != null"> ,change_type</if>
+		<if test="relObjetType != null"> ,rel_objet_type</if>
+		<if test="relObjetId != null"> ,rel_objet_id</if>
+		<if test="serialNumber != null">, serial_number</if>
+		<if test="status != null">, status </if>
+		)
+		values(
+		nextval('center_money_change_change_id_seq')
+		<if test="accountId != null"> ,#{accountId}</if>
+		<if test="changeTime != null"> ,#{changeTime}</if>
+		<if test="lockId != null"> ,#{lockId}</if>
+		<if test="amount != null"> ,#{amount}</if>
+		<if test="changeType != null"> ,#{changeType}</if>
+		<if test="relObjetType != null"> ,#{relObjetType}</if>
+		<if test="relObjetId != null"> ,#{relObjetId}</if>
+		<if test="serialNumber != null">, #{serialNumber} </if>
+		<if test="status != null">, #{status} </if>
+		)
+	</insert>
+	
+	<insert id="insertCenterMoneyChangeList" parameterType="ArrayList">
+		
+		insert into center_money_change(
+			change_id
+			,account_id
+			,change_time
+			,lock_id
+			,amount
+			,change_type
+			,rel_objet_type
+			,rel_objet_id
+			,serial_number
+			,status
+		)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+			nextval('center_money_change_change_id_seq')
+			 ,#{item.accountId}
+			 ,#{item.changeTime}
+			 ,#{item.lockId}
+			 ,#{item.amount}
+			 ,#{item.changeType}
+			 ,#{item.relObjetType}
+			 ,#{item.relObjetId}
+			 ,#{item.serialNumber}
+			 ,#{item.status}
+			)
+		</foreach>
+	</insert>
+	
+	<delete id="deleteCenterMoneyChange">
+		delete from center_money_change
+		<include refid="queryConditionCenterMoneyChange"/>
+	</delete>
+	
+	<update id="updateCenterMoneyChangeByKey" parameterType="com.seentao.stpedu.common.entity.CenterMoneyChange">
+		update center_money_change 
+		<set>
+			<if test="changeId != null"> change_id = #{changeId}, </if>
+			<if test="accountId != null"> account_id = #{accountId}, </if>
+			<if test="changeTime != null"> change_time = #{changeTime}, </if>
+			<if test="lockId != null"> lock_id = #{lockId}, </if>
+			<if test="amount != null"> amount = #{amount}, </if>
+			<if test="changeType != null"> change_type = #{changeType}, </if>
+			<if test="relObjetType != null"> rel_objet_type = #{relObjetType}, </if>
+			<if test="relObjetId != null"> rel_objet_id = #{relObjetId}, </if>
+			<if test="serialNumber != null"> and serial_number = #{serialNumber} </if>
+			<if test="status != null"> and status = #{status} </if>
+		</set>
+		<include refid="queryByKeyCenterMoneyChange"/>
+	</update>
+	
+	<select id="selectSingleCenterMoneyChange" resultMap="centerMoneyChange">
+		select 
+		change_id
+		,account_id
+		,change_time
+		,lock_id
+		,amount
+		,change_type
+		,rel_objet_type
+		,rel_objet_id
+		,serial_number
+		,status
+		from center_money_change 
+		<include refid="queryConditionCenterMoneyChange"/>
+	</select>
+	
+	<select id="selectAllCenterMoneyChange" resultMap="centerMoneyChange">
+		select 
+		change_id
+		,account_id
+		,change_time
+		,lock_id
+		,amount
+		,change_type
+		,rel_objet_type
+		,rel_objet_id
+		,serial_number
+		,status
+		from center_money_change
+	</select>
+	
+	
+	<select id="selectCenterMoneyChangeByCondition" parameterType="java.util.Map" resultMap="centerMoneyChange">
+		select 
+		change_id
+		,account_id
+		,change_time
+		,lock_id
+		,amount
+		,change_type
+		,rel_objet_type
+		,rel_objet_id
+		,serial_number
+		,status
+		from center_money_change
+		where account_id=#{accountId}  and change_type=#{changeType} 
+		<if test="endTime != null ">
+			<![CDATA[and  change_time  <= ${endTime}]]>
+		</if>
+		<if test="startTime != null ">
+			<![CDATA[and  change_time  >=${startTime}]]>
+		</if>
+		order by change_time desc limit #{limit} offset #{offset}
+		
+	</select>
+	
+	<select id="countCenterMoneyChangeByCondition" parameterType="java.util.Map"  resultType="java.lang.Integer">
+		select 
+		count(change_id)
+		from center_money_change
+		where account_id=#{accountId}  and change_type=#{changeType} 
+		<if test="endTime != null ">
+			<![CDATA[and  change_time  <= ${endTime}]]>
+		</if>
+		<if test="startTime != null ">
+			<![CDATA[and  change_time  >=${startTime}]]>
+		</if>
+	</select>
+</mapper>
+	

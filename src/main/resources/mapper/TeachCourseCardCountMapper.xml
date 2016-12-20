@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.TeachCourseCardCountMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.TeachCourseCardCount" id="teachCourseCardCount" >
+		<result property="countId" column="count_id"/>
+		<result property="classId" column="class_id"/>
+		<result property="notSetNum" column="not_set_num"/>
+		<result property="notStartNum" column="not_statr_num"/>
+		<result property="notEndNum" column="not_end_num"/>
+		<result property="completeNum" column="complete_num"/>
+		<result property="totalCompleteHours" column="total_complete_hours"/>
+		<result property="totalCompleteChapter" column="total_complete_chapter"/>
+	</resultMap>
+	
+	<sql id="queryConditionTeachCourseCardCount">
+		<where>
+			<if test="countId != null"> and count_id = #{countId} </if>
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="notSetNum != null"> and not_set_num = #{notSetNum} </if>
+			<if test="notStartNum != null"> and not_statr_num = #{notStartNum} </if>
+			<if test="notEndNum != null"> and not_end_num = #{notEndNum} </if>
+			<if test="completeNum != null"> and complete_num = #{completeNum} </if>
+			<if test="totalCompleteHours != null"> and total_complete_hours = #{totalCompleteHours} </if>
+			<if test="totalCompleteChapter != null"> and total_complete_chapter = #{totalCompleteChapter} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyTeachCourseCardCount">
+		where count_id = #{countId}
+	</sql>
+	
+	<insert id="insertTeachCourseCardCount" parameterType="com.seentao.stpedu.common.entity.TeachCourseCardCount">
+		insert into teach_course_card_count(
+		count_id
+		<if test="classId != null"> ,class_id</if>
+		<if test="notSetNum != null"> ,not_set_num</if>
+		<if test="notStartNum != null"> ,not_statr_num</if>
+		<if test="notEndNum != null"> ,not_end_num</if>
+		<if test="completeNum != null"> ,complete_num</if>
+		<if test="totalCompleteHours != null"> ,total_complete_hours</if>
+		<if test="totalCompleteChapter != null"> ,total_complete_chapter</if>
+		)
+		values(
+		nextval('teach_course_card_count_count_id_seq')
+		<if test="classId != null"> ,#{classId}</if>
+		<if test="notSetNum != null"> ,#{notSetNum}</if>
+		<if test="notStartNum != null"> ,#{notStartNum}</if>
+		<if test="notEndNum != null"> ,#{notEndNum}</if>
+		<if test="completeNum != null"> ,#{completeNum}</if>
+		<if test="totalCompleteHours != null"> ,#{totalCompleteHours}</if>
+		<if test="totalCompleteChapter != null"> ,#{totalCompleteChapter}</if>
+		)
+	</insert>
+	
+	<delete id="deleteTeachCourseCardCount">
+		delete from teach_course_card_count
+		<include refid="queryConditionTeachCourseCardCount"/>
+	</delete>
+	
+	<update id="updateTeachCourseCardCountByKey" parameterType="com.seentao.stpedu.common.entity.TeachCourseCardCount">
+		update teach_course_card_count 
+		<set>
+			<if test="countId != null"> count_id = #{countId}, </if>
+			<if test="classId != null"> class_id = #{classId}, </if>
+			<if test="notSetNum != null"> not_set_num = #{notSetNum}, </if>
+			<if test="notStartNum != null"> not_statr_num = #{notStartNum}, </if>
+			<if test="notEndNum != null"> not_end_num = #{notEndNum}, </if>
+			<if test="completeNum != null"> complete_num = #{completeNum}, </if>
+			<if test="totalCompleteHours != null"> total_complete_hours = #{totalCompleteHours}, </if>
+			<if test="totalCompleteChapter != null"> total_complete_chapter = #{totalCompleteChapter}, </if>
+		</set>
+		<include refid="queryByKeyTeachCourseCardCount"/>
+	</update>
+	
+	<select id="selectSingleTeachCourseCardCount" resultMap="teachCourseCardCount">
+		select 
+		count_id
+		,class_id
+		,not_set_num
+		,not_statr_num
+		,not_end_num
+		,complete_num
+		,total_complete_hours
+		,total_complete_chapter
+		from teach_course_card_count 
+		<include refid="queryConditionTeachCourseCardCount"/>
+	</select>
+	
+	<select id="selectAllTeachCourseCardCount" resultMap="teachCourseCardCount">
+		select 
+		count_id
+		,class_id
+		,not_set_num
+		,not_statr_num
+		,not_end_num
+		,complete_num
+		,total_complete_hours
+		,total_complete_chapter
+		from teach_course_card_count
+	</select>
+	
+	<update id="updateTeachCourseCountByClassId" parameterType="com.seentao.stpedu.common.entity.TeachCourseCardCount">
+		update teach_course_card_count 
+		<set>
+			<if test="countId != null"> count_id = #{countId}, </if>
+			<if test="classId != null"> class_id = #{classId}, </if>
+			<if test="notSetNum != null"> not_set_num = #{notSetNum}, </if>
+			<if test="notStartNum != null"> not_statr_num = #{notStartNum}, </if>
+			<if test="notEndNum != null"> not_end_num = #{notEndNum}, </if>
+			<if test="completeNum != null"> complete_num = #{completeNum}, </if>
+			<if test="totalCompleteHours != null"> total_complete_hours = #{totalCompleteHours}, </if>
+			<if test="totalCompleteChapter != null"> total_complete_chapter = #{totalCompleteChapter}, </if>
+		</set>
+		where class_id = #{classId}
+	</update>
+	
+</mapper>
+	

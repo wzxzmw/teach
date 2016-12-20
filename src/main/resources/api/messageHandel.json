@@ -1,0 +1,25 @@
+{
+    "submitAttitude": {
+    	"request": {
+            "0": "userId",
+            "1": "attiMainType",
+            "2": "attiMainId",
+            "3": "platformModule",
+            "4": "actionType"
+        },
+        "result": {
+        	"supportCount":"supportCount"
+        }
+    },
+    "submitDelete": {
+    	"request": {
+            "0": "userId",
+            "1": "actionObjectType",
+            "2": "platformModule",
+            "3": "actionObjectId"
+        },
+        "result": {
+        }
+    }
+}
+

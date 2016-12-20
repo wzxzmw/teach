@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.CenterAlbumMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.CenterAlbum" id="centerAlbum" >
+		<result property="albumId" column="album_id"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="createTime" column="create_time"/>
+		<result property="albumName" column="album_name"/>
+		<result property="albumExplain" column="album_explain"/>
+		<result property="photoNum" column="photo_num"/>
+		<result property="lastUpdateTime" column="last_update_time"/>
+		<result property="isDelete" column="is_delete"/>
+		<result property="coverPhotoId" column="cover_photo_id"/>
+	</resultMap>
+	
+	<sql id="queryConditionCenterAlbum">
+		<where>
+			<if test="albumId != null"> and album_id = #{albumId} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="albumName != null"> and album_name = #{albumName} </if>
+			<if test="albumExplain != null"> and album_explain = #{albumExplain} </if>
+			<if test="photoNum != null"> and photo_num = #{photoNum} </if>
+			<if test="lastUpdateTime != null"> and last_update_time = #{lastUpdateTime} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+			<if test="coverPhotoId != null"> and cover_photo_id = #{coverPhotoId} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyCenterAlbum">
+		where album_id = #{albumId}
+	</sql>
+	
+	<insert id="insertCenterAlbum" parameterType="com.seentao.stpedu.common.entity.CenterAlbum">
+		insert into center_album(
+		album_id
+		<if test="createUserId != null"> ,create_user_id</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="albumName != null"> ,album_name</if>
+		<if test="albumExplain != null"> ,album_explain</if>
+		<if test="photoNum != null"> ,photo_num</if>
+		<if test="lastUpdateTime != null"> ,last_update_time</if>
+		<if test="isDelete != null"> ,is_delete</if>
+		<if test="coverPhotoId != null"> ,cover_photo_id</if>
+		)
+		values(
+		nextval('center_album_album_id_seq')
+		<if test="createUserId != null"> ,#{createUserId}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="albumName != null"> ,#{albumName}</if>
+		<if test="albumExplain != null"> ,#{albumExplain}</if>
+		<if test="photoNum != null"> ,#{photoNum}</if>
+		<if test="lastUpdateTime != null"> ,#{lastUpdateTime}</if>
+		<if test="isDelete != null"> ,#{isDelete}</if>
+		<if test="coverPhotoId != null"> ,#{coverPhotoId}</if>
+		)
+	</insert>
+	
+	<delete id="deleteCenterAlbum">
+		delete from center_album
+		<include refid="queryConditionCenterAlbum"/>
+	</delete>
+	
+	<update id="updateCenterAlbumByKey" parameterType="com.seentao.stpedu.common.entity.CenterAlbum">
+		update center_album 
+		<set>
+			<if test="albumId != null"> album_id = #{albumId}, </if>
+			<if test="createUserId != null"> create_user_id = #{createUserId}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="albumName != null"> album_name = #{albumName}, </if>
+			<if test="albumExplain != null"> album_explain = #{albumExplain}, </if>
+			<if test="photoNum != null"> photo_num = #{photoNum}, </if>
+			<if test="lastUpdateTime != null"> last_update_time = #{lastUpdateTime}, </if>
+			<if test="isDelete != null"> is_delete = #{isDelete}, </if>
+			<if test="coverPhotoId != null"> cover_photo_id = #{coverPhotoId}, </if>
+		</set>
+		<include refid="queryByKeyCenterAlbum"/>
+	</update>
+	<update id="updateCenterAlbumByKeyAll" parameterType="com.seentao.stpedu.common.entity.CenterAlbum">
+		update center_album 
+		set is_delete = #{isDelete} where album_id = #{albumId}
+	</update>
+	
+	<update id="updateCoverPhotoId" parameterType="com.seentao.stpedu.common.entity.CenterAlbum">
+		update center_album 
+		set cover_photo_id = #{coverPhotoId} where album_id = #{albumId}
+	</update>
+	
+	<update id="updatePhotoNum" parameterType="com.seentao.stpedu.common.entity.CenterAlbum">
+		update center_album 
+		set photo_num = photo_num - #{photoNum} where album_id = #{albumId}
+	</update>
+	
+	<select id="selectSingleCenterAlbum" resultMap="centerAlbum">
+		select 
+		album_id
+		,create_user_id
+		,create_time
+		,album_name
+		,album_explain
+		,photo_num
+		,last_update_time
+		,is_delete
+		,cover_photo_id
+		from center_album 
+		<include refid="queryConditionCenterAlbum"/>
+		order by create_time DESC
+	</select>
+	
+	<select id="selectAllCenterAlbum" resultMap="centerAlbum">
+		select 
+		album_id
+		,create_user_id
+		,create_time
+		,album_name
+		,album_explain
+		,photo_num
+		,last_update_time
+		,is_delete
+		,cover_photo_id
+		from center_album
+	</select>
+	
+	<select id="queryCountalbum" resultType="java.lang.Integer">
+	   SELECT count(*) from center_album where create_user_id = #{createUserId} and is_delete = 0 
+	</select>
+	
+	<select id="queryByCenteralbum" resultMap="centerAlbum" >
+	  SELECT album_id,album_name,album_explain,photo_num,create_time,last_update_time,cover_photo_id   
+	  from center_album where create_user_id = #{createUserId} and is_delete = 0 ORDER BY album_id desc
+	  limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="queryCountalbumInfo" resultType="java.lang.Integer">
+	 SELECT count(*) from center_album where is_delete = 0
+	</select>
+	
+	<select id="queryByCenteralbumInfo"  resultMap="centerAlbum">
+	   SELECT album_id,album_name,create_time,last_update_time,photo_num,cover_photo_id FROM 
+	    center_album WHERE create_user_id = #{createUserId} and is_delete = 0 ORDER BY album_id ASC
+	</select>
+	<!-- 根据userId和相册名查询相册是否存在 -->
+	<select id="queryCenterAlbumByUserIdSome" resultMap="centerAlbum">
+	SELECT album_id,album_name,create_time,last_update_time,photo_num,cover_photo_id FROM 
+	    center_album WHERE create_user_id = #{createUserId} and album_name =#{albumTitle} and is_delete = 0 
+	
+	</select>
+	<!-- 根据用户userId查询所有的相册 -->
+	<select id="queryCenterAlbumByUserId" resultMap="centerAlbum">
+	SELECT album_id,album_name,create_time,last_update_time,photo_num,cover_photo_id FROM 
+	    center_album WHERE create_user_id = #{createUserId}and is_delete = 0 
+	
+	
+	</select>
+</mapper>
+	

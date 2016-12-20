@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.ClubTrainingDiscussMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.ClubTrainingDiscuss" id="clubTrainingDiscuss" >
+		<result property="discussId" column="discuss_id"/>
+		<result property="classId" column="class_id"/>
+		<result property="content" column="content"/>
+		<result property="createTime" column="create_time"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="praiseNum" column="praise_num"/>
+		<result property="isDelete" column="is_delete"/>
+	</resultMap>
+	
+	<sql id="queryConditionClubTrainingDiscuss">
+		<where>
+			<if test="discussId != null"> and discuss_id = #{discussId} </if>
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="content != null"> and content = #{content} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="praiseNum != null"> and praise_num = #{praiseNum} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyClubTrainingDiscuss">
+		where discuss_id = #{discussId}
+	</sql>
+	
+	<insert id="insertClubTrainingDiscuss" parameterType="com.seentao.stpedu.common.entity.ClubTrainingDiscuss">
+		insert into club_training_discuss(
+		discuss_id
+		<if test="classId != null"> ,class_id</if>
+		<if test="content != null"> ,content</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="createUserId != null"> ,create_user_id</if>
+		<if test="praiseNum != null"> ,praise_num</if>
+		<if test="isDelete != null"> ,is_delete</if>
+		)
+		values(
+		nextval('club_training_discuss_discuss_id_seq')
+		<if test="classId != null"> ,#{classId}</if>
+		<if test="content != null"> ,#{content}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="createUserId != null"> ,#{createUserId}</if>
+		<if test="praiseNum != null"> ,#{praiseNum}</if>
+		<if test="isDelete != null"> ,#{isDelete}</if>
+		)
+	</insert>
+	
+	<delete id="deleteClubTrainingDiscuss">
+		delete from club_training_discuss
+		<include refid="queryConditionClubTrainingDiscuss"/>
+	</delete>
+	
+	<update id="updateClubTrainingDiscussByKey" parameterType="com.seentao.stpedu.common.entity.ClubTrainingDiscuss">
+		update club_training_discuss 
+		<set>
+			<if test="discussId != null"> discuss_id = #{discussId}, </if>
+			<if test="classId != null"> class_id = #{classId}, </if>
+			<if test="content != null"> content = #{content}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="createUserId != null"> create_user_id = #{createUserId}, </if>
+			<if test="praiseNum != null"> praise_num = #{praiseNum}, </if>
+			<if test="isDelete != null"> is_delete = #{isDelete}, </if>
+		</set>
+		<include refid="queryByKeyClubTrainingDiscuss"/>
+	</update>
+	
+	<select id="selectSingleClubTrainingDiscuss" resultMap="clubTrainingDiscuss">
+		select 
+		discuss_id
+		,class_id
+		,content
+		,create_time
+		,create_user_id
+		,praise_num
+		,is_delete
+		from club_training_discuss 
+		<include refid="queryConditionClubTrainingDiscuss"/>
+	</select>
+	
+	<select id="selectAllClubTrainingDiscuss" resultMap="clubTrainingDiscuss">
+		select 
+		discuss_id
+		,class_id
+		,content
+		,create_time
+		,create_user_id
+		,praise_num
+		,is_delete
+		from club_training_discuss
+	</select>
+	<select id="queryCount" resultType="Integer" parameterType="HashMap">
+		select count(*)
+		from club_training_discuss  where class_id = #{classId}  and  is_delete = #{isDelete} 
+	</select>
+	<select id="queryByPage" resultMap="clubTrainingDiscuss" parameterType="HashMap">
+		select *
+		from club_training_discuss  where class_id = #{classId}  and is_delete = #{isDelete}
+		ORDER BY discuss_id  DESC
+		limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="queryCountOne" resultType="Integer" parameterType="HashMap">
+		select count(*)
+		from club_training_discuss  where class_id = #{classId}  and  is_delete = #{isDelete} 
+	</select>
+	<select id="queryPageOne" resultMap="clubTrainingDiscuss" parameterType="HashMap">
+		select *
+		from club_training_discuss  where class_id = #{classId}  and is_delete = #{isDelete}
+		ORDER BY discuss_id  DESC
+		limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="queryByCountnew" resultType="Integer" parameterType="HashMap">
+		select count(*)
+		from club_training_discuss  where class_id = #{classId}  and  is_delete = #{isDelete} 
+	</select>
+	<select id="queryByPagenew" resultMap="clubTrainingDiscuss" parameterType="HashMap">
+		select *
+		from club_training_discuss  where class_id = #{classId}  and is_delete = #{isDelete}
+		and discuss_id > #{newCommentId}
+		ORDER BY discuss_id  DESC
+		limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="queryByCountOld" resultType="Integer" parameterType="HashMap">
+		select count(*)
+		from club_training_discuss  where class_id = #{classId}  and  is_delete = #{isDelete} 
+	</select>
+	<select id="queryByPageOld" resultMap="clubTrainingDiscuss" parameterType="HashMap">
+		select *
+		from club_training_discuss  where class_id = #{classId}  and is_delete = #{isDelete}
+		and discuss_id &lt; #{oldCommentId}
+		ORDER BY discuss_id  DESC
+		limit #{limit} offset #{offset}
+	</select>
+	
+	
+	<update id="delClubTrainingDiscussAll" parameterType="ArrayList">
+	
+		 update club_training_discuss 
+		 
+           <trim prefix="set" suffixOverrides=",">
+           
+            	<trim prefix="is_delete = CASE discuss_id " suffix="end,">
+	                <foreach collection="list" item="i" index="index">
+	                        <if test="i.isDelete != null">
+	                         WHEN #{i.discussId}  THEN #{i.isDelete}
+	                        </if>
+	                </foreach>
+             	</trim>
+             	
+           </trim>
+           
+         WHERE discuss_id in
+         
+         	<foreach collection="list" separator="," item="i" index="index" open="(" close=")" >
+             	#{i.discussId}
+         	</foreach>
+	</update>
+</mapper>
+	

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.TeachRelStudentAttachmentMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.TeachRelStudentAttachment" id="teachRelStudentAttachment" >
+		<result property="relId" column="rel_id"/>
+		<result property="studentId" column="student_id"/>
+		<result property="attaId" column="atta_id"/>
+		<result property="courseHour" column="course_hour"/>
+		<result property="isStudy" column="is_study"/>
+	</resultMap>
+	
+	<sql id="queryConditionTeachRelStudentAttachment">
+		<where>
+			<if test="relId != null"> and rel_id = #{relId} </if>
+			<if test="studentId != null"> and student_id = #{studentId} </if>
+			<if test="attaId != null"> and atta_id = #{attaId} </if>
+			<if test="courseHour != null"> and course_hour = #{courseHour} </if>
+			<if test="isStudy != null"> and is_study = #{isStudy} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyTeachRelStudentAttachment">
+		where rel_id = #{relId}
+	</sql>
+	
+	<insert id="insertTeachRelStudentAttachment" parameterType="com.seentao.stpedu.common.entity.TeachRelStudentAttachment">
+		<selectKey resultType="java.lang.Integer"  order="AFTER" keyProperty="relId" >
+	        SELECT currval('teach_rel_student_attachment_rel_id_seq') AS rel_id   
+	    </selectKey>
+		insert into teach_rel_student_attachment(
+		rel_id
+		<if test="studentId != null"> ,student_id</if>
+		<if test="attaId != null"> ,atta_id</if>
+		<if test="courseHour != null"> ,course_hour</if>
+		<if test="isStudy != null"> ,is_study</if>
+		)
+		values(
+		nextval('teach_rel_student_attachment_rel_id_seq')
+		<if test="studentId != null"> ,#{studentId}</if>
+		<if test="attaId != null"> ,#{attaId}</if>
+		<if test="courseHour != null"> ,#{courseHour}</if>
+		<if test="isStudy != null"> ,#{isStudy}</if>
+		)
+	</insert>
+	
+	<delete id="deleteTeachRelStudentAttachment">
+		delete from teach_rel_student_attachment
+		<include refid="queryConditionTeachRelStudentAttachment"/>
+	</delete>
+	
+	<update id="updateTeachRelStudentAttachmentByKey" parameterType="com.seentao.stpedu.common.entity.TeachRelStudentAttachment">
+		update teach_rel_student_attachment 
+		<set>
+			<if test="relId != null"> rel_id = #{relId}, </if>
+			<if test="studentId != null"> student_id = #{studentId}, </if>
+			<if test="attaId != null"> atta_id = #{attaId}, </if>
+			<if test="courseHour != null"> course_hour = #{courseHour}, </if>
+			<if test="isStudy != null"> is_study = #{isStudy}, </if>
+		</set>
+		<include refid="queryByKeyTeachRelStudentAttachment"/>
+	</update>
+	
+	<select id="selectSingleTeachRelStudentAttachment" resultMap="teachRelStudentAttachment">
+		select 
+		rel_id
+		,student_id
+		,atta_id
+		,course_hour
+		,is_study
+		from teach_rel_student_attachment 
+		<include refid="queryConditionTeachRelStudentAttachment"/>
+	</select>
+	
+	<select id="selectAllTeachRelStudentAttachment" resultMap="teachRelStudentAttachment">
+		select 
+		rel_id
+		,student_id
+		,atta_id
+		,course_hour
+		,is_study
+		from teach_rel_student_attachment
+	</select>
+	
+	<select id="selectTeachRelStudentAttachmentByIds" parameterType="map" resultMap="teachRelStudentAttachment">
+		select * from teach_rel_student_attachment
+		where student_id = #{studentId}
+		and atta_id in (${attaIds})
+		and is_study = 1;
+	</select>
+	
+	<update id="batchUpdateTeachRelStudentAttachment" parameterType="ArrayList">
+		<foreach collection="list" item="item" index="index" separator=";">
+        	update teach_rel_student_attachment 
+            <set>
+				<if test="item.relId != null"> rel_id = #{item.relId}, </if>
+				<if test="item.studentId != null"> student_id = #{item.studentId}, </if>
+				<if test="item.attaId != null"> atta_id = #{item.attaId}, </if>
+				<if test="item.courseHour != null">course_hour = #{item.courseHour}, </if>
+				<if test="item.isStudy != null">is_study = #{item.isStudy}, </if>
+			</set>
+			where rel_id = #{item.relId}
+         </foreach>
+	</update>
+	
+	<select id="selectStudentCourseHour" resultType="java.lang.Integer">
+		select sum(course_hour)
+		from teach_rel_student_attachment
+		where student_id = #{studentId}
+	</select>
+</mapper>
+	

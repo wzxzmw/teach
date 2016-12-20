@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.TeachRelStudentCourseMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.TeachRelStudentCourse" id="teachRelStudentCourse" >
+		<result property="relId" column="rel_id"/>
+		<result property="courseId" column="course_id"/>
+		<result property="studentId" column="student_id"/>
+		<result property="isStudy" column="is_study"/>
+	</resultMap>
+	
+	<sql id="queryConditionTeachRelStudentCourse">
+		<where>
+			<if test="relId != null"> and rel_id = #{relId} </if>
+			<if test="courseId != null"> and course_id = #{courseId} </if>
+			<if test="studentId != null"> and student_id = #{studentId} </if>
+			<if test="isStudy != null"> and is_study = #{isStudy} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyTeachRelStudentCourse">
+		where rel_id = #{relId}
+	</sql>
+	
+	<insert id="insertTeachRelStudentCourse" parameterType="com.seentao.stpedu.common.entity.TeachRelStudentCourse">
+		insert into teach_rel_student_course(
+		rel_id
+		<if test="courseId != null"> ,course_id</if>
+		<if test="studentId != null"> ,student_id</if>
+		<if test="isStudy != null"> ,is_study</if>
+		)
+		values(
+		nextval('teach_rel_student_course_rel_id_seq')
+		<if test="courseId != null"> ,#{courseId}</if>
+		<if test="studentId != null"> ,#{studentId}</if>
+		<if test="isStudy != null"> ,#{isStudy}</if>
+		)
+	</insert>
+	
+	<delete id="deleteTeachRelStudentCourse">
+		delete from teach_rel_student_course
+		<include refid="queryConditionTeachRelStudentCourse"/>
+	</delete>
+	
+	<update id="updateTeachRelStudentCourseByKey" parameterType="com.seentao.stpedu.common.entity.TeachRelStudentCourse">
+		update teach_rel_student_course 
+		<set>
+			<if test="relId != null"> rel_id = #{relId}, </if>
+			<if test="courseId != null"> course_id = #{courseId}, </if>
+			<if test="studentId != null"> student_id = #{studentId}, </if>
+			<if test="isStudy != null"> is_study = #{isStudy}, </if>
+		</set>
+		<include refid="queryByKeyTeachRelStudentCourse"/>
+	</update>
+	
+	<select id="selectSingleTeachRelStudentCourse" resultMap="teachRelStudentCourse">
+		select 
+		rel_id
+		,course_id
+		,student_id
+		,is_study
+		from teach_rel_student_course 
+		<include refid="queryConditionTeachRelStudentCourse"/>
+	</select>
+	
+	<select id="selectAllTeachRelStudentCourse" resultMap="teachRelStudentCourse">
+		select 
+		rel_id
+		,course_id
+		,student_id
+		,is_study
+		from teach_rel_student_course
+	</select>
+	
+	<select id="selectStudiedCourse" parameterType="map" resultMap="teachRelStudentCourse">
+		select distinct srel.* from teach_rel_student_course srel 
+		join 
+		(
+		select distinct course.* from teach_course course
+		join teach_rel_card_course rel 
+		on rel.course_id = course.course_id
+		join (
+			select * from teach_course_card card
+			join teach_course_chapter chapter on (chapter.chapter_id = card.chapter_id)
+			where chapter.class_id = #{classId} and (card.card_type = 2 or card.card_type = 3)
+		) card2 
+		on (rel.card_id = card2.card_id) where rel.show_type = 1
+		) course2 
+		on (srel.course_id = course2.course_id) and is_study = 1  and srel.student_id = #{userId};
+	</select>
+	
+	<update id="updateTeachRelStudentCourse" parameterType="com.seentao.stpedu.common.entity.TeachRelStudentCourse">
+		update teach_rel_student_course 
+		<set>
+			<if test="relId != null"> rel_id = #{relId}, </if>
+			<if test="courseId != null"> course_id = #{courseId}, </if>
+			<if test="studentId != null"> student_id = #{studentId}, </if>
+			<if test="isStudy != null"> is_study = #{isStudy}, </if>
+		</set>
+		where course_id = #{courseId} and student_id = #{studentId}
+	</update>
+	
+</mapper>
+	

@@ -1,0 +1,40 @@
+{
+    "getGameEvents": {
+    
+    	"request": {
+            "0": "userId"
+            ,"1": "gameEventId"
+            ,"2": "searchWord"
+            ,"3": "start"
+            ,"4": "limit"
+            ,"5": "inquireType"
+            ,"6": "memberId"
+            ,"7": "_type"
+        }
+        
+        ,"result": {
+        	"returnCount"	:"returnCount"
+        	,"allPage"		:"allPage"
+        	,"currentPage"	:"currentPage"
+        	,"gameEvents"	:"gameEvents"
+        }
+        
+        ,"gameEvents": {
+            "gameEventId"			: "compId"
+            ,"gameEventTitle"		: "title"
+            ,"gameEventLinkId"		: "imgId"
+            ,"gameEventLink"		: "gameEventLink"
+            ,"gameEventStartDate"	: "startTime"
+            ,"gameEventEndDate"		: "endTime"
+            ,"clubId"				: "clubId"
+            ,"clubLogoLink"			: "clubLogoLink"
+            ,"clubName"				: "clubName"
+            ,"notStartGameCount"	: "notStartNum"
+            ,"onGameCount"			: "inProcessNum"
+            ,"enrolledGroupCount"	: "totalSignNum"
+            ,"gameEventDesc"		: "introduce"
+            ,"hasBeenAttention"		: "hasBeenAttention"
+        }
+        
+    }
+}

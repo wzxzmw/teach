@@ -1,0 +1,13 @@
+{
+    "submitQuizBetting": {
+    	"request": {
+            "0": "userId",
+            "1": "quizId",
+            "2": "bettingObject",
+            "3": "bettingCount"
+        },
+        "result": {
+             
+        }
+    }
+  }  

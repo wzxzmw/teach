@@ -1,0 +1,32 @@
+{
+	"getVotes":{
+		"request":{
+		"0":"userId",
+		"1":"voteId",
+		"2":"start",
+		"3":"limit",
+		"4":"inquireType"
+		},
+		"result": {
+        	"returnCount":"returnCount",
+        	"allPage":"allPage",
+        	"currentPage": "currentPage",
+        	"votes": "votes"
+        },
+        "votes":{
+        "voteId":"voteId",
+        "voteTitle":"voteTitle",
+        "voteStatus":"voteStatus",
+        "voteLogo":"voteLogo",
+        "voteStartDate":"voteStartDate",
+        "voteEndDate":"voteEndDate",
+        "voteDesc":"voteDesc",
+        "voteLimitType":"voteLimitType",
+        "voteLimitCount":"voteLimitCount",
+        "voteSelectType":"voteSelectType",
+        "perMostVoteChance":"perMostVoteChance",
+        "voteTotalCount":"voteTotalCount",
+        "isShowingVoteTotalCount":"isShowingVoteTotalCount"
+        }
+	}
+}

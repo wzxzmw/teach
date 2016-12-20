@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.ClubTopicCommentMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.ClubTopicComment" id="clubTopicComment" >
+		<result property="commentId" column="comment_id"/>
+		<result property="topicId" column="topic_id"/>
+		<result property="content" column="content"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="createTime" column="create_time"/>
+		<result property="praiseNum" column="praise_num"/>
+		<result property="isFrozen" column="is_frozen"/>
+	</resultMap>
+	
+	<sql id="queryConditionClubTopicComment">
+		<where>
+			<if test="commentId != null"> and comment_id = #{commentId} </if>
+			<if test="topicId != null"> and topic_id = #{topicId} </if>
+			<if test="content != null"> and content = #{content} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="praiseNum != null"> and praise_num = #{praiseNum} </if>
+			<if test="isFrozen != null"> and is_frozen = #{isFrozen} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyClubTopicComment">
+		where comment_id = #{commentId}
+	</sql>
+	
+	<insert id="insertClubTopicComment" parameterType="com.seentao.stpedu.common.entity.ClubTopicComment">
+		insert into club_topic_comment(
+		comment_id
+		<if test="topicId != null"> ,topic_id</if>
+		<if test="content != null"> ,content</if>
+		<if test="createUserId != null"> ,create_user_id</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="praiseNum != null"> ,praise_num</if>
+		<if test="isFrozen != null"> ,is_frozen</if>
+		)
+		values(
+		nextval('club_topic_comment_comment_id_seq')
+		<if test="topicId != null"> ,#{topicId}</if>
+		<if test="content != null"> ,#{content}</if>
+		<if test="createUserId != null"> ,#{createUserId}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="praiseNum != null"> ,#{praiseNum}</if>
+		<if test="isFrozen != null"> ,#{isFrozen}</if>
+		)
+	</insert>
+	
+	<delete id="deleteClubTopicComment">
+		delete from club_topic_comment
+		<include refid="queryConditionClubTopicComment"/>
+	</delete>
+	
+	<update id="updateClubTopicCommentByKey" parameterType="com.seentao.stpedu.common.entity.ClubTopicComment">
+		update club_topic_comment 
+		<set>
+			<if test="commentId != null"> comment_id = #{commentId}, </if>
+			<if test="topicId != null"> topic_id = #{topicId}, </if>
+			<if test="content != null"> content = #{content}, </if>
+			<if test="createUserId != null"> create_user_id = #{createUserId}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="praiseNum != null"> praise_num = #{praiseNum}, </if>
+			<if test="isFrozen != null"> is_frozen = #{isFrozen}, </if>
+		</set>
+		<include refid="queryByKeyClubTopicComment"/>
+	</update>
+	<!-- 根据create_user_id批量更新话题评论 -->
+	<update id="batchUpdateClubTopicComment">
+	update club_topic_comment
+		set is_frozen = 1
+		where create_user_id =#{createUserId}
+	</update>
+	
+	<select id="selectSingleClubTopicComment" resultMap="clubTopicComment">
+		select 
+		comment_id
+		,topic_id
+		,content
+		,create_user_id
+		,create_time
+		,praise_num
+		,is_frozen
+		from club_topic_comment 
+		<include refid="queryConditionClubTopicComment"/>
+	</select>
+	
+	<select id="selectAllClubTopicComment" resultMap="clubTopicComment">
+		select 
+		comment_id
+		,topic_id
+		,content
+		,create_user_id
+		,create_time
+		,praise_num
+		,is_frozen
+		from club_topic_comment
+	</select>
+	<select id="queryCount" resultType="Integer" parameterType="HashMap">
+		select count(*)
+		from club_topic_comment  where topic_id = #{topicId} 
+	</select>
+	<select id="queryByPage" resultMap="clubTopicComment" parameterType="HashMap">
+		select *
+		from club_topic_comment  where topic_id = #{topicId}
+		ORDER BY comment_id  DESC
+		limit #{limit} offset #{offset}
+	</select>
+</mapper>
+	

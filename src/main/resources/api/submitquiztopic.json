@@ -1,0 +1,13 @@
+{
+    "submitQuizTopic": {
+    	"request": {
+            "0": "userId",
+            "1": "quizTopicTitle",
+            "2": "quizTopicDesc",
+            "3": "gameId"
+        },
+        "result": {
+             
+        }
+    }
+  }  

@@ -1,0 +1,322 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.ArenaGuessTopicMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.ArenaGuessTopic" id="arenaGuessTopic" >
+		<result property="topicId" column="topic_id"/>
+		<result property="matchId" column="match_id"/>
+		<result property="title" column="title"/>
+		<result property="content" column="content"/>
+		<result property="createTime" column="create_time"/>
+		<result property="guessNum" column="guess_num"/>
+		<result property="status" column="status"/>
+		<result property="joinNum" column="join_user_num"/>
+		<result property="compId" column="comp_id"/>
+	</resultMap>
+	
+	<sql id="queryConditionArenaGuessTopic">
+		<where>
+			<if test="topicId != null"> and topic_id = #{topicId} </if>
+			<if test="matchId != null"> and match_id = #{matchId} </if>
+			<if test="title != null"> and title = #{title} </if>
+			<if test="content != null"> and content = #{content} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="guessNum != null"> and guess_num = #{guessNum} </if>
+			<if test="status != null"> and status = #{status} </if>
+			<if test="joinNum != null"> and join_user_num = #{joinNum} </if>
+			<if test="compId != null"> and comp_id = #{compId} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyArenaGuessTopic">
+		where topic_id = #{topicId}
+	</sql>
+	
+	<insert id="insertArenaGuessTopic" parameterType="com.seentao.stpedu.common.entity.ArenaGuessTopic">
+		insert into arena_guess_topic(
+		topic_id
+		<if test="matchId != null"> ,match_id</if>
+		<if test="title != null"> ,title</if>
+		<if test="content != null"> ,content</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="guessNum != null"> ,guess_num</if>
+		<if test="status != null"> ,status</if>
+		<if test="joinNum != null"> ,join_user_num</if>
+		<if test="compId != null"> ,comp_id</if>
+		)
+		values(
+		nextval('arena_guess_topic_topic_id_seq')
+		<if test="matchId != null"> ,#{matchId}</if>
+		<if test="title != null"> ,#{title}</if>
+		<if test="content != null"> ,#{content}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="guessNum != null"> ,#{guessNum}</if>
+		<if test="status != null"> ,#{status}</if>
+		<if test="joinNum != null"> ,#{joinNum}</if>
+		<if test="compId != null"> ,#{compId}</if>
+		)
+	</insert>
+	
+	<delete id="deleteArenaGuessTopic">
+		delete from arena_guess_topic
+		<include refid="queryConditionArenaGuessTopic"/>
+	</delete>
+	
+	<update id="updateArenaGuessTopicByKey" parameterType="com.seentao.stpedu.common.entity.ArenaGuessTopic">
+		update arena_guess_topic 
+		<set>
+			<if test="topicId != null"> topic_id = #{topicId}, </if>
+			<if test="matchId != null"> match_id = #{matchId}, </if>
+			<if test="title != null"> title = #{title}, </if>
+			<if test="content != null"> content = #{content}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="guessNum != null"> guess_num = #{guessNum}, </if>
+			<if test="status != null"> status = #{status}, </if>
+			<if test="joinNum != null"> join_user_num = #{joinNum}, </if>
+			<if test="compId != null"> comp_id = #{compId}, </if>
+		</set>
+		<include refid="queryConditionArenaGuessTopic"/>
+	</update>
+	
+
+	
+	<select id="selectSingleArenaGuessTopic" resultMap="arenaGuessTopic">
+		select 
+		topic_id
+		,match_id
+		,title
+		,content
+		,create_time
+		,guess_num
+		,status
+		,join_user_num
+		,comp_id
+		from arena_guess_topic 
+		<include refid="queryConditionArenaGuessTopic"/>
+	</select>
+	
+	<select id="selectAllArenaGuessTopic" resultMap="arenaGuessTopic">
+		select 
+		topic_id
+		,match_id
+		,title
+		,content
+		,create_time
+		,guess_num
+		,status
+		,join_user_num
+		,comp_id
+		from arena_guess_topic
+	</select>
+	
+	
+	<select id="addOneGuessNum" parameterType="java.lang.Integer">
+	
+		UPDATE 	arena_guess_topic  SET
+		
+			 guess_num = guess_num + 1
+		
+		WHERE topic_id = #{value}
+	</select>
+	
+	<select id="addOneGuessNumAndPsersion" parameterType="java.lang.Integer">
+	
+		UPDATE 	arena_guess_topic  
+		
+			SET 
+				guess_num = guess_num + 1
+				,join_user_num = join_user_num + 1
+				
+		
+		WHERE topic_id = #{value}
+	</select>
+	
+	<update id="addPersonNum" parameterType="java.lang.Integer">
+	
+		UPDATE arena_guess_topic 
+		
+			SET 
+				join_user_num = join_user_num + 1
+				
+		WHERE topic_id = #{value}
+	</update>
+	
+	
+	
+	<update id="closeArenaGuessTopic" parameterType="com.seentao.stpedu.common.entity.ArenaGuessTopic">
+		
+		UPDATE  
+		
+			arena_guess_topic 
+			
+				SET status = ${status}
+				
+		WHERE topic_id = ${topicId}
+	</update>
+	
+	
+	
+	
+	
+	
+	
+	<select id="queryCount" parameterType="HashMap" resultType="java.lang.Integer" >
+	
+		SELECT 
+		
+			count(*)
+			
+		FROM	arena_guess_topic
+		
+		<where>
+			<if test="topicId != null"> and topic_id = #{topicId} </if>
+			<if test="matchId != null"> and match_id = #{matchId} </if>
+			<if test="title != null"> and title = #{title} </if>
+			<if test="content != null"> and content = #{content} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="guessNum != null"> and guess_num = #{guessNum} </if>
+			<if test="status != null"> and status = #{status} </if>
+			<if test="joinNum != null"> and join_user_num = #{joinNum} </if>
+			<if test="compId != null"> and comp_id = #{compId} </if>
+			<if test="matchIds != null"> and match_id in (${matchIds}) </if>
+		</where>
+	 	
+	</select>
+	
+	
+	<select id="queryByPageids" parameterType="HashMap" resultType="java.lang.Integer" >
+	
+		SELECT 
+		
+			topic_id
+			
+		FROM arena_guess_topic
+		
+	 	<where>
+			<if test="topicId != null"> and topic_id = #{topicId} </if>
+			<if test="matchId != null"> and match_id = #{matchId} </if>
+			<if test="title != null"> and title = #{title} </if>
+			<if test="content != null"> and content = #{content} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="guessNum != null"> and guess_num = #{guessNum} </if>
+			<if test="status != null"> and status = #{status} </if>
+			<if test="joinNum != null"> and join_user_num = #{joinNum} </if>
+			<if test="compId != null"> and comp_id = #{compId} </if>
+			<if test="matchIds != null"> and match_id in (${matchIds}) </if>
+		</where>
+	 	ORDER BY ${orderBy}  DESC
+		limit #{limit} offset #{offset}
+	</select>
+	
+	
+	<select id="queryByPage" parameterType="HashMap" resultMap="arenaGuessTopic">
+		SELECT 
+		
+			topic_id
+			,match_id
+			,title
+			,content
+			,create_time
+			,guess_num
+			,status
+			,join_user_num
+			,comp_id
+		FROM arena_guess_topic
+		<where>
+			<if test="topicId != null"> and topic_id = #{topicId} </if>
+			<if test="matchId != null"> and match_id = #{matchId} </if>
+			<if test="title != null"> and title = #{title} </if>
+			<if test="content != null"> and content = #{content} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="guessNum != null"> and guess_num = #{guessNum} </if>
+			<if test="status != null"> and status = #{status} </if>
+			<if test="joinNum != null"> and join_user_num = #{joinNum} </if>
+			<if test="compId != null"> and comp_id = #{compId} </if>
+			<if test="matchIds != null"> and match_id in (${matchIds}) </if>
+			<if test="ids_key != null"> and topic_id in (${ids_key}) </if>
+		</where>
+		GROUP BY topic_id
+		ORDER BY ${orderBy}  DESC
+		<if test="ids_key == null"> limit #{limit} offset #{offset} </if>
+		
+	</select>
+	
+	
+	
+	
+	
+	
+	<select id="queryCountUser" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+	
+		
+	SELECT 
+		
+		count(*)
+	
+	FROM 
+		(
+			SELECT 
+			
+				count(*)
+			
+			FROM arena_guess 			AS guess 
+			
+			LEFT JOIN arena_guess_bet 	AS bet		 ON guess.guess_id = bet.guess_id
+			
+			GROUP BY guess.topic_id 
+	) as tmp
+	</select>
+	
+	<select id="queryByPageidsUser" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+	
+		SELECT 
+		
+			guess.topic_id 
+		
+		FROM arena_guess 			AS guess 
+		
+		LEFT JOIN arena_guess_bet 	AS bet		 ON guess.guess_id = bet.guess_id
+		
+		where bet.user_id = #{userId}
+		GROUP BY guess.topic_id 
+		limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="queryByPageUser" parameterType="HashMap" resultMap="arenaGuessTopic">
+		SELECT 
+		
+			topic_id
+			,match_id
+			,title
+			,content
+			,create_time
+			,guess_num
+			,status
+			,join_user_num
+			,comp_id
+		FROM arena_guess_topic
+		
+		<where>
+			<if test="topicId != null"> and topic_id = #{topicId} </if>
+			<if test="matchId != null"> and match_id = #{matchId} </if>
+			<if test="title != null"> and title = #{title} </if>
+			<if test="content != null"> and content = #{content} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="guessNum != null"> and guess_num = #{guessNum} </if>
+			<if test="status != null"> and status = #{status} </if>
+			<if test="joinNum != null"> and join_user_num = #{joinNum} </if>
+			<if test="compId != null"> and comp_id = #{compId} </if>
+			<if test="matchIds != null"> and match_id in (${matchIds}) </if>
+			<if test="ids_key != null"> and topic_id in (${ids_key}) </if>
+		</where>
+		GROUP BY topic_id
+		ORDER BY topic_id  DESC
+		<if test="ids_key != null"> limit #{limit} offset #{offset} </if>
+		
+		
+		
+	</select>
+	
+</mapper>
+	

@@ -1,0 +1,27 @@
+{
+    "getTeachers": {
+    	"request": {
+            "0": "classId",
+            "1": "teacherId",
+            "2": "start",
+            "3": "limit",
+            "4": "inquireType",
+            "5": "userId",
+            "6": "classType"
+        },
+        "result": {
+        	"returnCount":"returnCount",
+        	"allPage":"allPage",
+        	"currentPage":"currentPage",
+        	"teachers":"teachers"
+        },
+        "teachers": {
+            "teacherId": "teacherId",
+            "teacherName": "teacherName",
+            "teacherSchool": "teacherSchool",
+            "teacherDesc": "teacherDesc",
+            "teacherHeadLink": "teacherHeadLink"
+        }
+    }
+}
+

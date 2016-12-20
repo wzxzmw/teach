@@ -1,0 +1,19 @@
+{
+    "submitQuiz": {
+    
+    	"request": {
+            "0": "userId"
+            ,"1": "quizTopicId"
+            ,"2": "quizType"
+            ,"3": "quizTitle"
+            ,"4": "quizEndDate"
+            ,"5": "bankerBettingObject"
+            ,"6": "odds"
+            ,"7": "bankerBettingCount"
+        }
+        
+        ,"result": {
+        }
+        
+    }
+}

@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.CenterCashOutMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.CenterCashOut" id="centerCashOut" >
+		<result property="cashOutId" column="cash_out_id"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="createTime" column="create_time"/>
+		<result property="cashOutType" column="cash_out_type"/>
+		<result property="amount" column="amount"/>
+		<result property="status" column="status"/>
+		<result property="virtualAmount" column="virtual_amount"/>
+		<result property="account" column="account"/>
+		<result property="serialNumber" column="serial_number"/>
+		<result property="reason" column="reason"/>
+		<result property="errorInfo" column="error_info"/>
+	</resultMap>
+	
+	<sql id="queryConditionCenterCashOut">
+		<where>
+			<if test="cashOutId != null"> and cash_out_id = #{cashOutId} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="cashOutType != null"> and cash_out_type = #{cashOutType} </if>
+			<if test="amount != null"> and amount = #{amount} </if>
+			<if test="status != null"> and status = #{status} </if>
+			<if test="virtualAmount != null"> and virtual_amount = #{virtualAmount} </if>
+			<if test="account != null"> and account = #{account} </if>
+			<if test="serialNumber != null"> and serial_number = #{serialNumber} </if>
+			<if test="reason != null"> and reason = #{reason} </if>
+			<if test="errorInfo != null"> and error_info = #{errorInfo} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyCenterCashOut">
+		where cash_out_id = #{cashOutId}
+	</sql>
+	
+	<insert id="insertCenterCashOut" parameterType="com.seentao.stpedu.common.entity.CenterCashOut">
+		insert into center_cash_out(
+		<if test="createUserId != null"> create_user_id</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="cashOutType != null"> ,cash_out_type</if>
+		<if test="amount != null"> ,amount</if>
+		<if test="status != null"> ,status</if>
+		<if test="virtualAmount != null"> ,virtual_amount</if>
+		<if test="account != null"> ,account</if>
+		<if test="serialNumber != null"> ,serial_number</if>
+		<if test="reason != null"> ,reason</if>
+		<if test="errorInfo != null"> ,error_info</if>
+		)
+		values(
+		<if test="createUserId != null"> #{createUserId}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="cashOutType != null"> ,#{cashOutType}</if>
+		<if test="amount != null"> ,#{amount}</if>
+		<if test="status != null"> ,#{status}</if>
+		<if test="virtualAmount != null"> ,#{virtualAmount}</if>
+		<if test="account != null"> ,#{account}</if>
+		<if test="serialNumber != null"> ,#{serialNumber}</if>
+		<if test="reason != null"> ,#{reason}</if>
+		<if test="errorInfo != null"> ,#{errorInfo}</if>
+		)
+	</insert>
+	
+	<delete id="deleteCenterCashOut">
+		delete from center_cash_out
+		<include refid="queryConditionCenterCashOut"/>
+	</delete>
+	
+	<update id="updateCenterCashOutByKey" parameterType="com.seentao.stpedu.common.entity.CenterCashOut">
+		update center_cash_out 
+		<set>
+			<if test="cashOutId != null"> cash_out_id = #{cashOutId}, </if>
+			<if test="createUserId != null"> create_user_id = #{createUserId}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="cashOutType != null"> cash_out_type = #{cashOutType}, </if>
+			<if test="amount != null"> amount = #{amount}, </if>
+			<if test="status != null"> status = #{status}, </if>
+			<if test="virtualAmount != null"> virtual_amount = #{virtualAmount}, </if>
+			<if test="account != null"> account = #{account}, </if>
+			<if test="serialNumber != null"> serial_number = #{serialNumber}, </if>
+			<if test="reason != null"> reason = #{reason}, </if>
+			<if test="errorInfo != null"> error_info = #{errorInfo}, </if>
+		</set>
+		<include refid="queryByKeyCenterCashOut"/>
+	</update>
+	
+	<select id="selectSingleCenterCashOut" resultMap="centerCashOut">
+		select 
+		cash_out_id
+		,create_user_id
+		,create_time
+		,cash_out_type
+		,amount
+		,status
+		,virtual_amount
+		,account
+		,serial_number
+		,reason
+		,error_info
+		from center_cash_out 
+		<include refid="queryConditionCenterCashOut"/>
+	</select>
+	
+	<select id="selectAllCenterCashOut" resultMap="centerCashOut">
+		select 
+		cash_out_id
+		,create_user_id
+		,create_time
+		,cash_out_type
+		,amount
+		,status
+		,virtual_amount
+		,account
+		,serial_number
+		,reason
+		,error_info
+		from center_cash_out
+	</select>
+	
+	
+	<select id="selectCenterCashOutListByCondition" parameterType="java.util.Map" resultMap="centerCashOut">
+		select 
+		cash_out_id
+		,create_user_id
+		,create_time
+		,cash_out_type
+		,amount
+		,status
+		,virtual_amount
+		,account
+		,serial_number
+		,reason
+		,error_info
+		from center_cash_out
+		where create_user_id=#{createUserId} 
+		<if test="endTime != null ">
+			<![CDATA[and  create_time  <= ${endTime}]]>
+		</if>
+		<if test="startTime != null ">
+			<![CDATA[and  create_time  >=${startTime}]]>
+		</if>
+		order by create_time desc
+	</select>
+	
+	<select id="countCenterCashOutListByCondition" parameterType="java.util.Map"  resultType="int">
+		select 
+		count(cash_out_id)
+		from center_cash_out
+		where create_user_id=#{createUserId} 
+		<if test="endTime != null ">
+			<![CDATA[and  create_time  <= ${endTime}]]>
+		</if>
+		<if test="startTime != null ">
+			<![CDATA[and  create_time  >=${startTime}]]>
+		</if>
+	</select>
+	
+</mapper>
+	

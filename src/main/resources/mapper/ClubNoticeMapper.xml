@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.ClubNoticeMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.ClubNotice" id="clubNotice" >
+		<result property="noticeId" column="notice_id"/>
+		<result property="title" column="title"/>
+		<result property="content" column="content"/>
+		<result property="createTime" column="create_time"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="isTop" column="is_top"/>
+		<result property="clubId" column="club_id"/>
+		<result property="isDelete" column="is_delete"/>
+	</resultMap>
+	
+	<sql id="queryConditionClubNotice">
+		<where>
+			<if test="noticeId != null"> and notice_id = #{noticeId} </if>
+			<if test="title != null"> and title = #{title} </if>
+			<if test="content != null"> and content = #{content} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="isTop != null"> and is_top = #{isTop} </if>
+			<if test="clubId != null"> and club_id = #{clubId} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyClubNotice">
+		where notice_id = #{noticeId}
+	</sql>
+	
+	<insert id="insertClubNotice" parameterType="com.seentao.stpedu.common.entity.ClubNotice">
+		<selectKey resultType="java.lang.Integer" keyProperty="noticeId" order="AFTER" >
+		   SELECT currval('club_notice_notice_id_seq')
+		</selectKey>
+		insert into club_notice(
+		<if test="title != null"> title</if>
+		<if test="content != null"> ,content</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="createUserId != null"> ,create_user_id</if>
+		<if test="isTop != null"> ,is_top</if>
+		<if test="clubId != null"> ,club_id</if>
+		<if test="isDelete != null"> ,is_delete</if>
+		)
+		values(
+		<if test="title != null"> #{title}</if>
+		<if test="content != null"> ,#{content}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="createUserId != null"> ,#{createUserId}</if>
+		<if test="isTop != null"> ,#{isTop}</if>
+		<if test="clubId != null"> ,#{clubId}</if>
+		<if test="isDelete != null"> ,#{isDelete}</if>
+		)
+	</insert>
+	
+	<delete id="deleteClubNotice">
+		delete from club_notice
+		<include refid="queryConditionClubNotice"/>
+	</delete>
+	
+	<update id="updateClubNoticeByKey" parameterType="com.seentao.stpedu.common.entity.ClubNotice">
+		update club_notice 
+		<set>
+			<if test="noticeId != null"> notice_id = #{noticeId}, </if>
+			<if test="title != null"> title = #{title}, </if>
+			<if test="content != null"> content = #{content}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="createUserId != null"> create_user_id = #{createUserId}, </if>
+			<if test="isTop != null"> is_top = #{isTop}, </if>
+			<if test="clubId != null"> club_id = #{clubId}, </if>
+			<if test="isDelete != null">  is_delete = #{isDelete} </if>
+		</set>
+		<include refid="queryByKeyClubNotice"/>
+	</update>
+	
+	<update id="updateClubNoticeByKeyAll" parameterType="com.seentao.stpedu.common.entity.ClubNotice">
+		update club_notice set is_top = #{isTop} where club_id = #{clubId}
+	</update>
+	
+	<select id="selectSingleClubNotice" resultMap="clubNotice">
+		select 
+		notice_id
+		,title
+		,content
+		,create_time
+		,create_user_id
+		,is_top
+		,club_id
+		,is_delete
+		from club_notice 
+		<include refid="queryConditionClubNotice"/>
+	</select>
+	
+	<select id="selectAllClubNotice" resultMap="clubNotice">
+		select 
+		notice_id
+		,title
+		,content
+		,create_time
+		,create_user_id
+		,is_top
+		,club_id
+		,is_delete
+		from club_notice
+	</select>
+	
+	<select id="queryCount" parameterType="HashMap" resultType="java.lang.Integer" >
+		select count(*) from club_notice 
+		<include refid="queryConditionClubNotice"/>
+	</select>
+	<select id="selectClubNoticesInfo" parameterType="HashMap" resultMap="clubNotice">
+		select 
+		notice_id
+		from club_notice 
+		<include refid="queryConditionClubNotice"/>
+		order by is_top desc, create_time desc limit #{limit} offset #{offset}
+	</select>
+	
+	
+	<update id="delClubNoticeAll" parameterType="ArrayList">
+	
+		 update club_notice 
+		 
+           <trim prefix="set" suffixOverrides=",">
+           
+            	<trim prefix="is_delete = CASE notice_id " suffix="end,">
+	                <foreach collection="list" item="i" index="index">
+	                        <if test="i.isDelete != null">
+	                         WHEN #{i.noticeId}  THEN #{i.isDelete}
+	                        </if>
+	                </foreach>
+             	</trim>
+             	
+           </trim>
+           
+         WHERE notice_id in
+         
+         	<foreach collection="list" separator="," item="i" index="index" open="(" close=")" >
+             	#{i.noticeId}
+         	</foreach>
+	</update>
+</mapper>
+	

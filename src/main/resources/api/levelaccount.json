@@ -1,0 +1,13 @@
+{
+    "getFLevelAccount": {
+    	"request": {
+            "0": "userId",
+            "1": "clubId",
+            "2": "inquireType"
+        },
+        "result": {
+             "fLevelAccount":"fLevelAccount",
+             "canChangeCash":"canChangeCash"
+        }
+    }
+  }  

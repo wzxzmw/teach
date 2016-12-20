@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.ClubRelClassCourseMemberMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.ClubRelClassCourseMember" id="clubRelClassCourseMember" >
+		<result property="relId" column="rel_id"/>
+		<result property="courseId" column="course_id"/>
+		<result property="studentId" column="student_id"/>
+		<result property="isStudy" column="is_study"/>
+	</resultMap>
+	
+	<sql id="queryConditionClubRelClassCourseMember">
+		<where>
+			<if test="relId != null"> and rel_id = #{relId} </if>
+			<if test="courseId != null"> and course_id = #{courseId} </if>
+			<if test="studentId != null"> and student_id = #{studentId} </if>
+			<if test="isStudy != null"> and is_study = #{isStudy} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyClubRelClassCourseMember">
+		where rel_id = #{relId}
+	</sql>
+	
+	<insert id="insertClubRelClassCourseMember" parameterType="com.seentao.stpedu.common.entity.ClubRelClassCourseMember">
+		insert into club_rel_class_course_member(
+		rel_id
+		<if test="courseId != null"> ,course_id</if>
+		<if test="studentId != null"> ,student_id</if>
+		<if test="isStudy != null"> ,is_study</if>
+		)
+		values(
+		nextval('club_rel_class_course_member_rel_id_seq')
+		<if test="courseId != null"> ,#{courseId}</if>
+		<if test="studentId != null"> ,#{studentId}</if>
+		<if test="isStudy != null"> ,#{isStudy}</if>
+		)
+	</insert>
+	
+	<delete id="deleteClubRelClassCourseMember">
+		delete from club_rel_class_course_member
+		<include refid="queryConditionClubRelClassCourseMember"/>
+	</delete>
+	
+	<update id="updateClubRelClassCourseMemberByKey" parameterType="com.seentao.stpedu.common.entity.ClubRelClassCourseMember">
+		update club_rel_class_course_member 
+		<set>
+			<if test="relId != null"> rel_id = #{relId}, </if>
+			<if test="courseId != null"> course_id = #{courseId}, </if>
+			<if test="studentId != null"> student_id = #{studentId}, </if>
+			<if test="isStudy != null"> is_study = #{isStudy}, </if>
+		</set>
+		<include refid="queryByKeyClubRelClassCourseMember"/>
+	</update>
+	
+	<select id="selectSingleClubRelClassCourseMember" resultMap="clubRelClassCourseMember">
+		select 
+		rel_id
+		,course_id
+		,student_id
+		,is_study
+		from club_rel_class_course_member 
+		<include refid="queryConditionClubRelClassCourseMember"/>
+	</select>
+	
+	<select id="selectAllClubRelClassCourseMember" resultMap="clubRelClassCourseMember">
+		select 
+		rel_id
+		,course_id
+		,student_id
+		,is_study
+		from club_rel_class_course_member
+	</select>
+	
+</mapper>
+	

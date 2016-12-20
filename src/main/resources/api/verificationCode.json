@@ -1,0 +1,17 @@
+{
+    "submitIdentifyingCode": {
+    	"request": {
+            "0": "userType",
+            "1": "userName",
+            "2": "userId",
+            "3": "userToken",
+            "4": "iType",
+            "5": "phoneNumber",
+            "6": "clubId"
+        },
+        "result": {
+            
+        }
+    }
+}
+

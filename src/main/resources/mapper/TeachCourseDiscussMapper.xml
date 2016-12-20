@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.TeachCourseDiscussMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.TeachCourseDiscuss" id="teachCourseDiscuss" >
+		<result property="discussId" column="discuss_id"/>
+		<result property="classId" column="class_id"/>
+		<result property="type" column="type"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="createTime" column="create_time"/>
+		<result property="praiseNum" column="praise_num"/>
+		<result property="content" column="content"/>
+		<result property="isDelete" column="is_delete"/>
+	</resultMap>
+	
+	<sql id="queryConditionTeachCourseDiscuss">
+		<where>
+			<if test="discussId != null"> and discuss_id = #{discussId} </if>
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="type != null"> and type = #{type} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="praiseNum != null"> and praise_num = #{praiseNum} </if>
+			<if test="content != null"> and content = #{content} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyTeachCourseDiscuss">
+		where discuss_id = #{discussId}
+	</sql>
+	
+	<insert id="insertTeachCourseDiscuss" parameterType="com.seentao.stpedu.common.entity.TeachCourseDiscuss">
+		insert into teach_course_discuss(
+		discuss_id
+		<if test="classId != null"> ,class_id</if>
+		<if test="type != null"> ,type</if>
+		<if test="createUserId != null"> ,create_user_id</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="praiseNum != null"> ,praise_num</if>
+		<if test="content != null"> ,content</if>
+		<if test="isDelete != null"> ,is_delete</if>
+		)
+		values(
+		nextval('teach_course_discuss_discuss_id_seq')
+		<if test="classId != null"> ,#{classId}</if>
+		<if test="type != null"> ,#{type}</if>
+		<if test="createUserId != null"> ,#{createUserId}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="praiseNum != null"> ,#{praiseNum}</if>
+		<if test="content != null"> ,#{content}</if>
+		<if test="isDelete != null"> ,#{isDelete}</if>
+		)
+	</insert>
+	
+	<insert id="returninsertTeachCourseDiscuss" parameterType="com.seentao.stpedu.common.entity.TeachCourseDiscuss">
+		<selectKey resultType="java.lang.Integer"  order="AFTER" keyProperty="discussId" >
+	        SELECT currval('teach_course_discuss_discuss_id_seq') AS discuss_id   
+	    </selectKey>
+		insert into teach_course_discuss(
+		discuss_id
+		<if test="classId != null"> ,class_id</if>
+		<if test="type != null"> ,type</if>
+		<if test="createUserId != null"> ,create_user_id</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="praiseNum != null"> ,praise_num</if>
+		<if test="content != null"> ,content</if>
+		<if test="isDelete != null"> ,is_delete</if>
+		)
+		values(
+		nextval('teach_course_discuss_discuss_id_seq')
+		<if test="classId != null"> ,#{classId}</if>
+		<if test="type != null"> ,#{type}</if>
+		<if test="createUserId != null"> ,#{createUserId}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="praiseNum != null"> ,#{praiseNum}</if>
+		<if test="content != null"> ,#{content}</if>
+		<if test="isDelete != null"> ,#{isDelete}</if>
+		)
+	</insert>
+	
+	<delete id="deleteTeachCourseDiscuss">
+		delete from teach_course_discuss
+		<include refid="queryConditionTeachCourseDiscuss"/>
+	</delete>
+	
+	<update id="updateTeachCourseDiscussByKey" parameterType="com.seentao.stpedu.common.entity.TeachCourseDiscuss">
+		update teach_course_discuss 
+		<set>
+			<if test="discussId != null"> discuss_id = #{discussId}, </if>
+			<if test="classId != null"> class_id = #{classId}, </if>
+			<if test="type != null"> type = #{type}, </if>
+			<if test="createUserId != null"> create_user_id = #{createUserId}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="praiseNum != null"> praise_num = #{praiseNum}, </if>
+			<if test="content != null"> content = #{content}, </if>
+			<if test="isDelete != null"> is_delete = #{isDelete}, </if>
+		</set>
+		<include refid="queryByKeyTeachCourseDiscuss"/>
+	</update>
+	
+	<select id="selectSingleTeachCourseDiscuss" resultMap="teachCourseDiscuss">
+		select 
+		discuss_id
+		,class_id
+		,type
+		,create_user_id
+		,create_time
+		,praise_num
+		,content
+		,is_delete
+		from teach_course_discuss 
+		<include refid="queryConditionTeachCourseDiscuss"/>
+	</select>
+	
+	<select id="selectAllTeachCourseDiscuss" resultMap="teachCourseDiscuss">
+		select 
+		discuss_id
+		,class_id
+		,type
+		,create_user_id
+		,create_time
+		,praise_num
+		,content
+		,is_delete
+		from teach_course_discuss
+	</select>
+	<select id="queryCount" resultType="Integer" parameterType="HashMap">
+		select count(*)
+		from teach_course_discuss  where class_id = #{classId}  and  type = #{type} and is_delete = #{isDelete} 
+	</select>
+	<select id="queryByPage" resultMap="teachCourseDiscuss" parameterType="HashMap">
+		select *
+		from teach_course_discuss  where class_id = #{classId}  and  type = #{type} and is_delete = #{isDelete}
+		ORDER BY discuss_id  DESC
+		limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="queryNewestByCount" resultType="Integer" parameterType="HashMap">
+		select count(*)
+		from teach_course_discuss  where class_id = #{classId}  and  type = #{type} and is_delete = #{isDelete} 
+	</select>
+	<select id="queryNewestByPage" resultMap="teachCourseDiscuss" parameterType="HashMap">
+		select *
+		from teach_course_discuss  where class_id = #{classId}  and  type = #{type} and is_delete = #{isDelete}
+		and discuss_id > #{newCommentId}
+		ORDER BY discuss_id  DESC
+		limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="queryOldByCount" resultType="Integer" parameterType="HashMap">
+		select count(*)
+		from teach_course_discuss  where class_id = #{classId}  and  type = #{type} and is_delete = #{isDelete} 
+	</select>
+	<select id="queryOldByPage" resultMap="teachCourseDiscuss" parameterType="HashMap">
+		select *
+		from teach_course_discuss  where class_id = #{classId}  and  type = #{type} and is_delete = #{isDelete}
+		and discuss_id &lt; #{oldCommentId}
+		ORDER BY discuss_id  DESC
+		limit #{limit} offset #{offset}
+	</select>
+	
+	
+	
+	<update id="delTeachCourseDiscussAll" parameterType="ArrayList">
+	
+		 update teach_course_discuss 
+		 
+           <trim prefix="set" suffixOverrides=",">
+           
+            	<trim prefix="is_delete = CASE discuss_id " suffix="end,">
+	                <foreach collection="list" item="i" index="index">
+	                        <if test="i.isDelete != null">
+	                         WHEN #{i.discussId}  THEN #{i.isDelete}
+	                        </if>
+	                </foreach>
+             	</trim>
+             	
+           </trim>
+           
+         WHERE discuss_id in
+         
+         	<foreach collection="list" separator="," item="i" index="index" open="(" close=")" >
+             	#{i.discussId}
+         	</foreach>
+	</update>
+	
+	<select id="getNewTeachCourseDiscuss" resultMap="teachCourseDiscuss">
+		select 
+		max(discuss_id) discuss_id
+		from teach_course_discuss 
+		where class_id = #{classId} and is_delete = #{isDelete}
+	</select>
+	
+	<!-- 最后一条的课程通知ID -->
+	<select id="getNewTeachCourseDiscussMax" resultType="Integer">
+			SELECT
+			MAX (discuss_id)
+		FROM
+			teach_course_discuss
+		WHERE
+			TYPE = 2
+		AND is_delete = 0
+		AND class_id = #{classId}
+	</select>
+	
+</mapper>
+	

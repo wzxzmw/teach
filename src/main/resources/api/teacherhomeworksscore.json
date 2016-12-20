@@ -1,0 +1,14 @@
+{
+    "submitScore": {
+    	"request": {
+            "0": "userId"
+            ,"1": "scoreType"
+            ,"2": "scoreObjectId"
+            ,"3": "score"
+            ,"4": "textEvaluation"
+        },
+        "result": {
+             
+        }
+    }
+  }  

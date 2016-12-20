@@ -1,0 +1,12 @@
+{
+    "submitCertRequest": {
+    	"request": {
+            "0": "userId",
+            "1": "certObjectId",
+            "2": "actionType"
+        },
+        "result": {
+             
+        }
+    }
+  }  

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.ClubBackgroundColorMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.ClubBackgroundColor" id="clubBackgroundColor" >
+		<result property="bgColorId" column="bg_color_id"/>
+		<result property="colorCode" column="color_code"/>
+	</resultMap>
+	
+	<sql id="queryConditionClubBackgroundColor">
+		<where>
+			<if test="bgColorId != null"> and bg_color_id = #{bgColorId} </if>
+			<if test="colorCode != null"> and color_code = #{colorCode} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyClubBackgroundColor">
+		where bg_color_id = #{bgColorId}
+	</sql>
+	
+	<insert id="insertClubBackgroundColor" parameterType="com.seentao.stpedu.common.entity.ClubBackgroundColor">
+		insert into club_background_color(
+		bg_color_id
+		<if test="colorCode != null"> ,color_code</if>
+		)
+		values(
+		null
+		<if test="colorCode != null"> ,#{colorCode}</if>
+		)
+	</insert>
+	
+	<delete id="deleteClubBackgroundColor">
+		delete from club_background_color
+		<include refid="queryConditionClubBackgroundColor"/>
+	</delete>
+	
+	<update id="updateClubBackgroundColorByKey" parameterType="com.seentao.stpedu.common.entity.ClubBackgroundColor">
+		update club_background_color 
+		<set>
+			<if test="bgColorId != null"> bg_color_id = #{bgColorId}, </if>
+			<if test="colorCode != null"> color_code = #{colorCode}, </if>
+		</set>
+		<include refid="queryByKeyClubBackgroundColor"/>
+	</update>
+	
+	<select id="selectSingleClubBackgroundColor" resultMap="clubBackgroundColor">
+		select 
+		bg_color_id
+		,color_code
+		from club_background_color 
+		<include refid="queryConditionClubBackgroundColor"/>
+	</select>
+	
+	<select id="selectAllClubBackgroundColor" resultMap="clubBackgroundColor">
+		select 
+		bg_color_id
+		,color_code
+		from club_background_color
+	</select>
+	
+</mapper>
+	

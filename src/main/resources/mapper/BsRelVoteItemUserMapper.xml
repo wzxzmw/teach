@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.BsRelVoteItemUserMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.BsRelVoteItemUser" id="BaseBsRelVoteItemUser" >
+		<result property="relId" column="rel_id"/>
+		<result property="itemId" column="item_id"/>
+		<result property="userId" column="user_id"/>
+		<result property="voteId" column="vote_id"/>
+		<result property="voteTime" column="vote_time"/>
+		<result property="voteTimes" column="vote_times"/>
+	</resultMap>
+	<sql id="base_bs_vote_item_user_sql">
+	rel_id,item_id,user_id,vote_id,vote_time,vote_times
+	</sql>
+	<!-- 批量添加评选项关联用户对象  -->
+	<insert id="batchBsRelVoteItemUser"  parameterType="java.util.List">
+	<!-- 序列自增赋值给主键，并且返回 -->
+			<selectKey order="AFTER" keyProperty="relId" resultType="java.lang.Integer">
+    	SELECT currval('bs_rel_vote_item_user_rel_id_seq')as relId
+    	</selectKey>
+		insert into bs_rel_vote_item_user(item_id,user_id,vote_id,vote_time,vote_times)values
+		<foreach collection="list" item="item" index="index" separator="," > 
+			(#{item.itemId},#{item.userId},#{item.voteId},#{item.voteTime},#{item.voteTimes})
+	</foreach>
+	 
+	</insert>
+	<!-- 添加评选项关联用户对象 -->
+	<insert id="insertBsRelVoteItemUser" parameterType="com.seentao.stpedu.common.entity.BsRelVoteItemUser">
+		<!-- 序列自增赋值给主键，并且返回 -->
+		<selectKey resultType="java.lang.Integer" keyProperty="relId" order="AFTER" >
+	      SELECT currval('bs_rel_vote_item_rel_id_seq')as relId
+		</selectKey>
+		insert into bs_vote_item(
+		rel_id
+		<!-- 评选项主题 -->
+		<if test="itemId !=null">,item_id</if>
+		<!-- 评选项描述 -->
+		<if test="userId != null">,user_id</if>
+		<!--评选项主图id-->
+		<if test="voteId !=null"> ,vote_id</if>
+		<!--  评选项时间-->
+		<if test="voteTime != null">,vote_time</if>
+		<!-- 评选次数 -->
+		<if test="voteTimes != null ">,vote_times</if>
+		)values(
+		nextval('bs_rel_vote_item_rel_id_seq')
+		<!-- 评选项主题 -->
+		<if test="itemId !=null">,#{itemId}</if>
+		<!-- 评选项描述 -->
+		<if test="userId != null">,#{userId}</if>
+		<!--评选项主图id-->
+		<if test="voteId !=null"> ,#{voteId}</if>
+		<!--  评选项时间-->
+		<if test="voteTime != null">,#{voteTime}</if>
+		<!-- 评选次数 -->
+		<if test="voteTimes != null ">,#{voteTimes}</if>
+		)
+	</insert>
+	<!-- 根据评选人数排序查询评选voteIds -->
+	<select id="queryBsVoteItemUserSomesVoteIds" resultType="java.lang.Integer">
+		select rels.vote_id from (SELECT
+		vote_id,
+		count(user_id) as cn
+	FROM
+		bs_rel_vote_item_user
+	GROUP BY vote_id ORDER BY cn desc )as rels
+	</select>
+	<!-- 根据评选itemIds查询评选项  -->
+		<select id="queryBsVoteItemUserSomesItemIds" resultType="java.lang.Integer">
+		select item_id from bs_rel_vote_item_user where vote_id = #{voteId}  
+	</select>
+	<!-- 根据投票选项查询投票选项次数 -->
+	<select id="queryBsVoteItemUserByItemId" resultType="java.lang.Integer">
+			SELECT
+		SUM (vote_times)
+	FROM
+		bs_rel_vote_item_user
+	GROUP BY
+		item_id ,vote_id,user_id
+	HAVING
+		item_id = #{itemId} and user_id = #{userId} and vote_id=#{voteId}
+	</select>
+	<!-- 根据评选项itemIds查询所有的评选项关联 -->
+		<select id="queryBsRelVoteItemUserItems" resultMap="BaseBsRelVoteItemUser">
+		select <include refid="base_bs_vote_item_user_sql" /> from bs_rel_vote_item_user where 
+			item_id in (${itemIds}) and vote_id = #{voteId} and user_id =#{userId}
+	</select> 
+	<!-- 根据投票选项itemIds批量更新评选次数-->
+	  <update id="updateBsRelVoteItemUserByItemIds" parameterType="java.util.List" >
+	  <foreach collection="list" item="item" index="index" open="" close="" separator=";">  
+                update bs_rel_vote_item_user   
+                <set>  
+                  vote_times=${item.voteTimes}+1  
+                </set>  
+                where item_id = ${item.itemId}   and vote_id = #{item.voteId}
+         </foreach> 
+	 </update> 
+	 <!-- 根据voteId查询评选和评选项关联查询 -->
+	 <select id="queryBsRelVoteItemUserVoteId" resultMap="BaseBsRelVoteItemUser">
+	 select <include refid="base_bs_vote_item_user_sql" /> from bs_rel_vote_item_user where vote_id = #{voteId} 
+	 </select>
+	 <!-- 删除 bs_rel_vote_item_user表中的全部数据-->
+	 <delete id="deleteBsRelVoteItemUser">
+	 delete from bs_rel_vote_item_user
+	 
+	 </delete>
+</mapper>
+	

@@ -1,0 +1,38 @@
+{
+    "getCommentsForMobile": {
+    	"request": {
+            "0": "userId",
+            "1": "classId",
+            "2": "classType",
+            "3": "gameEventId",
+            "4": "topicId",
+            "5": "commentType",
+            "6": "start",
+            "7": "limit",
+            "8": "sortType",
+            "9":"newCommentId",
+            "10":"oldCommentId",
+            "11":"inquireType"
+        },
+        "result": {
+        	"returnCount":"returnCount",
+        	"allPage":"allPage",
+        	"currentPage":"currentPage",
+        	"newCommentId":"newCommentId",
+        	"oldCommentId":"oldCommentId",
+        	"comments":"comments"
+        },
+        "comments":{
+        	"commentId": "commentId",
+        	"commentBody": "content",
+        	"createrId": "createrId",
+        	"createrName": "createrName",
+        	"createrNickname": "createrNickname",
+        	"createrHeadLink": "createrHeadLink",
+        	"commentType": "type",
+        	"supportCount": "praiseNum",
+        	"cCreateDate": "createTime"
+        }
+    }
+}
+

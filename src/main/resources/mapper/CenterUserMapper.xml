@@ -1,0 +1,873 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.CenterUserMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.CenterUser" id="centerUser" >
+		<result property="userId" column="user_id"/>
+		<result property="userName" column="user_name"/>
+		<result property="password" column="password"/>
+		<result property="salt" column="salt"/>
+		<result property="nickName" column="nick_name"/>
+		<result property="realName" column="real_name"/>
+		<result property="headImgId" column="head_img_id"/>
+		<result property="phone" column="phone"/>
+		<result property="sex" column="sex"/>
+		<result property="schoolId" column="school_id"/>
+		<result property="instId" column="inst_id"/>
+		<result property="qq" column="qq"/>
+		<result property="email" column="email"/>
+		<result property="weixin" column="weixin"/>
+		<result property="studentId" column="student_id"/>
+		<result property="idCard" column="id_card"/>
+		<result property="description" column="description"/>
+		<result property="profession" column="profession"/>
+		<result property="birthday" column="birthday"/>
+		<result property="studentCardNo" column="student_card_no"/>
+		<result property="teacherCardNo" column="teacher_card_no"/>
+		<result property="positionalTitle" column="positional_title"/>
+		<result property="speciality" column="speciality"/>
+		<result property="grade" column="grade"/>
+		<result property="educationLevel" column="education_level"/>
+		<result property="userType" column="user_type"/>
+		<result property="userSourceType" column="user_source_type"/>
+		<result property="sourceId" column="source_id"/>
+		<result property="classId" column="class_id"/>
+		<result property="clubId" column="club_id"/>
+		<result property="questionNum" column="question_num"/>
+		<result property="answerNum" column="answer_num"/>
+		<result property="clubActiveNum" column="club_active_num"/>
+		<result property="praiseNum" column="praise_num"/>
+		<result property="regTime" column="reg_time"/>
+		<result property="lastLoginTime" column="last_login_time"/>
+		<result property="logins" column="logins"/>
+		<result property="replacePhone" column="replace_phone"/>
+		<result property="trainNum" column="train_num"/>
+		<result property="atteClubNum" column="atte_club_num"/>
+		<result property="atteCompanyNum" column="atte_company_num"/>
+		<result property="isIdentify" column="is_identify"/><!-- 是否认证 -->
+		<result property="isApplyCertificate" column="certificate_status"/><!--证书状态 -->
+	    <result property="todayClubActiveNum" column="today_club_active_num"/>
+	    <result property="score" column="score"/>
+	    <result property="address" column="address"/>
+	    <result property="userNameUpdateTimes" column="user_name_update_times"/>
+	</resultMap>
+	
+	<sql id="queryConditionCenterUser">
+		<where>
+			<if test="userId != null"> and user_id = #{userId} </if>
+			<if test="userName != null"> and user_name = #{userName} </if>
+			<if test="password != null"> and password = #{password} </if>
+			<if test="salt != null"> and salt = #{salt} </if>
+			<if test="nickName != null"> and nick_name like CONCAT('%','${nickName}','%' )</if>
+			<if test="realName != null"> and real_name like CONCAT('%','${realName}','%' )</if>
+			<if test="headImgId != null"> and head_img_id = #{headImgId} </if>
+			<if test="phone != null"> and phone = #{phone} </if>
+			<if test="sex != null"> and sex = #{sex} </if>
+			<if test="schoolId != null"> and school_id = #{schoolId} </if>
+			<if test="instId != null"> and inst_id = #{instId} </if>
+			<if test="qq != null"> and qq = #{qq} </if>
+			<if test="email != null"> and email = #{email} </if>
+			<if test="weixin != null"> and weixin = #{weixin} </if>
+			<if test="studentId != null"> and student_id = #{studentId} </if>
+			<if test="idCard != null"> and id_card = #{idCard} </if>
+			<if test="description != null"> and description = #{description} </if>
+			<if test="profession != null"> and profession = #{profession} </if>
+			<if test="birthday != null"> and birthday = #{birthday} </if>
+			<if test="studentCardNo != null"> and student_card_no = #{studentCardNo} </if>
+			<if test="teacherCardNo != null"> and teacher_card_no = #{teacherCardNo} </if>
+			<if test="positionalTitle != null"> and positional_title = #{positionalTitle} </if>
+			<if test="speciality != null"> and speciality = #{speciality} </if>
+			<if test="grade != null"> and grade = #{grade} </if>
+			<if test="educationLevel != null"> and education_level = #{educationLevel} </if>
+			<if test="userType != null"> and user_type = #{userType} </if>
+			<if test="userSourceType != null"> and user_source_type = #{userSourceType} </if>
+			<if test="sourceId != null"> and source_id = #{sourceId} </if>
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="clubId != null"> and club_id = #{clubId} </if>
+			<if test="questionNum != null"> and question_num = #{questionNum} </if>
+			<if test="answerNum != null"> and answer_num = #{answerNum} </if>
+			<if test="clubActiveNum != null"> and club_active_num = #{clubActiveNum} </if>
+			<if test="praiseNum != null"> and praise_num = #{praiseNum} </if>
+			<if test="regTime != null"> and reg_time = #{regTime} </if>
+			<if test="lastLoginTime != null"> and last_login_time = #{lastLoginTime} </if>
+			<if test="logins != null"> and logins = #{logins} </if>
+			<if test="replacePhone != null"> and replace_phone = #{replacePhone} </if>
+			<if test="trainNum != null"> and train_num = #{trainNum} </if>
+			<if test="atteClubNum != null"> and atte_club_num = #{atteClubNum} </if>
+			<if test="atteCompanyNum != null"> and atte_company_num = #{atteCompanyNum} </if>
+			<if test="isIdentify != null"> and is_identify = #{isIdentify} </if>
+			<if test="isClassNull == 1"> and class_id is null </if>
+			<if test="userIds != null"> and user_id not in (${userIds}) </if>
+			<if test="isSchlooNull == 1"> and school_id is not null </if>
+			<if test="todayClubActiveNum != null"> and today_club_active_num = #{todayClubActiveNum} </if>
+			<if test="userNameUpdateTimes != null"> and user_name_update_times = #{userNameUpdateTimes} </if>
+		</where>
+	</sql>
+	
+	<insert id="insertCenterUser" parameterType="com.seentao.stpedu.common.entity.CenterUser">
+		<selectKey resultType="java.lang.Integer"  order="AFTER" keyProperty="userId" >
+	        SELECT currval('center_user_user_id_seq') AS user_id   
+	    </selectKey>
+		insert into center_user(
+		user_id
+		<if test="userName != null"> ,user_name</if>
+		<if test="password != null"> ,password</if>
+		<if test="salt != null"> ,salt</if>
+		<if test="nickName != null"> ,nick_name</if>
+		<if test="realName != null"> ,real_name</if>
+		<if test="headImgId != null"> ,head_img_id</if>
+		<if test="phone != null"> ,phone</if>
+		<if test="sex != null"> ,sex</if>
+		<if test="schoolId != null"> ,school_id</if>
+		<if test="instId != null"> ,inst_id</if>
+		<if test="qq != null"> ,qq</if>
+		<if test="email != null"> ,email</if>
+		<if test="weixin != null"> ,weixin</if>
+		<if test="studentId != null"> ,student_id</if>
+		<if test="idCard != null"> ,id_card</if>
+		<if test="description != null"> ,description</if>
+		<if test="profession != null"> ,profession</if>
+		<if test="birthday != null"> ,birthday</if>
+		<if test="studentCardNo != null"> ,student_card_no</if>
+		<if test="teacherCardNo != null"> ,teacher_card_no</if>
+		<if test="positionalTitle != null"> ,positional_title</if>
+		<if test="speciality != null"> ,speciality</if>
+		<if test="grade != null"> ,grade</if>
+		<if test="educationLevel != null"> ,education_level</if>
+		<if test="userType != null"> ,user_type</if>
+		<if test="userSourceType != null"> ,user_source_type</if>
+		<if test="sourceId != null"> ,source_id</if>
+		<if test="classId != null"> ,class_id</if>
+		<if test="clubId != null"> ,club_id</if>
+		<if test="questionNum != null"> ,question_num</if>
+		<if test="answerNum != null"> ,answer_num</if>
+		<if test="clubActiveNum != null"> ,club_active_num</if>
+		<if test="praiseNum != null"> ,praise_num</if>
+		<if test="regTime != null"> ,reg_time</if>
+		<if test="lastLoginTime != null"> ,last_login_time</if>
+		<if test="logins != null"> ,logins</if>
+		<if test="replacePhone != null"> ,replace_phone</if>
+		<if test="trainNum != null"> ,train_num</if>
+		<if test="atteClubNum != null"> ,atte_club_num</if>
+		<if test="atteCompanyNum != null"> ,atte_company_num</if>
+		<if test="todayClubActiveNum != null"> ,today_club_active_num</if>
+		<if test="address != null"> ,address</if>
+		<if test="userNameUpdateTimes != null">, user_name_update_times</if>
+		)
+		values(
+		nextval('center_user_user_id_seq')
+		<if test="userName != null"> ,#{userName}</if>
+		<if test="password != null"> ,#{password}</if>
+		<if test="salt != null"> ,#{salt}</if>
+		<if test="nickName != null"> ,#{nickName}</if>
+		<if test="realName != null"> ,#{realName}</if>
+		<if test="headImgId != null"> ,#{headImgId}</if>
+		<if test="phone != null"> ,#{phone}</if>
+		<if test="sex != null"> ,#{sex}</if>
+		<if test="schoolId != null"> ,#{schoolId}</if>
+		<if test="instId != null"> ,#{instId}</if>
+		<if test="qq != null"> ,#{qq}</if>
+		<if test="email != null"> ,#{email}</if>
+		<if test="weixin != null"> ,#{weixin}</if>
+		<if test="studentId != null"> ,#{studentId}</if>
+		<if test="idCard != null"> ,#{idCard}</if>
+		<if test="description != null"> ,#{description}</if>
+		<if test="profession != null"> ,#{profession}</if>
+		<if test="birthday != null"> ,#{birthday}</if>
+		<if test="studentCardNo != null"> ,#{studentCardNo}</if>
+		<if test="teacherCardNo != null"> ,#{teacherCardNo}</if>
+		<if test="positionalTitle != null"> ,#{positionalTitle}</if>
+		<if test="speciality != null"> ,#{speciality}</if>
+		<if test="grade != null"> ,#{grade}</if>
+		<if test="educationLevel != null"> ,#{educationLevel}</if>
+		<if test="userType != null"> ,#{userType}</if>
+		<if test="userSourceType != null"> ,#{userSourceType}</if>
+		<if test="sourceId != null"> ,#{sourceId}</if>
+		<if test="classId != null"> ,#{classId}</if>
+		<if test="clubId != null"> ,#{clubId}</if>
+		<if test="questionNum != null"> ,#{questionNum}</if>
+		<if test="answerNum != null"> ,#{answerNum}</if>
+		<if test="clubActiveNum != null"> ,#{clubActiveNum}</if>
+		<if test="praiseNum != null"> ,#{praiseNum}</if>
+		<if test="regTime != null"> ,#{regTime}</if>
+		<if test="lastLoginTime != null"> ,#{lastLoginTime}</if>
+		<if test="logins != null"> ,#{logins}</if>
+		<if test="replacePhone != null"> ,#{replacePhone}</if>
+		<if test="trainNum != null"> ,#{trainNum}</if>
+		<if test="atteClubNum != null"> ,#{atteClubNum}</if>
+		<if test="atteCompanyNum != null"> ,#{atteCompanyNum}</if>
+		<if test="todayClubActiveNum != null"> ,#{todayClubActiveNum}</if>
+		<if test="address != null"> ,#{address}</if>
+		<if test="userNameUpdateTimes != null"> , #{userNameUpdateTimes} </if>
+		)
+	</insert>
+	
+	<delete id="deleteCenterUser">
+		delete from center_user
+		<include refid="queryConditionCenterUser"/>
+	</delete>
+	
+	<update id="updateCenterUserByKey" parameterType="com.seentao.stpedu.common.entity.CenterUser">
+		update center_user 
+		<set>
+			<if test="userId != null"> user_id = #{userId}, </if>
+			<if test="userName != null"> user_name = #{userName}, </if>
+			<if test="password != null"> password = #{password}, </if>
+			<if test="salt != null"> salt = #{salt}, </if>
+			<if test="nickName != null"> nick_name = #{nickName}, </if>
+			<if test="realName != null"> real_name = #{realName}, </if>
+			<if test="headImgId != null"> head_img_id = #{headImgId}, </if>
+			<if test="phone != null"> phone = #{phone}, </if>
+			<if test="sex != null"> sex = #{sex}, </if>
+			<if test="schoolId != null"> school_id = #{schoolId}, </if>
+			<if test="instId != null"> inst_id = #{instId}, </if>
+			<if test="qq != null"> qq = #{qq}, </if>
+			<if test="email != null"> email = #{email}, </if>
+			<if test="weixin != null"> weixin = #{weixin}, </if>
+			<if test="studentId != null"> student_id = #{studentId}, </if>
+			<if test="idCard != null"> id_card = #{idCard}, </if>
+			<if test="description != null"> description = #{description}, </if>
+			<if test="profession != null"> profession = #{profession}, </if>
+			<if test="birthday != null"> birthday = #{birthday}, </if>
+			<if test="studentCardNo != null"> student_card_no = #{studentCardNo}, </if>
+			<if test="teacherCardNo != null"> teacher_card_no = #{teacherCardNo}, </if>
+			<if test="positionalTitle != null"> positional_title = #{positionalTitle}, </if>
+			<if test="speciality != null"> speciality = #{speciality}, </if>
+			<if test="grade != null"> grade = #{grade}, </if>
+			<if test="educationLevel != null"> education_level = #{educationLevel}, </if>
+			<if test="userType != null"> user_type = #{userType}, </if>
+			<if test="userSourceType != null"> user_source_type = #{userSourceType}, </if>
+			<if test="sourceId != null"> source_id = #{sourceId}, </if>
+			<if test="classId != null"> class_id = #{classId}, </if>
+			<if test="clubId != null"> club_id = #{clubId}, </if>
+			<if test="questionNum != null"> question_num = #{questionNum}, </if>
+			<if test="answerNum != null"> answer_num = #{answerNum}, </if>
+			<if test="clubActiveNum != null"> club_active_num = #{clubActiveNum}, </if>
+			<if test="praiseNum != null"> praise_num = #{praiseNum}, </if>
+			<if test="regTime != null"> reg_time = #{regTime}, </if>
+			<if test="lastLoginTime != null"> last_login_time = #{lastLoginTime}, </if>
+			<if test="logins != null"> logins = #{logins}, </if>
+			<if test="replacePhone != null"> replace_phone = #{replacePhone}, </if>
+			<if test="trainNum != null"> train_num = #{trainNum}, </if>
+			<if test="atteClubNum != null"> atte_club_num = #{atteClubNum}, </if>
+			<if test="atteCompanyNum != null"> atte_company_num = #{atteCompanyNum}, </if>
+		    <if test="todayClubActiveNum != null"> today_club_active_num = #{todayClubActiveNum}, </if>
+		    <if test="address != null"> address = #{address}, </if>
+		    <if test="userNameUpdateTimes != null"> user_name_update_times = #{userNameUpdateTimes} </if>
+		</set>
+		<include refid="queryByKeyCenterUser"/>
+	</update>
+	<update id="updateCenterUserTeach" parameterType="com.seentao.stpedu.common.entity.CenterUser">
+		update center_user 
+		<set>
+			<if test="userId != null"> user_id = #{userId}, </if>
+			class_id = #{classId}
+		</set>
+		<include refid="queryByKeyCenterUser"/>
+	</update>
+	
+	<sql id="queryByKeyCenterUser">
+		where user_id = #{userId}
+	</sql>
+	
+	<select id="selectSingleCenterUser" resultMap="centerUser" parameterType="com.seentao.stpedu.common.entity.CenterUser">
+		select 
+		user_id
+		,user_name
+		,password
+		,salt
+		,nick_name
+		,real_name
+		,head_img_id
+		,phone
+		,sex
+		,school_id
+		,inst_id
+		,qq
+		,email
+		,weixin
+		,student_id
+		,id_card
+		,description
+		,profession
+		,birthday
+		,student_card_no
+		,teacher_card_no
+		,positional_title
+		,speciality
+		,grade
+		,education_level
+		,user_type
+		,user_source_type
+		,source_id
+		,class_id
+		,club_id
+		,question_num
+		,answer_num
+		,club_active_num
+		,praise_num
+		,reg_time
+		,last_login_time
+		,logins
+		,replace_phone
+		,train_num
+		,atte_club_num
+		,atte_company_num
+		,today_club_active_num
+		,address
+		,user_name_update_times
+		from center_user  
+	 <include refid="queryConditionCenterUser"/> 
+		 order by user_id  DESC
+		 limit #{limit} offset #{start}
+	</select>
+	
+	<select id="selectCenterByUserAnyThing" resultMap="centerUser" parameterType="com.seentao.stpedu.common.entity.CenterUser">
+			select 
+		user_id
+		,user_name
+		,password
+		,salt
+		,nick_name
+		,real_name
+		,head_img_id
+		,phone
+		,sex
+		,school_id
+		,inst_id
+		,qq
+		,email
+		,weixin
+		,student_id
+		,id_card
+		,description
+		,profession
+		,birthday
+		,student_card_no
+		,teacher_card_no
+		,positional_title
+		,speciality
+		,grade
+		,education_level
+		,user_type
+		,user_source_type
+		,source_id
+		,class_id
+		,club_id
+		,question_num
+		,answer_num
+		,club_active_num
+		,praise_num
+		,reg_time
+		,last_login_time
+		,logins
+		,replace_phone
+		,train_num
+		,atte_club_num
+		,atte_company_num
+		,today_club_active_num
+		,address
+		,user_name_update_times
+		from center_user  where 1=1
+		<if test="classId != null and classId !=''">
+		and class_id = #{classId}
+		
+		</if>
+		<if test="nickName != null and nickName != ''">
+		and nick_name like CONCAT('%','${nickName}','%' )
+		</if>
+		<if test="userType != null and userType != '' ">
+		and user_type =#{userType}
+		</if>
+		<if test="realName !=null and realName !=''">
+		and real_name like CONCAT('%','${realName}','%' )
+		</if>
+		<if test="userIds != null and userIds!=''" >
+		and user_id not in(${userIds})
+		</if>
+		<if test="isSchlooNull == 1"> and school_id is not null </if>
+		<if test="isClassNull == 1"> and class_id is null </if>
+		<if test="schoolId !=null and schoolId != ''"> and school_id =#{schoolId} </if>
+	 <!-- <include refid="queryConditionCenterUser"/> --> 
+		 order by user_id  DESC
+		 limit #{limit} offset #{start}
+	</select>
+	<sql id="base_center_user_sql">
+	user_id,user_name,password,salt,nick_name,real_name,head_img_id
+	,phone,sex,school_id,inst_id,qq,email,weixin
+	,student_id,id_card,description,profession,birthday,student_card_no,teacher_card_no
+	,positional_title,speciality,grade,education_level,user_type,user_source_type,source_id
+	,class_id,club_id,question_num,answer_num,club_active_num,praise_num,reg_time
+	,last_login_time,logins,replace_phone,train_num,atte_club_num,atte_company_num,today_club_active_num,address,user_name_update_times
+	</sql>
+	<!-- 根据 电话号码校验 -->
+	<select id="selectCenterUserByPhone" resultMap="centerUser">
+	select  
+	<include refid="base_center_user_sql" />
+	from center_user where phone =#{phone} order by user_id DESC
+	</select>
+	
+	<!-- 登陆 ligs -->
+	<select id="selectCenterUserByAll" resultMap="centerUser">
+	select  
+	<include refid="base_center_user_sql" />
+	from center_user where phone =#{userName}
+	UNION
+	select  
+	<include refid="base_center_user_sql" />
+	from center_user where user_name =#{userName}
+	</select>
+	
+	<select id="selectCenterUserInfo" resultMap="centerUser" parameterType="com.seentao.stpedu.common.entity.CenterUser">
+		select 
+		<include refid="base_center_user_sql" />
+		from center_user 
+		<include refid="queryConditionCenterUser"/>
+		order by user_id DESC
+	</select>
+	
+	<select id="selectAllCenterUser" resultMap="centerUser">
+		select 
+		user_id
+		,user_name
+		,password
+		,salt
+		,nick_name
+		,real_name
+		,head_img_id
+		,phone
+		,sex
+		,school_id
+		,inst_id
+		,qq
+		,email
+		,weixin
+		,student_id
+		,id_card
+		,description
+		,profession
+		,birthday
+		,student_card_no
+		,teacher_card_no
+		,positional_title
+		,speciality
+		,grade
+		,education_level
+		,user_type
+		,user_source_type
+		,source_id
+		,class_id
+		,club_id
+		,question_num
+		,answer_num
+		,club_active_num
+		,praise_num
+		,reg_time
+		,last_login_time
+		,logins
+		,replace_phone
+		,train_num
+		,atte_club_num
+		,atte_company_num
+		,today_club_active_num
+		,address
+		,user_name_update_times
+		from center_user
+	</select>
+	
+	<select id="selectAllCenterUsers" resultMap="centerUser">
+		select * from center_user
+		<include refid="queryConditionCenterUser"/>
+	</select>
+	
+	<select id="queryCount" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+		select count(*) from center_user 
+		<include refid="queryConditionCenterUser"/>
+	</select>
+	
+	<select id="queryCountCondition" resultType="java.lang.Integer">
+		select count(*) from center_user 
+		<include refid="queryConditionCenterUser"/>
+	</select>
+	
+	<select id="queryByPage" resultMap="centerUser" parameterType="HashMap">
+		select * from
+		 center_user where user_type = #{userType} and school_Id = #{schoolId}
+		  ORDER BY user_id  ASC
+		 limit #{limit} offset #{offset}
+	</select>
+	<select id="getUserList" resultMap="centerUser">
+		select
+			cu.*,
+			tr.certificate_status as certificate_status,
+			tr.is_identify as is_identify,
+			tr.assess_score as score
+		from
+			center_user cu
+			join teach_rel_student_class tr on cu.user_id = tr.student_id
+		<where>
+			<if test="realName != null"> and cu.real_name like CONCAT('%','${realName}','%' )</if>
+			<if test="classId != null"> and cu.class_id = #{classId} </if>
+			<if test="isIdentify != null"> and tr.is_identify = #{isIdentify} </if>
+			and cu.user_type=2
+			and tr.is_delete = 0
+		</where>
+	    order by tr.assess_score desc
+	    limit #{limit} offset #{start}
+	</select>
+	
+	<select id="getUserListCount" resultType="java.lang.Integer">
+		select count(*) from (
+			select
+			cu.*,
+			tr.certificate_status as certificate_status,
+			tr.is_identify as is_identify
+		from
+			center_user cu
+			join teach_rel_student_class tr on cu.user_id = tr.student_id
+		<where>
+			<if test="realName != null"> and cu.real_name like CONCAT('%','${realName}','%' )</if>
+			<if test="classId != null"> and cu.class_id = #{classId} </if>
+			<if test="isIdentify != null"> and tr.is_identify = #{isIdentify} </if>
+			and cu.user_type=2
+			and tr.is_delete = 0
+		</where>
+		) A
+	</select>
+	
+	<select id="getActiveAndRecommendUser" resultMap="centerUser">
+		select
+			sum(
+				dd.answer_num + dd.question_num
+			) as total,
+			dd.answer_num,
+			dd.question_num,
+			dd.user_id,
+			dd.real_name,
+			dd.nick_name,
+			dd.description,
+			dd.head_img_id
+		from
+			center_user dd
+		<where>
+			<if test="classId != null"> and dd.class_id = #{classId} </if>
+		</where>
+		group by
+			dd.user_id
+		order by
+			total desc,dd.user_id asc
+		limit #{limit} offset #{start}
+	</select>
+	<!-- 查询班级里最活跃的10人 -->
+	<select id="queryActiveAndRecommendUser" resultMap="centerUser" parameterType="com.seentao.stpedu.common.entity.CenterUser">
+	select * from (select
+			<!-- sum(
+				dd.answer_num + dd.question_num
+			) as total, -->
+			sum(
+				COALESCE(dd.question_num, 0) +
+				COALESCE(dd.answer_num, 0) 
+			) as total,
+				COALESCE(dd.question_num, 0) as question_num,
+				COALESCE(dd.answer_num, 0) as answer_num,
+			dd.answer_num,
+			dd.question_num,
+			dd.user_id,
+			dd.real_name,
+			dd.nick_name,
+			dd.description,
+			dd.head_img_id
+		from
+			center_user dd 
+		<where>
+			<if test="classId != null"> and dd.class_id = #{classId} </if>
+		</where>
+		group by
+			dd.user_id
+		order by
+			total desc,dd.user_id asc
+		limit 10 offset 0) as us limit #{limit} offset #{start}
+	</select>
+	<select id="getClubActiveUser" resultMap="centerUser">
+		select
+			dd.club_active_num as total,
+			dd.user_id,
+			dd.real_name,
+			dd.nick_name,
+			dd.club_id,
+			dd.head_img_id
+		from
+			center_user dd
+		where
+			dd.club_id is not null
+		group by
+			dd.user_id
+		order by
+			total desc
+		limit #{limit} offset #{start}
+	</select>
+	
+	<select id="queryClubActiveUserCount" resultType="java.lang.Integer">
+		select
+			count(*)
+		from
+			(
+				select
+					dd.club_active_num as total,
+					dd.user_id,
+					dd.real_name,
+					dd.nick_name
+				from
+					center_user dd
+				where
+					dd.club_id is not null
+				group by
+					dd.user_id
+			) a
+	</select>
+	
+	<select id="selectCenterUserByClubId" resultMap="centerUser" parameterType="com.seentao.stpedu.common.entity.CenterUser">
+		select user_id from center_user
+		<include refid="queryConditionCenterUser"/>
+	</select>
+	
+	<update id="addAnswerNum" parameterType="java.lang.Integer">
+	
+		UPDATE center_user SET answer_num = answer_num + 1 
+		
+		WHERE user_id = #{userId}
+	</update>
+	
+	<update id="addQuestionNum" parameterType="java.lang.Integer">
+	
+		UPDATE center_user SET question_num = question_num + 1 
+		
+		WHERE user_id = #{userId}
+	</update>
+	
+	<select id="selectCenterUserTodayNum" resultMap="centerUser" parameterType="com.seentao.stpedu.common.entity.CenterUser">
+	  SELECT today_club_active_num from center_user WHERE user_id = #{userId}
+	</select>
+	<!-- <update id="updateCenterUserTodayClubNum" parameterType="com.seentao.stpedu.common.entity.CenterUser">
+	
+		UPDATE center_user SET today_club_active_num = #{todayClubActiveNum} 
+		
+		WHERE user_id = #{userId}
+	</update> -->
+	<select id="selectCenterUserSource" resultMap="centerUser">
+		SELECT
+			cu.class_id,
+			cu.school_id,
+			tt.assess_score as score,
+			cu.user_id,
+			cu.real_name,
+			tt.certificate_status as certificate_status
+		FROM
+			center_user cu
+		JOIN teach_rel_student_class tt ON cu.class_id = tt.class_id
+		<where>
+			<if test="classId != null"> and cu.class_id = #{classId} </if>
+		</where>
+		AND cu.class_id IS NOT NULL
+		and cu.user_id = tt.student_id
+		ORDER BY
+			tt.assess_score DESC
+		limit #{limit} offset #{start}
+	</select>
+	
+	<select id="queryUserSourceCount" resultType="java.lang.Integer">
+		select
+			count(*)
+		from
+			(
+				SELECT
+					cu.class_id
+				FROM
+					center_user cu
+				JOIN teach_rel_student_class tt ON cu.class_id = tt.class_id
+				<where>
+					<if test="classId != null"> and cu.class_id = #{classId} </if>
+				</where>
+				AND cu.class_id IS NOT NULL
+				and cu.user_id = tt.student_id
+			) a
+	</select>
+	
+	<select id="validateNickName" resultType="java.lang.Integer">
+		select
+			count(user_id)
+		from center_user
+		where 
+		<![CDATA[user_id!=#{userId}]]>  
+		<if test="nickName != null">and nick_name=#{nickName}</if>
+		<if test="userName != null">and user_name=#{userName}</if>
+		<if test="phone != null">and phone=#{phone}</if>
+	</select>
+	
+	
+	<update id="updateUserLoginsByUserId">
+		update center_user 
+		<set>
+			<if test="logins != null"> logins = logins+1,</if>
+			<if test="replacePhone != null"> replace_phone = #{replacePhone}, </if>
+		</set>
+		<where>
+			<if test="userId != null">user_id = #{userId}</if>
+		</where>
+	</update>
+	<update id="updateUser">
+	  UPDATE center_user SET club_id = #{clubId} 
+		
+		WHERE user_id = #{userId}
+	</update>
+	
+	<select id="selectCenterByClubIdList" resultMap="centerUser" parameterType="com.seentao.stpedu.common.entity.CenterUser">
+		select 
+		dd.*
+		from center_user dd join club_member cc on cc.club_id = dd.club_id and cc.user_id = dd.user_id
+		<where>
+			<if test="clubId != null"> and cc.club_id = #{clubId} </if>
+			<if test="nickName != null"> and dd.nick_name like CONCAT('%','${nickName}','%' )</if>
+			<if test="userIds != null"> and dd.user_id not in (${userIds}) </if>
+			<if test="profession != null"> and cc.member_status = #{profession} </if>
+		</where>
+		 order by dd.user_id desc
+		 limit #{limit} offset #{start}
+	</select>
+	
+	<select id="queryUserByClubIdCount" resultType="java.lang.Integer" parameterType="com.seentao.stpedu.common.entity.CenterUser">
+		select count(*) from center_user dd join club_member cc on cc.club_id = dd.club_id and cc.user_id = dd.user_id
+		<where>
+			<if test="clubId != null"> and cc.club_id = #{clubId} </if>
+			<if test="nickName != null"> and dd.nick_name like CONCAT('%','${nickName}','%' )</if>
+			<if test="userIds != null"> and dd.user_id not in (${userIds}) </if>
+			<if test="profession != null"> and cc.member_status = #{profession} </if>
+		</where>
+	</select>
+	<!-- 查询竞猜下注详情 -->
+	<select id="queryCenterUserMapByQuizId" parameterType="com.seentao.stpedu.common.entity.CenterUser" resultType="Map" >
+		SELECT
+		<!-- 序号 -->
+		<!-- row_number () OVER () AS rownumber, -->
+			 case when guess.result=0
+		then 
+		ROW_NUMBER () OVER (ORDER BY (bet.amount+guess.sure_amount+guess.negative_amount) DESC ) 
+		else 
+		ROW_NUMBER () OVER (ORDER BY bet.bonus DESC  ) 
+		end  AS rownumber,
+		<!-- 用户id -->
+		us.user_id ,
+		<!-- 用户昵称 -->
+		us.nick_name ,
+		<!-- 用户头像 -->
+		us.head_img_id ,
+		<!-- 下注时间 -->
+		bet.bet_time ,
+		<!-- 正方金额 -->
+		guess.sure_amount,
+		<!-- 反方金额 -->
+		guess.negative_amount,
+		<!-- 竞猜id -->
+		guess.guess_id ,
+		<!--  竞猜类型-->
+		guess.guess_type,
+		<!-- 竞猜赔率 -->
+		guess.odds,
+		<!-- 竞猜id -->
+		bet.bet_id ,
+		<!-- 下注方 -->
+		bet.bet_position,
+		
+		<!-- 下注结果 -->
+		bet.bet_result,
+		<!-- 下注额度-->
+		bet.amount,
+			bet.bonus,
+		case when bet.bonus =0 and  guess.result=0
+		then 0
+	   	when bet.bonus =0 and guess.result = 2 and bet.bet_position =1 
+		then - bet.amount
+	   	when bet.bonus = 0 and guess.result =2 and bet.bet_position =2
+		then - bet.amount
+		when bet.bonus =0 and guess.result = 1 and bet.bet_position =1 
+		then - bet.amount
+	  	when bet.bonus = 0 and guess.result =1 and bet.bet_position =2
+		then - bet.amount
+		
+	  	when bet.bonus !=0 and guess.result =1 and bet.bet_position=1
+		then bet.bonus 
+		when bet.bonus !=0 and guess.result =2 and bet.bet_position =2
+		then bet.bonus  
+		else 0 
+		end as  gain
+		FROM
+		arena_guess_bet bet
+		JOIN center_user us ON bet.user_id = us.user_id
+		JOIN arena_guess guess ON guess.guess_id = bet.guess_id
+		WHERE
+		guess.guess_id = #{guessId}   limit #{limit} offset #{start}
+	</select>
+	<!-- 查询竞猜下注条数 -->
+	<select id="queryCenterUserMapByQuizIdCount" parameterType="com.seentao.stpedu.common.entity.CenterUser" resultType="java.lang.Integer" >
+		select count(1) FROM
+		arena_guess_bet bet
+		JOIN center_user us ON bet.user_id = us.user_id
+		JOIN arena_guess guess ON guess.guess_id = bet.guess_id
+		WHERE guess.guess_id = #{guessId} <!-- limit #{limit} offset #{start} -->
+	</select>
+	
+	<!-- 根据userId查询 -->
+	<select id= "queryCenterUserByUserId" resultMap="centerUser">
+		select user_id
+		,user_name
+		,password
+		,salt
+		,nick_name
+		,real_name
+		,head_img_id
+		,phone
+		,sex
+		,school_id
+		,inst_id
+		,qq
+		,email
+		,weixin
+		,student_id
+		,id_card
+		,description
+		,profession
+		,birthday
+		,student_card_no
+		,teacher_card_no
+		,positional_title
+		,speciality
+		,grade
+		,education_level
+		,user_type
+		,user_source_type
+		,source_id
+		,class_id
+		,club_id
+		,question_num
+		,answer_num
+		,club_active_num
+		,praise_num
+		,reg_time
+		,last_login_time
+		,logins
+		,replace_phone
+		,train_num
+		,atte_club_num
+		,atte_company_num
+		,today_club_active_num
+		,address from center_user where user_id = #{userId}
+	</select>
+	
+	<select id="selectCenterUserByClassId" parameterType="java.lang.Integer" resultMap="centerUser">
+		select * from center_user 
+		where class_id = #{classId}
+	</select>
+
+</mapper>
+	

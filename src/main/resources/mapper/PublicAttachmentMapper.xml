@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.PublicAttachmentMapper">
+	
+	<resultMap type="com.seentao.stpedu.common.entity.PublicAttachment" id="publicAttachment" >
+		<result property="attaId" column="atta_id"/>
+		<result property="attaType" column="atta_type"/>
+		<result property="fileName" column="file_name"/>
+		<result property="filePath" column="file_path"/>
+		<result property="downloadUrl" column="download_url"/>
+		<result property="suffixName" column="suffix_name"/>
+		<result property="size" column="size"/>
+		<result property="timeLength" column="time_length"/>
+		<result property="createTime" column="create_time"/>
+		<result property="createUserId" column="create_user_id"/>
+	</resultMap>
+
+
+
+	<resultMap type="com.seentao.stpedu.common.entity.PublicAttachment" id="publicAttachmenthomework" >
+		<result property="attaId" column="atta_id"/>
+		<result property="attaType" column="atta_type"/>
+		<result property="fileName" column="file_name"/>
+		<result property="downloadUrl" column="download_url"/>
+	</resultMap>
+	
+	<sql id="queryConditionPublicAttachment">
+		<where>
+			<if test="attaId != null"> and atta_id = #{attaId} </if>
+			<if test="attaType != null"> and atta_type = #{attaType} </if>
+			<if test="fileName != null"> and file_name = #{fileName} </if>
+			<if test="filePath != null"> and file_path = #{filePath} </if>
+			<if test="downloadUrl != null"> and download_url = #{downloadUrl} </if>
+			<if test="suffixName != null"> and suffix_name = #{suffixName} </if>
+			<if test="size != null"> and size = #{size} </if>
+			<if test="timeLength != null"> and time_length = #{timeLength} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyPublicAttachment">
+		where atta_id = #{attaId}
+	</sql>
+	
+	<insert id="insertPublicAttachment" parameterType="com.seentao.stpedu.common.entity.PublicAttachment" >
+		<selectKey resultType="java.lang.Integer"  order="AFTER" keyProperty="attaId" >
+		        SELECT currval('public_attachment_atta_id_seq') AS atta_id   
+		 </selectKey>
+		insert into public_attachment(
+		<if test="attaType != null"> atta_type</if>
+		<if test="fileName != null"> ,file_name</if>
+		<if test="filePath != null"> ,file_path</if>
+		<if test="downloadUrl != null"> ,download_url</if>
+		<if test="suffixName != null"> ,suffix_name</if>
+		<if test="size != null"> ,size</if>
+		<if test="timeLength != null"> ,time_length</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="createUserId != null"> ,create_user_id</if>
+		)
+		values(
+		<if test="attaType != null"> #{attaType}</if>
+		<if test="fileName != null"> ,#{fileName}</if>
+		<if test="filePath != null"> ,#{filePath}</if>
+		<if test="downloadUrl != null"> ,#{downloadUrl}</if>
+		<if test="suffixName != null"> ,#{suffixName}</if>
+		<if test="size != null"> ,#{size}</if>
+		<if test="timeLength != null"> ,#{timeLength}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="createUserId != null"> ,#{createUserId}</if>
+		)
+	</insert>
+	
+	<delete id="deletePublicAttachment">
+		delete from public_attachment
+		<include refid="queryConditionPublicAttachment"/>
+	</delete>
+	
+	<update id="updatePublicAttachmentByKey" parameterType="com.seentao.stpedu.common.entity.PublicAttachment">
+		update public_attachment 
+		<set>
+			<if test="attaId != null"> atta_id = #{attaId}, </if>
+			<if test="attaType != null"> atta_type = #{attaType}, </if>
+			<if test="fileName != null"> file_name = #{fileName}, </if>
+			<if test="filePath != null"> file_path = #{filePath}, </if>
+			<if test="downloadUrl != null"> download_url = #{downloadUrl}, </if>
+			<if test="suffixName != null"> suffix_name = #{suffixName}, </if>
+			<if test="size != null"> size = #{size}, </if>
+			<if test="timeLength != null"> time_length = #{timeLength}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="createUserId != null"> create_user_id = #{createUserId}, </if>
+		</set>
+		<include refid="queryByKeyPublicAttachment"/>
+	</update>
+	
+	<select id="selectSinglePublicAttachment" resultMap="publicAttachment">
+		select 
+		atta_id
+		,atta_type
+		,file_name
+		,file_path
+		,download_url
+		,suffix_name
+		,size
+		,time_length
+		,create_time
+		,create_user_id
+		from public_attachment 
+		<include refid="queryConditionPublicAttachment"/>
+	</select>
+	
+	<select id="selectAllPublicAttachment" resultMap="publicAttachment">
+		select 
+		atta_id
+		,atta_type
+		,file_name
+		,file_path
+		,download_url
+		,suffix_name
+		,size
+		,time_length
+		,create_time
+		,create_user_id
+		from public_attachment
+	</select>
+	
+	<select id="getOtherPublicAttachment" resultMap="publicAttachment" parameterType="java.util.HashMap">
+		select
+			*
+		from
+			public_attachment paa
+		where
+			paa.atta_id in (
+				select
+					trca.atta_id
+				from
+					teach_rel_course_attachment trca
+				where
+					trca.course_id = #{courseid} and trca.atta_id = #{attaid}
+		) and paa.atta_type = #{type}
+	</select>
+	
+	<select id="getClubOtherPublicAttachment" resultMap="publicAttachment" parameterType="java.util.HashMap">
+		select
+			*
+		from
+			public_attachment paa
+		where
+			paa.atta_id in (
+				select
+					trca.atta_id
+				from
+					club_rel_course_attachment trca
+				where
+					trca.course_id = #{courseid} and trca.atta_id = #{attaid}
+		) and paa.atta_type = #{type}
+	</select>
+	
+	<select id="getOtherPublicAttachment1" resultMap="publicAttachment" parameterType="java.lang.Integer">
+		select
+			*
+		from
+			public_attachment paa
+		where
+			paa.atta_id in (
+				select
+					trca.atta_id
+				from
+					teach_rel_course_attachment trca
+				where
+					trca.course_id = #{courseid}
+		)
+	</select>
+	
+	<select id="getClubOtherPublicAttachment1" resultMap="publicAttachment" parameterType="java.lang.Integer">
+		select
+			*
+		from
+			public_attachment paa
+		where
+			paa.atta_id in (
+				select
+					trca.atta_id
+				from
+					club_rel_course_attachment trca
+				where
+					trca.course_id = #{courseid}
+		)
+	</select>
+	
+</mapper>
+	

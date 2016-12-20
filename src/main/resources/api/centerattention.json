@@ -1,0 +1,13 @@
+{
+    "submitAttention": {
+    	"request": {
+            "0": "userId",
+            "1": "actionType",
+            "2": "actionObjectType",
+            "3": "actionObjectId"
+        },
+        "result": {
+        }
+    }
+}
+

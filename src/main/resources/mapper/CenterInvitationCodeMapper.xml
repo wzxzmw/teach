@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.CenterInvitationCodeMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.CenterInvitationCode" id="centerInvitationCode" >
+		<result property="dataId" column="data_id"/>
+		<result property="invitationCode" column="invitation_code"/>
+		<result property="status" column="status"/>
+		<result property="useTime" column="use_time"/>
+		<result property="regUserId" column="reg_user_id"/>
+	</resultMap>
+	
+	<sql id="queryConditionCenterInvitationCode">
+		<where>
+			<if test="dataId != null"> and data_id = #{dataId} </if>
+			<if test="invitationCode != null"> and invitation_code = #{invitationCode} </if>
+			<if test="status != null"> and status = #{status} </if>
+			<if test="useTime != null"> and use_time = #{useTime} </if>
+			<if test="regUserId != null"> and reg_user_id = #{regUserId} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyCenterInvitationCode">
+		where data_id = #{dataId}
+	</sql>
+	
+	<insert id="insertCenterInvitationCode" parameterType="com.seentao.stpedu.common.entity.CenterInvitationCode">
+		insert into center_invitation_code(
+		data_id
+		<if test="invitationCode != null"> ,invitation_code</if>
+		<if test="status != null"> ,status</if>
+		<if test="useTime != null"> ,use_time</if>
+		<if test="regUserId != null"> ,reg_user_id</if>
+		)
+		values(
+		nextval('center_invitation_code_data_id_seq')
+		<if test="invitationCode != null"> ,#{invitationCode}</if>
+		<if test="status != null"> ,#{status}</if>
+		<if test="useTime != null"> ,#{useTime}</if>
+		<if test="regUserId != null"> ,#{regUserId}</if>
+		)
+	</insert>
+	
+	<insert id="batchInsertCenterInvitationCode" parameterType="list">
+		insert into center_invitation_code(
+			data_id
+			,invitation_code
+			,status
+		) values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+				nextval('center_invitation_code_data_id_seq')
+				,#{item.invitationCode}
+				,#{item.status}
+			)
+		</foreach>
+	
+	</insert>
+	
+	<delete id="deleteCenterInvitationCode">
+		delete from center_invitation_code
+		<include refid="queryConditionCenterInvitationCode"/>
+	</delete>
+	
+	<update id="updateCenterInvitationCodeByKey" parameterType="com.seentao.stpedu.common.entity.CenterInvitationCode">
+		update center_invitation_code 
+		<set>
+			<if test="dataId != null"> data_id = #{dataId}, </if>
+			<if test="invitationCode != null"> invitation_code = #{invitationCode}, </if>
+			<if test="status != null"> status = #{status}, </if>
+			<if test="useTime != null"> use_time = #{useTime}, </if>
+			<if test="regUserId != null"> reg_user_id = #{regUserId}, </if>
+		</set>
+		<include refid="queryByKeyCenterInvitationCode"/>
+	</update>
+	
+	<select id="selectSingleCenterInvitationCode" resultMap="centerInvitationCode">
+		select 
+		data_id
+		,invitation_code
+		,status
+		,use_time
+		,reg_user_id
+		from center_invitation_code 
+		<include refid="queryConditionCenterInvitationCode"/>
+	</select>
+	
+	<select id="selectAllCenterInvitationCode" resultMap="centerInvitationCode">
+		select 
+		data_id
+		,invitation_code
+		,status
+		,use_time
+		,reg_user_id
+		from center_invitation_code
+	</select>
+	
+</mapper>
+	

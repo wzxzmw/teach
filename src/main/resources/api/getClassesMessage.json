@@ -1,0 +1,55 @@
+{
+    "getClasses": {
+    	"request": {
+            "0": "userId",
+            "1": "schoolId",
+            "2": "teacherId",
+            "3": "classId",
+            "4": "searchWord",
+            "5": "start",
+            "6": "limit",
+            "7": "inquireType",
+            "8": "clubId",
+            "9": "sortType",
+            "10": "classType",
+            "11":"memberId",
+            "12":"requestSide"
+        },
+        "result": {
+        	"returnCount":"returnCount",
+        	"allPage":"allPage",
+        	"currentPage":"currentPage",
+        	"classes":"classes"
+        },
+        "classes": {
+            "classId": "classIdStage",
+            "className": "className",
+            "teacherId": "teacherIds",
+            "teacherName": "teacherName",
+            "teacherHeadLink": "teacherHeadLink",
+            "clubId": "clubId",
+            "clubName": "clubName",
+            "studentNum": "studentsNum",
+            "classType": "classType",
+            "createDate": "createTime",
+            "classLogoId": "classLogoId",
+            "classLogoLink": "classLogoLink",
+            "schoolId": "schoolId",
+            "schoolName": "schoolName",
+            "collegeId": "collegeId",
+            "collegeName": "collegeName",
+            "isDefaultClass": "isDefaultClass",
+            "learningSeconds": "learningSeconds",
+            "practiceCount": "practiceCount",
+            "courseCount": "courseCounts",
+            "classDesc": "introduce",
+            "needToPay": "costType",
+            "clubCourseCount":"clubCourseCount",
+            "fLevelAccount": "costAmount",
+            "hasJoinClass": "isjoin",
+            "hasBuyOfficialCourse": "hasBuyOfficialCourse",
+            "bocNeedFLevelAccount": "bocNeedFLevelAccount"
+        }
+    }
+}
+

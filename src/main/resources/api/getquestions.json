@@ -1,0 +1,54 @@
+{
+    "getQuestions": {
+    
+    	"request": {
+            "0": "userId"
+            ,"1": "classId"
+            ,"2": "isExcellent"
+            ,"3": "inquireType"
+            ,"4": "chapterId"
+            ,"5": "questionId"
+            ,"6": "start"
+            ,"7": "limit"
+            ,"8": "classType"
+            ,"9": "_type"
+        }
+        
+        ,"result": {
+        	"returnCount"	:"returnCount"
+        	,"allPage"		:"allPage"
+        	,"currentPage"	:"currentPage"
+        	,"teachingRole"	:"teachingRole"
+        	,"questions"	:"questions"
+        }
+        
+        ,"questions": {
+            "questionId"			: "questionId"
+            ,"questionTitle"		: "title"
+            ,"questionBody"			: "content"
+            ,"qCreateDate"			: "createTime"
+            ,"qCreaterid"			: "createUserId"
+            ,"qCreaterName"			: "qCreaterName"
+            ,"qCreaterNickname"		: "qCreaterNickname"
+            ,"qCreaterHeadLink"		: "qCreaterHeadLink"
+            ,"questionModule"		: "questionModule"
+            ,"classId"				: "classId"
+            ,"chapterId"			: "chapterId"
+            ,"chapterName"			: "chapterName"
+            ,"isExcellent"			: "isEssence"
+            ,"supportCount"			: "praiseNum"
+            ,"answerCount"			: "answerNum"
+            ,"answers"				: "answers"
+        }
+        
+        ,"answers": {
+        	"answerId"			: "answerId"
+        	,"answerBody"		: "content"
+        	,"aCreaterId"		: "createUserId"
+        	,"aCreaterName"		: "aCreaterName"
+        	,"aCreaterHeadLink"	: "aCreaterHeadLink"
+        	,"aCreateDate"		: "createTime"
+        	,"supportCount"		: "praiseNum"
+        }
+    }
+}

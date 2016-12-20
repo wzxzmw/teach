@@ -1,0 +1,10 @@
+{
+    "getVirtualGoods": {
+    	"request": {
+            "0": "userId"
+        },
+        "result": {
+             "virtualGoodsCount":"virtualGoodsCount"
+        }
+    }
+  }  

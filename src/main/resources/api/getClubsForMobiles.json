@@ -1,0 +1,48 @@
+{
+    "getClubsForMobile": {
+        "request": {
+            "0": "userId",
+            "1": "userType",
+            "2": "memberId",
+            "3": "hasConcernTheClub",
+            "4": "searchWord",
+            "5": "clubId",
+            "6": "start",
+            "7": "limit",
+            "8": "recordingActivity",
+            "9": "inquireType"
+        },
+        "result": {
+            "returnCount": "returnCount",
+            "allPage": "allPage",
+            "currentPage": "currentPage",
+            "clubs": "clubs"
+        },
+        "clubs": {
+            "clubId": "clubId",
+            "clubName": "clubName",
+            "clubType": "clubType",
+            "clubLogoLinkId": "logoId",
+            "clubLogoLink": "clubLogoLink",
+            "clubDesc": "clubExplain",
+            "hasBeenAttention": "hasBeenAttention",
+            "clubRole": "clubRole",
+            "clubStatus": "status",
+            "clubMember": "memberNum",
+            "clubCreaterId": "createUserId",
+            "clubCreaterName": "realName",
+            "clubCreaterNickname": "nickName",
+            "fansNum" : "fansNum",
+            "clubApplyStatus" : "clubApplyStatus",
+            "addMemberType" : "addMemberType",
+            "fLevelAccount" : "addAmount",
+            "gameEventId" : "gameEventId",
+            "provinceId" : "provinceId",
+            "cityId" : "cityId",
+            "schoolId" : "schoolId",
+            "schoolName":"schoolName",
+            "clubCityId" : "clubCityId",
+            "clubProvinceId" : "clubProvinceId"
+        }
+    }
+}

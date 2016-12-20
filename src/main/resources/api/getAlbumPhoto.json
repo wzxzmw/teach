@@ -1,0 +1,34 @@
+{
+    "getAlbumPhotoes": {
+    	"request": {
+            "0": "userId",
+            "1": "memberId",
+            "2": "albumId",
+            "3": "start",
+            "4": "limit",
+            "5": "inquireType"
+        },
+        "result": {
+            "returnCount":"returnCount",
+        	"allPage":"allPage",
+        	"currentPage":"currentPage",
+        	"albumPhotoes":"albumPhotoes"
+        	
+        },
+        "albumPhotoes": {
+            "albumPhotoId": "photoId",
+            "albumPhotoLink": "filePath",
+            "apCreateDate": "createPhotoTime",
+            "albumId": "albumId",
+            "albumTitle": "albumName",
+            "aCreateDate": "createTime",
+            "aUpdateDate": "lastUpdateTime",
+            "supportCount" : "praiseNum",
+            "albumPhotoCount" : "photoNum",
+            "isCover" : "coverPhotoId",
+            "albumDesc": "albumExplain"
+            
+        }
+    }
+}
+

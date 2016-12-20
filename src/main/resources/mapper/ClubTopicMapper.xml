@@ -1,0 +1,210 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.ClubTopicMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.ClubTopic" id="clubTopic" >
+		<result property="topicId" column="topic_id"/>
+		<result property="title" column="title"/>
+		<result property="content" column="content"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="createTime" column="create_time"/>
+		<result property="clubId" column="club_id"/>
+		<result property="praiseNum" column="praise_num"/>
+		<result property="commentNum" column="comment_num"/>
+		<result property="isDelete" column="is_delete"/>
+		<result property="isTop" column="is_top"/>
+		<result property="isFrozen" column="is_frozen"/>
+	</resultMap>
+	
+	<sql id="queryConditionClubTopic">
+		<where>
+			<if test="topicId != null"> and topic_id = #{topicId} </if>
+			<if test="title != null"> and title like #{title} </if>
+			<if test="content != null"> and content = #{content} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="clubId != null"> and club_id = #{clubId} </if>
+			<if test="praiseNum != null"> and praise_num = #{praiseNum} </if>
+			<if test="commentNum != null"> and comment_num = #{commentNum} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+			<if test="isTop != null"> and is_top = #{isTop} </if>
+			<if test="isFrozen != null"> and is_frozen = #{isFrozen} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyClubTopic">
+		where topic_id = #{topicId}
+	</sql>
+	
+	<insert id="insertClubTopic" parameterType="com.seentao.stpedu.common.entity.ClubTopic">
+		<selectKey resultType="java.lang.Integer" keyProperty="topicId" order="AFTER" >
+		   SELECT currval('club_topic_topic_id_seq')
+		</selectKey>
+		insert into club_topic(
+		<if test="title != null"> title</if>
+		<if test="content != null"> ,content</if>
+		<if test="createUserId != null"> ,create_user_id</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="clubId != null"> ,club_id</if>
+		<if test="praiseNum != null"> ,praise_num</if>
+		<if test="commentNum != null"> ,comment_num</if>
+		<if test="isDelete != null"> ,is_delete</if>
+		<if test="isTop != null"> ,is_top</if>
+		<if test="isFrozen != null"> ,is_frozen</if>
+		)
+		values(
+		<if test="title != null"> #{title}</if>
+		<if test="content != null"> ,#{content}</if>
+		<if test="createUserId != null"> ,#{createUserId}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="clubId != null"> ,#{clubId}</if>
+		<if test="praiseNum != null"> ,#{praiseNum}</if>
+		<if test="commentNum != null"> ,#{commentNum}</if>
+		<if test="isDelete != null"> ,#{isDelete}</if>
+		<if test="isTop != null"> ,#{isTop}</if>
+		<if test="isFrozen != null"> ,#{isFrozen}</if>
+		)
+	</insert>
+	
+	<delete id="deleteClubTopic">
+		delete from club_topic
+		<include refid="queryConditionClubTopic"/>
+	</delete>
+	
+	<update id="updateClubTopicByKey" parameterType="com.seentao.stpedu.common.entity.ClubTopic">
+		update club_topic 
+		<set>
+			<if test="topicId != null"> topic_id = #{topicId}, </if>
+			<if test="title != null"> title = #{title}, </if>
+			<if test="content != null"> content = #{content}, </if>
+			<if test="createUserId != null"> create_user_id = #{createUserId}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="clubId != null"> club_id = #{clubId}, </if>
+			<if test="praiseNum != null"> praise_num = #{praiseNum}, </if>
+			<if test="commentNum != null"> comment_num = #{commentNum}, </if>
+			<if test="isDelete != null"> is_delete = #{isDelete}, </if>
+			<if test="isTop != null"> is_top = #{isTop}, </if>
+			<if test="isFrozen != null"> is_frozen = #{isFrozen}, </if>
+		</set>
+		<include refid="queryByKeyClubTopic"/>
+	</update>
+	<!-- 批量更新话题 -->
+	<update id="batchUpdateClubTopic">
+	update club_topic
+	set is_frozen = 1
+	where create_user_id =#{createUserId} and club_id = #{clubId}
+	<!-- <trim prefix="set" suffixOverrides=",">
+		<foreach collection="_clubTopics" separator="," item="item" index="index"
+			open="(" close=")">
+			<if test="topicId != null"> topic_id = #{item.topicId}, </if>
+			<if test="title != null"> title = #{item.title}, </if>
+			<if test="content != null"> content = #{item.content}, </if>
+			<if test="createUserId != null"> create_user_id = #{item.createUserId}, </if>
+			<if test="createTime != null"> create_time = #{item.createTime}, </if>
+			<if test="clubId != null"> club_id = #{item.clubId}, </if>
+			<if test="praiseNum != null"> praise_num = #{item.praiseNum}, </if>
+			<if test="commentNum != null"> comment_num = #{item.commentNum}, </if>
+			<if test="isDelete != null"> is_delete = #{item.isDelete}, </if>
+			<if test="isTop != null"> is_top = #{item.isTop}, </if>
+			<if test="isFrozen != null"> is_frozen = #{item.isFrozen}, </if>
+		</foreach>
+		</trim> -->
+	
+	<!-- <include refid="queryByKeyClubTopic"/> -->
+	</update>
+	<update id="updateClubTopicByKeyAll" parameterType="com.seentao.stpedu.common.entity.ClubTopic">
+		update club_topic 
+		set is_top = #{isTop} where club_id = #{clubId}
+	</update>
+	
+	<select id="selectSingleClubTopic" resultMap="clubTopic">
+		select 
+		topic_id
+		,title
+		,content
+		,create_user_id
+		,create_time
+		,club_id
+		,praise_num
+		,comment_num
+		,is_delete
+		,is_top
+		,is_frozen
+		from club_topic 
+		<include refid="queryConditionClubTopic"/>
+	</select>
+	
+	<select id="selectAllClubTopic" resultMap="clubTopic">
+		select 
+		topic_id
+		,title
+		,content
+		,create_user_id
+		,create_time
+		,club_id
+		,praise_num
+		,comment_num
+		,is_delete
+		,is_top
+		,is_frozen
+		from club_topic
+	</select>
+	<select id="queryCount" parameterType="HashMap" resultType="java.lang.Integer" >
+		select count(*) from club_topic 
+		<include refid="queryConditionClubTopic"/>
+	</select>
+	<select id="selectHotClubTopicByClubId" parameterType="HashMap" resultMap="clubTopic">
+		select 
+		topic_id
+		from club_topic 
+		where club_id = #{clubId} and is_delete = 0 order by is_top desc, praise_num+comment_num desc limit #{limit} offset #{offset}
+	</select>
+	<select id="selectNewClubTopicByClubId" parameterType="HashMap" resultMap="clubTopic">
+		select 
+		topic_id
+		from club_topic 
+		where club_id = #{clubId} and is_delete = 0 order by is_top desc, create_time desc limit #{limit} offset #{offset}
+	</select>
+	<select id="countBackClubTopic" parameterType="HashMap" resultType="java.lang.Integer" >
+		select count(*) from club_topic 
+		<include refid="queryConditionClubTopic"/>
+		<if test="startDate != null and endDate != null">
+			and create_time &gt; #{startDate} and create_time &lt; #{endDate}
+		</if>
+	</select>
+	<select id="selectBackClubTopicByClubId" parameterType="HashMap" resultMap="clubTopic">
+		select topic_id from club_topic 
+		<include refid="queryConditionClubTopic"/>
+		<if test="startDate != null and endDate != null">
+			and create_time &gt; #{startDate} and create_time &lt; #{endDate} 
+		</if>
+		order by create_time desc limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="selectCenterClubTopicByClubId" parameterType="HashMap" resultMap="clubTopic">
+		select topic_id from club_topic 
+		<include refid="queryConditionClubTopic"/>
+		order by create_time desc limit #{limit} offset #{offset}
+	</select>
+	
+	<update id="delClubTopicAll" parameterType="ArrayList">
+		 update club_topic 
+           <trim prefix="set" suffixOverrides=",">
+           
+            	<trim prefix="is_delete = CASE topic_id " suffix="end,">
+	                <foreach collection="list" item="i" index="index">
+	                        <if test="i.isDelete != null">
+	                         WHEN #{i.topicId}  THEN #{i.isDelete}
+	                        </if>
+	                </foreach>
+             	</trim>
+           </trim>
+           
+         WHERE topic_id in
+         	<foreach collection="list" separator="," item="i" index="index" open="(" close=")" >
+             	#{i.topicId}
+         	</foreach>
+	</update>
+</mapper>
+	

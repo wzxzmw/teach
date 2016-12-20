@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.CenterAttitudeMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.CenterAttitude" id="centerAttitude" >
+		<result property="attiId" column="atti_id"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="createTime" column="create_time"/>
+		<result property="attiType" column="atti_type"/>
+		<result property="relObjetType" column="rel_objet_type"/>
+		<result property="relObjetId" column="rel_objet_id"/>
+	</resultMap>
+	
+	<sql id="queryConditionCenterAttitude">
+		<where>
+			<if test="attiId != null"> and atti_id = #{attiId} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="attiType != null"> and atti_type = #{attiType} </if>
+			<if test="relObjetType != null"> and rel_objet_type = #{relObjetType} </if>
+			<if test="relObjetId != null"> and rel_objet_id = #{relObjetId} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyCenterAttitude">
+		where atti_id = #{attiId}
+	</sql>
+	
+	<insert id="insertCenterAttitude" parameterType="com.seentao.stpedu.common.entity.CenterAttitude">
+		insert into center_attitude(
+		atti_id
+		<if test="createUserId != null"> ,create_user_id</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="attiType != null"> ,atti_type</if>
+		<if test="relObjetType != null"> ,rel_objet_type</if>
+		<if test="relObjetId != null"> ,rel_objet_id</if>
+		)
+		values(
+		nextval('center_attitude_atti_id_seq')
+		<if test="createUserId != null"> ,#{createUserId}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="attiType != null"> ,#{attiType}</if>
+		<if test="relObjetType != null"> ,#{relObjetType}</if>
+		<if test="relObjetId != null"> ,#{relObjetId}</if>
+		)
+	</insert>
+	
+	<delete id="deleteCenterAttitude">
+		delete from center_attitude
+		<include refid="queryConditionCenterAttitude"/>
+	</delete>
+	
+	<update id="updateCenterAttitudeByKey" parameterType="com.seentao.stpedu.common.entity.CenterAttitude">
+		update center_attitude 
+		<set>
+			<if test="attiId != null"> atti_id = #{attiId}, </if>
+			<if test="createUserId != null"> create_user_id = #{createUserId}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="attiType != null"> atti_type = #{attiType}, </if>
+			<if test="relObjetType != null"> rel_objet_type = #{relObjetType}, </if>
+			<if test="relObjetId != null"> rel_objet_id = #{relObjetId}, </if>
+		</set>
+		<include refid="queryByKeyCenterAttitude"/>
+	</update>
+	
+	<select id="selectSingleCenterAttitude" resultMap="centerAttitude">
+		select 
+		atti_id
+		,create_user_id
+		,create_time
+		,atti_type
+		,rel_objet_type
+		,rel_objet_id
+		from center_attitude 
+		<include refid="queryConditionCenterAttitude"/>
+	</select>
+	
+	<select id="selectAllCenterAttitude" resultMap="centerAttitude">
+		select 
+		atti_id
+		,create_user_id
+		,create_time
+		,atti_type
+		,rel_objet_type
+		,rel_objet_id
+		from center_attitude
+	</select>
+	
+	<select id="selectCenterAttitudeCount" resultType="java.lang.Integer">
+		select 
+		count(*)
+		from center_attitude
+		<include refid="queryConditionCenterAttitude"/>
+	</select>
+	
+	
+</mapper>
+	

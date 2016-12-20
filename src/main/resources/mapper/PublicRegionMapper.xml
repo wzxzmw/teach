@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.PublicRegionMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.PublicRegion" id="publicRegion" >
+		<result property="regionId" column="region_id"/>
+		<result property="regionName" column="region_name"/>
+		<result property="regionAllName" column="region_all_name"/>
+		<result property="parentId" column="parent_id"/>
+		<result property="regionType" column="region_type"/>
+		<result property="zip" column="zip"/>
+	</resultMap>
+	
+	<sql id="queryConditionPublicRegion">
+		<where>
+			<if test="regionId != null"> and region_id = #{regionId} </if>
+			<if test="regionName != null"> and region_name = #{regionName} </if>
+			<if test="regionAllName != null"> and region_all_name = #{regionAllName} </if>
+			<if test="parentId != null"> and parent_id = #{parentId} </if>
+			<if test="regionType != null"> and region_type = #{regionType} </if>
+			<if test="zip != null"> and zip = #{zip} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyPublicRegion">
+		where region_id = #{regionId}
+	</sql>
+	
+	<insert id="insertPublicRegion" parameterType="com.seentao.stpedu.common.entity.PublicRegion">
+		insert into public_region(
+		region_id
+		<if test="regionName != null"> ,region_name</if>
+		<if test="regionAllName != null"> ,region_all_name</if>
+		<if test="parentId != null"> ,parent_id</if>
+		<if test="regionType != null"> ,region_type</if>
+		<if test="zip != null"> ,zip</if>
+		)
+		values(
+		null
+		<if test="regionName != null"> ,#{regionName}</if>
+		<if test="regionAllName != null"> ,#{regionAllName}</if>
+		<if test="parentId != null"> ,#{parentId}</if>
+		<if test="regionType != null"> ,#{regionType}</if>
+		<if test="zip != null"> ,#{zip}</if>
+		)
+	</insert>
+	
+	<delete id="deletePublicRegion">
+		delete from public_region
+		<include refid="queryConditionPublicRegion"/>
+	</delete>
+	
+	<update id="updatePublicRegionByKey" parameterType="com.seentao.stpedu.common.entity.PublicRegion">
+		update public_region 
+		<set>
+			<if test="regionId != null"> region_id = #{regionId}, </if>
+			<if test="regionName != null"> region_name = #{regionName}, </if>
+			<if test="regionAllName != null"> region_all_name = #{regionAllName}, </if>
+			<if test="parentId != null"> parent_id = #{parentId}, </if>
+			<if test="regionType != null"> region_type = #{regionType}, </if>
+			<if test="zip != null"> zip = #{zip}, </if>
+		</set>
+		<include refid="queryByKeyPublicRegion"/>
+	</update>
+	
+	<select id="selectSinglePublicRegion" resultMap="publicRegion">
+		select 
+		region_id
+		,region_name
+		,region_all_name
+		,parent_id
+		,region_type
+		,zip
+		from public_region 
+		<include refid="queryConditionPublicRegion"/>
+	</select>
+	
+	<select id="selectAllPublicRegion" resultMap="publicRegion">
+		select 
+		region_id
+		,region_name
+		,region_all_name
+		,parent_id
+		,region_type
+		,zip
+		from public_region
+	</select>
+	
+	<select id="selectPublicRegionByCityId" resultMap="publicRegion">
+		select
+			*
+		from
+			public_region cc
+		where
+			cc.region_id = (
+				select
+					dd.parent_id
+				from
+					public_region dd
+					<where>
+						<if test="regionId != null"> and region_id = #{regionId} </if>
+					</where>
+			)
+		union
+			select
+				*
+			from
+				public_region dd
+			<where>
+				<if test="regionId != null"> and region_id = #{regionId} </if>
+			</where>
+	</select>
+	
+</mapper>
+	

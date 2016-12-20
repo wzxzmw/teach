@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.ArenaCompetitionDiscussMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.ArenaCompetitionDiscuss" id="arenaCompetitionDiscuss" >
+		<result property="discussId" column="discuss_id"/>
+		<result property="compId" column="comp_id"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="createTime" column="create_time"/>
+		<result property="praiseNum" column="praise_num"/>
+		<result property="content" column="content"/>
+		<result property="isDelete" column="is_delete"/>
+	</resultMap>
+	
+	<sql id="queryConditionArenaCompetitionDiscuss">
+		<where>
+			<if test="discussId != null"> and discuss_id = #{discussId} </if>
+			<if test="compId != null"> and comp_id = #{compId} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="praiseNum != null"> and praise_num = #{praiseNum} </if>
+			<if test="content != null"> and content = #{content} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyArenaCompetitionDiscuss">
+		where discuss_id = #{discussId}
+	</sql>
+	
+	<insert id="insertArenaCompetitionDiscuss" parameterType="com.seentao.stpedu.common.entity.ArenaCompetitionDiscuss">
+		insert into arena_competition_discuss(
+		discuss_id
+		<if test="compId != null"> ,comp_id</if>
+		<if test="createUserId != null"> ,create_user_id</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="praiseNum != null"> ,praise_num</if>
+		<if test="content != null"> ,content</if>
+		<if test="isDelete != null"> ,is_delete</if>
+		)
+		values(
+		nextval('arena_competition_discuss_discuss_id_seq')
+		<if test="compId != null"> ,#{compId}</if>
+		<if test="createUserId != null"> ,#{createUserId}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="praiseNum != null"> ,#{praiseNum}</if>
+		<if test="content != null"> ,#{content}</if>
+		<if test="isDelete != null"> ,#{isDelete}</if>
+		)
+	</insert>
+	
+	<delete id="deleteArenaCompetitionDiscuss">
+		delete from arena_competition_discuss
+		<include refid="queryConditionArenaCompetitionDiscuss"/>
+	</delete>
+	
+	<update id="updateArenaCompetitionDiscussByKey" parameterType="com.seentao.stpedu.common.entity.ArenaCompetitionDiscuss">
+		update arena_competition_discuss 
+		<set>
+			<if test="discussId != null"> discuss_id = #{discussId}, </if>
+			<if test="compId != null"> comp_id = #{compId}, </if>
+			<if test="createUserId != null"> create_user_id = #{createUserId}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="praiseNum != null"> praise_num = #{praiseNum}, </if>
+			<if test="content != null"> content = #{content}, </if>
+			<if test="isDelete != null"> is_delete = #{isDelete}, </if>
+		</set>
+		<include refid="queryByKeyArenaCompetitionDiscuss"/>
+	</update>
+	
+	<select id="selectSingleArenaCompetitionDiscuss" resultMap="arenaCompetitionDiscuss">
+		select 
+		discuss_id
+		,comp_id
+		,create_user_id
+		,create_time
+		,praise_num
+		,content
+		,is_delete
+		from arena_competition_discuss 
+		<include refid="queryConditionArenaCompetitionDiscuss"/>
+	</select>
+	
+	<select id="selectAllArenaCompetitionDiscuss" resultMap="arenaCompetitionDiscuss">
+		select 
+		discuss_id
+		,comp_id
+		,create_user_id
+		,create_time
+		,praise_num
+		,content
+		,is_delete
+		from arena_competition_discuss
+	</select>
+	<select id="queryCount" resultType="Integer" parameterType="HashMap">
+		select count(*)
+		from arena_competition_discuss  where comp_id = #{compId}  and  is_delete = #{isDelete} 
+	</select>
+	<select id="queryByPage" resultMap="arenaCompetitionDiscuss" parameterType="HashMap">
+		select *
+		from arena_competition_discuss  where comp_id = #{compId} and is_delete = #{isDelete}
+		ORDER BY discuss_id  DESC
+		limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="queryCompNewByCount" resultType="Integer" parameterType="HashMap">
+		select count(*)
+		from arena_competition_discuss  where comp_id = #{compId}  and  is_delete = #{isDelete} 
+	</select>
+	<select id="queryCompNewByAge" resultMap="arenaCompetitionDiscuss" parameterType="HashMap">
+		select *
+		from arena_competition_discuss  where comp_id = #{compId} and is_delete = #{isDelete}
+		and discuss_id > #{newCommentId}
+		ORDER BY discuss_id  ASC
+		limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="queryCompoldByCount" resultType="Integer" parameterType="HashMap">
+		select count(*)
+		from arena_competition_discuss  where comp_id = #{compId}  and  is_delete = #{isDelete} 
+	</select>
+	<select id="queryCompoldByAge" resultMap="arenaCompetitionDiscuss" parameterType="HashMap">
+		select *
+		from arena_competition_discuss  where comp_id = #{compId} and is_delete = #{isDelete}
+		and discuss_id &lt; #{oldCommentId}
+		ORDER BY discuss_id  DESC
+		limit #{limit} offset #{offset}
+	</select>
+	
+	
+	<update id="delArenaCompetitionDiscussAll" parameterType="ArrayList">
+	
+		 update arena_competition_discuss 
+		 
+           <trim prefix="set" suffixOverrides=",">
+           
+            	<trim prefix="is_delete = CASE discuss_id " suffix="end,">
+	                <foreach collection="list" item="i" index="index">
+	                        <if test="i.isDelete != null">
+	                         WHEN #{i.discussId}  THEN #{i.isDelete}
+	                        </if>
+	                </foreach>
+             	</trim>
+             	
+           </trim>
+           
+         WHERE discuss_id in
+         
+         	<foreach collection="list" separator="," item="i" index="index" open="(" close=")" >
+             	#{i.discussId}
+         	</foreach>
+	</update>
+</mapper>
+	

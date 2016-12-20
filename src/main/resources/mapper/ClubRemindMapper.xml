@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.ClubRemindMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.ClubRemind" id="clubRemind" >
+		<result property="remindId" column="remind_id"/>
+		<result property="clubId" column="club_id"/>
+		<result property="content" column="content"/>
+		<result property="createTime" column="create_time"/>
+		<result property="createUserId" column="create_user_id"/>
+	</resultMap>
+	
+	<resultMap type="com.seentao.stpedu.common.entity.ClubRelRemindMember" id="clubRelRemindMember" >
+		<result property="relId" column="rel_id"/>
+		<result property="remindId" column="remind_id"/>
+		<result property="userId" column="user_id"/>
+	</resultMap>
+	
+	<sql id="queryConditionClubRemind">
+		<where>
+			<if test="remindId != null"> and remind_id = #{remindId} </if>
+			<if test="clubId != null"> and club_id = #{clubId} </if>
+			<if test="content != null"> and content = #{content} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyClubRemind">
+		where remind_id = #{remindId}
+	</sql>
+	
+	<insert id="insertClubRemind" parameterType="com.seentao.stpedu.common.entity.ClubRemind">
+		<selectKey resultType="java.lang.Integer" keyProperty="remindId" order="AFTER" >
+		   SELECT currval('club_remind_remind_id_seq')
+		</selectKey>
+		insert into club_remind(
+		<if test="clubId != null"> club_id</if>
+		<if test="content != null"> ,content</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="createUserId != null"> ,create_user_id</if>
+		)
+		values(
+		<if test="clubId != null"> #{clubId}</if>
+		<if test="content != null"> ,#{content}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="createUserId != null"> ,#{createUserId}</if>
+		)
+	</insert>
+	
+	<delete id="deleteClubRemind">
+		delete from club_remind
+		<include refid="queryConditionClubRemind"/>
+	</delete>
+	
+	<update id="updateClubRemindByKey" parameterType="com.seentao.stpedu.common.entity.ClubRemind">
+		update club_remind 
+		<set>
+			<if test="remindId != null"> remind_id = #{remindId}, </if>
+			<if test="clubId != null"> club_id = #{clubId}, </if>
+			<if test="content != null"> content = #{content}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="createUserId != null"> create_user_id = #{createUserId}, </if>
+		</set>
+		<include refid="queryByKeyClubRemind"/>
+	</update>
+	
+	<select id="selectSingleClubRemind" resultMap="clubRemind">
+		select 
+		remind_id
+		,club_id
+		,content
+		,create_time
+		,create_user_id
+		from club_remind 
+		<include refid="queryConditionClubRemind"/>
+	</select>
+	
+	<select id="selectAllClubRemind" resultMap="clubRemind">
+		select 
+		remind_id
+		,club_id
+		,content
+		,create_time
+		,create_user_id
+		from club_remind
+	</select>
+	
+	<select id="queryCount" parameterType="HashMap" resultType="java.lang.Integer" >
+		select count(*) from club_remind 
+		<include refid="queryConditionClubRemind"/>
+	</select>
+</mapper>
+	

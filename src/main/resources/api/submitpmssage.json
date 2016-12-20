@@ -1,0 +1,12 @@
+{
+    "submitPrivateMessage": {
+    	"request": {
+            "0": "userId",
+            "1": "pmObjectId",
+            "2": "pmContent"
+        },
+        "result": {
+             
+        }
+    }
+  }  

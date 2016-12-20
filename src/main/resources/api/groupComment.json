@@ -1,0 +1,48 @@
+{
+    "getComments": {
+    	"request": {
+            "0": "classId",
+            "1": "classType",
+            "2": "gameEventId",
+            "3": "topicId",
+            "4": "commentType",
+            "5": "start",
+            "6": "limit",
+            "7": "inquireType",
+            "8": "userId"
+        },
+        "result": {
+        	"returnCount":"returnCount",
+        	"allPage":"allPage",
+        	"currentPage":"currentPage",
+        	"comments":"comments"
+        },
+        "comments":{
+        	"commentId": "commentId",
+        	"commentBody": "content",
+        	"createrId": "createUserId",
+        	"createrName": "createrName",
+        	"createrNickname": "createrNickname",
+        	"createrHeadLink": "createrHeadLink",
+        	"commentType": "type",
+        	"supportCount": "praiseNum",
+        	"cCreateDate": "createTime"
+        }
+    },
+    "submitComment": {
+    	"request": {
+            "0": "userId",
+            "1": "commentModule",
+            "2": "classId",
+            "3": "classType",
+            "4": "gameEventId",
+            "5": "topicId",
+            "6": "commentBody",
+            "7": "commentType"
+        },
+        "result": {
+        	
+        }
+    }
+}
+

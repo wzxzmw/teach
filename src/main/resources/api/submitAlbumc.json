@@ -1,0 +1,12 @@
+{
+    "submitAlbumCover": {
+    	"request": {
+            "0": "userId",
+            "1": "albumId",
+            "2": "albumPhotoId"
+        },
+        "result": {
+              
+        }
+    }
+  }  

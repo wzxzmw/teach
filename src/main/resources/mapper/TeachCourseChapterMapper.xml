@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.TeachCourseChapterMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.TeachCourseChapter" id="teachCourseChapter" >
+		<result property="chapterNo" column="chapter_no"/>
+		<result property="chapterId" column="chapter_id"/>
+		<result property="chapterName" column="chapter_name"/>
+		<result property="classId" column="class_id"/>
+		<result property="matchId" column="match_id"/>
+		<result property="matchYear" column="match_year"/>
+	</resultMap>
+	
+	<sql id="queryConditionTeachCourseChapter">
+		<where>
+			<if test="chapterNo != null"> and chapter_no = #{chapterNo} </if>
+			<if test="chapterId != null"> and chapter_id = #{chapterId} </if>
+			<if test="chapterName != null"> and chapter_name = #{chapterName} </if>
+			<if test="classId != null"> and class_id = #{classId} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyTeachCourseChapter">
+		where chapter_no = #{chapterNo}
+		and   chapter_id = #{{c.beanPropertyName}}
+	</sql>
+	
+	<insert id="insertTeachCourseChapter" parameterType="com.seentao.stpedu.common.entity.TeachCourseChapter">
+		insert into teach_course_chapter(
+		chapter_no
+		<if test="chapterId != null"> ,chapter_id</if>
+		<if test="chapterName != null"> ,chapter_name</if>
+		<if test="classId != null"> ,class_id</if>
+		)
+		values(
+		nextval('teach_course_chapter_chapter_id_seq')
+		<if test="chapterId != null"> ,#{chapterId}</if>
+		<if test="chapterName != null"> ,#{chapterName}</if>
+		<if test="classId != null"> ,#{classId}</if>
+		)
+	</insert>
+	
+	<insert id="insertTeachCourseChapterId" parameterType="com.seentao.stpedu.common.entity.TeachCourseChapter">
+		insert into teach_course_chapter(
+		chapter_id
+		<if test="chapterId != null"> ,chapter_id</if>
+		<if test="chapterName != null"> ,chapter_name</if>
+		<if test="classId != null"> ,class_id</if>
+		<if test="chapterNo != null"> ,chapter_no</if>
+		)
+		values(
+		nextval('teach_course_chapter_chapter_id_seq')
+		<if test="chapterId != null"> ,#{chapterId}</if>
+		<if test="chapterName != null"> ,#{chapterName}</if>
+		<if test="classId != null"> ,#{classId}</if>
+		<if test="chapterNo != null"> ,#{chapterNo}</if>
+		)
+	</insert>
+	
+	<insert id="insertTeachCourseChapterIdAll" parameterType="ArrayList">
+		insert into teach_course_chapter(
+		chapter_id
+		,chapter_name
+		,class_id
+		,chapter_no
+		)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+			 nextval('teach_course_chapter_chapter_id_seq')
+			 ,#{item.chapterName}
+			 ,#{item.classId}
+			 ,#{item.chapterNo}
+			)
+		</foreach>
+	</insert>
+	
+	<delete id="deleteTeachCourseChapter">
+		delete from teach_course_chapter
+		<include refid="queryConditionTeachCourseChapter"/>
+	</delete>
+	
+	<update id="updateTeachCourseChapterByKey" parameterType="com.seentao.stpedu.common.entity.TeachCourseChapter">
+		update teach_course_chapter 
+		<set>
+			<if test="chapterNo != null"> chapter_no = #{chapterNo}, </if>
+			<if test="chapterId != null"> chapter_id = #{chapterId}, </if>
+			<if test="chapterName != null"> chapter_name = #{chapterName}, </if>
+			<if test="classId != null"> class_id = #{classId}, </if>
+		</set>
+		<include refid="queryByKeyTeachCourseChapter"/>
+	</update>
+	
+	<select id="selectSingleTeachCourseChapter" resultMap="teachCourseChapter">
+		select 
+		chapter_no
+		,chapter_id
+		,chapter_name
+		,class_id
+		from teach_course_chapter 
+		<include refid="queryConditionTeachCourseChapter"/>
+		order by chapter_no
+	</select>
+	
+	<select id="selectAllTeachCourseChapter" resultMap="teachCourseChapter">
+		select 
+		chapter_no
+		,chapter_id
+		,chapter_name
+		,class_id
+		from teach_course_chapter
+	</select>
+	<select id="getLastTeachCourseChapterByClassId" resultMap="teachCourseChapter">
+		select 
+		max(chapter_id) chapter_id
+		from teach_course_chapter 
+		<include refid="queryConditionTeachCourseChapter"/>
+	</select>
+	
+	<select id="selectAllChapetIdByClass" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select chapter_id from teach_course_chapter where class_id = #{classId}
+	</select>
+	
+	
+	<select id="selectTeachCourseChapterAndYearAndMatchId" resultMap="teachCourseChapter">
+		select 
+		chapter_no
+		,chapter.chapter_id
+		,chapter_name
+		,class_id
+		,coalesce(match_id,0) as match_id
+		,coalesce(match_year,-1) as match_year
+		from teach_course_chapter as chapter
+		left join teach_course_card as card on  chapter.chapter_id = card.chapter_id and card.card_type=1
+		<where>
+			1=1
+			<if test="chapterNo != null"> and chapter.chapter_no = #{chapterNo} </if>
+			<if test="chapterId != null"> and chapter.chapter_id = #{chapterId} </if>
+			<if test="chapterName != null"> and chapter.chapter_name = #{chapterName} </if>
+			<if test="classId != null"> and chapter.class_id = #{classId} </if>
+		</where>		
+		order by chapter.chapter_no
+	</select>
+</mapper>
+	

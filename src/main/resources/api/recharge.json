@@ -1,0 +1,53 @@
+{
+    "submitDeposit": {
+    	"request": {
+            "0": "userType",
+            "1": "userName",
+            "2": "userId",
+            "3": "userToken",
+            "4": "depositObjectType",
+            "5": "cash",
+            "6": "remark",
+            "7": "depositType",
+            "8": "clubId"
+        },
+        "result": {
+            "alipayParams": "alipayParams",
+            "depositId": "depositId"
+        },
+        "alipayParams": {
+            "name": "name",
+            "value": "value"
+        }
+        
+	},
+	"exchangeAccount": {
+    	"request": {
+            "0": "userType",
+            "1": "userName",
+            "2": "userId",
+            "3": "userToken",
+            "4": "virtualType",
+            "5": "fLevelAccount",
+            "6": "remark"
+        },
+        "result": {
+            
+        }
+	},
+	"checkPayment": {
+    	"request": {
+            "0": "userType",
+            "1": "userName",
+            "2": "userId",
+            "3": "userToken",
+            "4": "depositType",
+            "5": "depositId"
+        },
+        "result": {
+        	"paymentStatus": "paymentStatus"
+        }
+	}
+	
+}
+

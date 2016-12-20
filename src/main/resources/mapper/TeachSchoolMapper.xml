@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.TeachSchoolMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.TeachSchool" id="teachSchool" >
+		<result property="schoolId" column="school_id"/>
+		<result property="schoolName" column="school_name"/>
+		<result property="regionId" column="region_id"/>
+		<result property="schoolType" column="school_type"/>
+		<result property="schoolProperties" column="school_properties"/>
+	</resultMap>
+	
+	<sql id="queryConditionTeachSchool">
+		<where>
+			<if test="schoolId != null"> and school_id = #{schoolId} </if>
+			<if test="schoolName != null"> and school_name = #{schoolName} </if>
+			<if test="regionId != null"> and region_id = #{regionId} </if>
+			<if test="schoolType != null"> and school_type = #{schoolType} </if>
+			<if test="schoolProperties != null"> and school_properties = #{schoolProperties} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyTeachSchool">
+		where school_id = #{schoolId}
+	</sql>
+	
+	<insert id="insertTeachSchool" parameterType="com.seentao.stpedu.common.entity.TeachSchool">
+		insert into teach_school(
+		school_id
+		<if test="schoolName != null"> ,school_name</if>
+		<if test="regionId != null"> ,region_id</if>
+		<if test="schoolType != null"> ,school_type</if>
+		<if test="schoolProperties != null"> ,school_properties</if>
+		)
+		values(
+		nextval('teach_school_school_id_seq')
+		<if test="schoolName != null"> ,#{schoolName}</if>
+		<if test="regionId != null"> ,#{regionId}</if>
+		<if test="schoolType != null"> ,#{schoolType}</if>
+		<if test="schoolProperties != null">, #{schoolProperties} </if>
+		)
+	</insert>
+	
+	<delete id="deleteTeachSchool">
+		delete from teach_school
+		<include refid="queryConditionTeachSchool"/>
+	</delete>
+	
+	<update id="updateTeachSchoolByKey" parameterType="com.seentao.stpedu.common.entity.TeachSchool">
+		update teach_school 
+		<set>
+			<if test="schoolId != null"> school_id = #{schoolId}, </if>
+			<if test="schoolName != null"> school_name = #{schoolName}, </if>
+			<if test="regionId != null"> region_id = #{regionId}, </if>
+			<if test="schoolType != null"> school_type = #{schoolType}, </if>
+			<if test="schoolProperties != null"> school_properties = #{schoolProperties} </if>
+		</set>
+		<include refid="queryByKeyTeachSchool"/>
+	</update>
+	
+	<select id="selectSingleTeachSchool" resultMap="teachSchool">
+		select 
+		school_id
+		,school_name
+		,region_id
+		,school_type
+		,school_properties
+		from teach_school 
+		<include refid="queryConditionTeachSchool"/>
+	</select>
+	
+	<select id="selectAllTeachSchool" resultMap="teachSchool">
+		select 
+		school_id
+		,school_name
+		,region_id
+		,school_type
+		,school_properties
+		from teach_school
+	</select>
+	
+	<select id="queryCount" resultType="Integer" parameterType="java.util.Map">
+		select count(*)
+		from teach_school
+		<if test="regionId != null"> where region_id in (${regionId})  </if>
+	</select>
+	
+	
+	<select id="queryByPage" resultMap="teachSchool" parameterType="java.util.Map">
+		
+		select school.school_id,
+			school.school_name,
+			school.region_id,
+			school.school_type,
+			school.school_properties,
+			case 
+			 when sum(classes.students_num) is null 
+			 then 0 else sum(classes.students_num) 
+			end
+			  AS studentNum,
+			case
+			 when sum(tccc.total_complete_hours) is null 
+			 then 0 else sum(tccc.total_complete_hours) 
+			end
+			  AS learningSeconds,
+			case 
+			 when sum(classes.total_train_num) is null 
+			 then 0 else sum(classes.total_train_num) 
+			end
+			  AS practiceCount,
+			case 
+			 when sum(classes.original_course_num) is null 
+			 then 0 else sum(classes.original_course_num) 
+			end
+			  AS courseCount
+			  
+		from teach_school as school
+		
+		left join teach_class as classes on school.school_id = classes.school_id left join teach_course_card_count as tccc on classes.class_id = tccc.class_id
+		
+		<if test="regionId != null"> where region_id in (${regionId})  </if>
+		group by 
+			school.school_id,
+			school.school_name,
+			school.region_id,
+			school.school_type,
+			school.school_properties
+		order BY ${orderBy} DESC,school.school_name ASC
+		limit #{limit} offset #{offset}
+	</select>
+	
+	
+	
+	
+	<select id="querySchoolCount" resultType="Integer" parameterType="java.util.Map">
+		select count(*)
+		from teach_school  where region_id = #{regionId} 
+	</select>
+	<select id="querySchoolByPage" resultMap="teachSchool" parameterType="java.util.Map">
+		select *
+		from teach_school  where region_id = #{regionId} 
+		ORDER BY
+		school_id
+		ASC
+		limit #{limit} offset #{offset}
+	</select>
+</mapper>
+	

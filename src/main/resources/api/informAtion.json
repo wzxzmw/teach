@@ -1,0 +1,15 @@
+{
+    "submitInvitation": {
+    	"request": {
+            "0": "userId",
+            "1": "invitationType",
+            "2": "invitationObjectId",
+            "3": "questionId",
+            "4": "classId",
+            "5": "classType"
+        },
+        "result": {
+        }
+    }
+}
+

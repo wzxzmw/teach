@@ -1,0 +1,28 @@
+{
+    "getSchools": {
+    	"request": {
+            "0": "userId",
+            "1": "start",
+            "2": "limit",
+            "3": "provinceId",
+            "4": "cityId",
+            "5": "sortType",
+            "6": "inquireType"
+        },
+        "result": {
+        	"returnCount":"returnCount",
+        	"allPage":"allPage",
+        	"currentPage":"currentPage",
+        	"schools":"schools"
+        },
+        "schools":{
+        	"schoolId": "schoolId",
+        	"schoolName": "schoolName",
+        	"studentNum": "studentNum",
+        	"learningSeconds": "learningSeconds",
+        	"practiceCount": "practiceCount",
+        	"courseCount": "courseCount"
+        }
+    }
+}
+

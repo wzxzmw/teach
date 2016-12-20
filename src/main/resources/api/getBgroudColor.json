@@ -1,0 +1,16 @@
+{
+    "getBackgroundColor": {
+    	"request": {
+            "0": "userId",
+            "1": "userType"
+        },
+        "result": {
+        	"backgroundColors":"backgroundColors"
+        },
+        "backgroundColors": {
+            "backgroundColorId": "bgColorId",
+            "colorValue": "colorCode"
+        }
+    }
+}
+

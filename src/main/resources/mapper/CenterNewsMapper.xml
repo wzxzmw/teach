@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.CenterNewsMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.CenterNews" id="centerNews" >
+		<result property="newsId" column="news_id"/>
+		<result property="createTime" column="create_time"/>
+		<result property="userId" column="user_id"/>
+		<result property="newsType" column="news_type"/>
+		<result property="content" column="content"/>
+		<result property="relObjectType" column="rel_object_type"/>
+		<result property="relObjectId" column="rel_object_id"/>
+		<result property="createUserId" column="create_user_id"/>
+	</resultMap>
+	
+	<sql id="queryConditionCenterNews">
+		<where>
+			<if test="newsId != null"> and news_id = #{newsId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="userId != null"> and user_id = #{userId} </if>
+			<if test="newsType != null"> and news_type = #{newsType} </if>
+			<if test="content != null"> and content = #{content} </if>
+			<if test="relObjectType != null"> and rel_object_type = #{relObjectType} </if>
+			<if test="relObjectId != null"> and rel_object_id = #{relObjectId} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyCenterNews">
+		where news_id = #{newsId}
+	</sql>
+	
+	<insert id="insertCenterNews" parameterType="com.seentao.stpedu.common.entity.CenterNews">
+		insert into center_news(
+		news_id
+		<if test="createTime != null"> ,create_time</if>
+		<if test="userId != null"> ,user_id</if>
+		<if test="newsType != null"> ,news_type</if>
+		<if test="content != null"> ,content</if>
+		<if test="relObjectType != null"> ,rel_object_type</if>
+		<if test="relObjectId != null"> ,rel_object_id</if>
+		<if test="createUserId != null"> ,create_user_id</if>
+		)
+		values(
+		nextval('center_news_news_id_seq')
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="userId != null"> ,#{userId}</if>
+		<if test="newsType != null"> ,#{newsType}</if>
+		<if test="content != null"> ,#{content}</if>
+		<if test="relObjectType != null"> ,#{relObjectType}</if>
+		<if test="relObjectId != null"> ,#{relObjectId}</if>
+		<if test="createUserId != null"> ,#{createUserId}</if>
+		)
+	</insert>
+	
+	<delete id="deleteCenterNews">
+		delete from center_news
+		<include refid="queryConditionCenterNews"/>
+	</delete>
+	
+	<update id="updateCenterNewsByKey" parameterType="com.seentao.stpedu.common.entity.CenterNews">
+		update center_news 
+		<set>
+			<if test="newsId != null"> news_id = #{newsId}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="userId != null"> user_id = #{userId}, </if>
+			<if test="newsType != null"> news_type = #{newsType}, </if>
+			<if test="content != null"> content = #{content}, </if>
+			<if test="relObjectType != null"> rel_object_type = #{relObjectType}, </if>
+			<if test="relObjectId != null"> rel_object_id = #{relObjectId}, </if>
+			<if test="createUserId != null"> create_user_id = #{createUserId}, </if>
+		</set>
+		<include refid="queryByKeyCenterNews"/>
+	</update>
+	
+	<select id="selectSingleCenterNews" resultMap="centerNews">
+		select 
+		news_id
+		,create_time
+		,user_id
+		,news_type
+		,content
+		,rel_object_type
+		,rel_object_id
+		,create_user_id
+		from center_news 
+		<include refid="queryConditionCenterNews"/>
+	</select>
+	
+	<select id="selectAllCenterNews" resultMap="centerNews">
+		select 
+		news_id
+		,create_time
+		,user_id
+		,news_type
+		,content
+		,rel_object_type
+		,rel_object_id
+		,create_user_id
+		from center_news
+	</select>
+	
+	<select id="selectCenterNewsByCondition" parameterType="java.util.Map" resultMap="centerNews">
+		select 
+		news_id
+		,create_time
+		,user_id
+		,news_type
+		,content
+		,rel_object_type
+		,rel_object_id
+		,create_user_id
+		from center_news
+		where user_id=#{userId} and news_type=#{messageType} order by create_time desc limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="countCenterNewsByCondition" parameterType="java.util.Map"  resultType="java.lang.Integer">
+		select 
+		count(news_id)
+		from center_news
+		where user_id=#{userId} and news_type=#{messageType}
+	</select>
+	<select id="selectCenterNewsByUserId" resultMap="centerNews">
+		select 
+		max(news_id) news_id
+		from center_news 
+		where user_id=#{userId}
+	</select>
+</mapper>
+	

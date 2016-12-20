@@ -1,0 +1,31 @@
+{
+    "getPrivateMessagesForMobile": {
+    	"request": {
+            "0": "userId",
+            "1": "memberId",
+            "2": "limit",
+            "3": "sortType",
+            "4": "newPrivateMessageId",
+            "5": "oldPrivateMessageId",
+            "6": "inquireType"
+        },
+        "result": {
+             "oldPrivateMessageId":"oldPrivateMessageId",
+             "newPrivateMessageId":"newPrivateMessageId",
+             "returnCount" : "returnCount",
+             "allPage" : "allPage",
+             "currentPage" : "currentPage",
+             "privateMessages":"privateMessages"
+        },
+        "privateMessages": {
+            "privateMessageId": "privateMessageId",
+            "pmCreaterId": "sendUserId",
+            "pmCreaterName": "realName",
+            "pmCreaterNickname": "nickName",
+            "pmCreaterHeadLink": "filePath",
+            "pmIsLoginUser": "pmIsLoginUser",
+            "pmContent": "content",
+            "pmCreateDate": "createTime"
+        }
+    }
+  }  

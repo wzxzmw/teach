@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.CenterBankMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.CenterBank" id="centerBank" >
+		<result property="bankId" column="bank_id"/>
+		<result property="bankName" column="bank_name"/>
+	</resultMap>
+	
+	<resultMap type="com.seentao.stpedu.persionalcenter.model.AccountTypes" id="accountTypes" >
+		<result property="accountType" column="bank_id"/>
+		<result property="accountTypeName" column="bank_name"/>
+	</resultMap>
+	
+	
+	
+	<sql id="queryConditionCenterBank">
+		<where>
+			<if test="bankId != null"> and bank_id = #{bankId} </if>
+			<if test="bankName != null"> and bank_name = #{bankName} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyCenterBank">
+		where bank_id = #{bankId}
+	</sql>
+	
+	<insert id="insertCenterBank" parameterType="com.seentao.stpedu.common.entity.CenterBank">
+		insert into center_bank(
+		bank_id
+		<if test="bankName != null"> ,bank_name</if>
+		)
+		values(
+		null
+		<if test="bankName != null"> ,#{bankName}</if>
+		)
+	</insert>
+	
+	<delete id="deleteCenterBank">
+		delete from center_bank
+		<include refid="queryConditionCenterBank"/>
+	</delete>
+	
+	<update id="updateCenterBankByKey" parameterType="com.seentao.stpedu.common.entity.CenterBank">
+		update center_bank 
+		<set>
+			<if test="bankId != null"> bank_id = #{bankId}, </if>
+			<if test="bankName != null"> bank_name = #{bankName}, </if>
+		</set>
+		<include refid="queryByKeyCenterBank"/>
+	</update>
+	
+	<select id="selectSingleCenterBank" resultMap="centerBank">
+		select 
+		bank_id
+		,bank_name
+		from center_bank 
+		<include refid="queryConditionCenterBank"/>
+	</select>
+	
+	<select id="selectAllCenterBank" resultMap="centerBank">
+		select 
+		bank_id
+		,bank_name
+		from center_bank
+	</select>
+	
+	<select id="selectAllAccountTypes" resultMap="accountTypes">
+		select 
+		bank_id
+		,bank_name
+		from center_bank
+	</select>
+	
+</mapper>
+	

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.CenterFeedbackMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.CenterFeedback" id="centerFeedback" >
+		<result property="feedbackId" column="feedback_id"/>
+		<result property="createTime" column="create_time"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="content" column="content"/>
+	</resultMap>
+	
+	<sql id="queryConditionCenterFeedback">
+		<where>
+			<if test="feedbackId != null"> and feedback_id = #{feedbackId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="content != null"> and content = #{content} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyCenterFeedback">
+		where feedback_id = #{feedbackId}
+	</sql>
+	
+	<insert id="insertCenterFeedback" parameterType="com.seentao.stpedu.common.entity.CenterFeedback">
+		insert into center_feedback(
+		<if test="createTime != null"> create_time</if>
+		<if test="createUserId != null"> ,create_user_id</if>
+		<if test="content != null"> ,content</if>
+		)
+		values(
+		<if test="createTime != null"> #{createTime}</if>
+		<if test="createUserId != null"> ,#{createUserId}</if>
+		<if test="content != null"> ,#{content}</if>
+		)
+	</insert>
+	
+	<delete id="deleteCenterFeedback">
+		delete from center_feedback
+		<include refid="queryConditionCenterFeedback"/>
+	</delete>
+	
+	<update id="updateCenterFeedbackByKey" parameterType="com.seentao.stpedu.common.entity.CenterFeedback">
+		update center_feedback 
+		<set>
+			<if test="feedbackId != null"> feedback_id = #{feedbackId}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="createUserId != null"> create_user_id = #{createUserId}, </if>
+			<if test="content != null"> content = #{content}, </if>
+		</set>
+		<include refid="queryByKeyCenterFeedback"/>
+	</update>
+	
+	<select id="selectSingleCenterFeedback" resultMap="centerFeedback">
+		select 
+		feedback_id
+		,create_time
+		,create_user_id
+		,content
+		from center_feedback 
+		<include refid="queryConditionCenterFeedback"/>
+	</select>
+	
+	<select id="selectAllCenterFeedback" resultMap="centerFeedback">
+		select 
+		feedback_id
+		,create_time
+		,create_user_id
+		,content
+		from center_feedback
+	</select>
+	
+</mapper>
+	

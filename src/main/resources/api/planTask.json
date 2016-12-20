@@ -1,0 +1,42 @@
+{
+    "getTasks": {
+    	"request": {
+            "0": "userId",
+            "1": "classId",
+            "2": "startYear",
+            "3": "startMonth",
+            "4": "endYear",
+            "5": "endMonth"
+        },
+        "result": {
+        	"tasks":"tasks"
+        },
+        "tasks":{
+        	"taskId": "planId",
+        	"taskDate": "taskDate",
+        	"taskYear": "taskYear",
+        	"taskMonth": "taskMonth",
+        	"taskDay": "taskDay",
+        	"taskContent": "planTask",
+        	"targetContent": "planTarget",
+        	"needSign": "isSign",
+        	"hasSigned": "hasSigned",
+        	"hasSignedCount": "actualSignNum",
+        	"needSignCount": "planSignNum"
+        }
+    },
+    "submitTask": {
+    	"request": {
+            "0": "userId",
+            "1": "taskId",
+            "2": "taskDate",
+            "3": "taskContent",
+            "4": "targetContent",
+            "5": "needSign"
+        },
+        "result": {
+        	
+        }
+    }
+}
+

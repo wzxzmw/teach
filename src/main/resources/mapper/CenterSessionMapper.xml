@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.CenterSessionMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.CenterSession" id="centerSession" >
+		<result property="sessionId" column="session_id"/>
+		<result property="userId" column="user_id"/>
+		<result property="userSource" column="user_source"/>
+		<result property="sourceId" column="source_id"/>
+		<result property="loginTime" column="login_time"/>
+		<result property="pushToken" column="push_token"/>
+		<result property="userToken" column="user_token"/>
+		<result property="clientType" column="client_type"/>
+	</resultMap>
+	
+	<sql id="queryConditionCenterSession">
+		<where>
+			<if test="sessionId != null"> and session_id = #{sessionId} </if>
+			<if test="userId != null"> and user_id = #{userId} </if>
+			<if test="userSource != null"> and user_source = #{userSource} </if>
+			<if test="sourceId != null"> and source_id = #{sourceId} </if>
+			<if test="loginTime != null"> and login_time = #{loginTime} </if>
+			<if test="pushToken != null"> and push_token = #{pushToken} </if>
+			<if test="userToken != null"> and user_token = #{userToken} </if>
+			<if test="clientType != null"> and client_type = #{clientType} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyCenterSession">
+		where session_id = #{sessionId}
+	</sql>
+	
+	<insert id="insertCenterSession" parameterType="com.seentao.stpedu.common.entity.CenterSession">
+		<selectKey resultType="java.lang.Integer" keyProperty="sessionId" order="AFTER" >
+	      SELECT currval('center_session_session_id_seq') as session_id
+		</selectKey> 
+		insert into center_session(
+		session_id
+		<if test="userId != null"> ,user_id</if>
+		<if test="userSource != null"> ,user_source</if>
+		<if test="sourceId != null"> ,source_id</if>
+		<if test="loginTime != null"> ,login_time</if>
+		<if test="pushToken != null"> ,push_token</if>
+		<if test="userToken != null"> ,user_token</if>
+		<if test="clientType != null"> ,client_type</if>
+		)
+		values(
+		nextval('center_session_session_id_seq')
+		<if test="userId != null"> ,#{userId}</if>
+		<if test="userSource != null"> ,#{userSource}</if>
+		<if test="sourceId != null"> ,#{sourceId}</if>
+		<if test="loginTime != null"> ,#{loginTime}</if>
+		<if test="pushToken != null"> ,#{pushToken}</if>
+		<if test="userToken != null"> ,#{userToken}</if>
+		<if test="clientType != null"> ,#{clientType}</if>
+		)
+	</insert>
+	
+	<delete id="deleteCenterSession">
+		delete from center_session
+		<include refid="queryConditionCenterSession"/>
+	</delete>
+	
+	<update id="updateCenterSessionByKey" parameterType="com.seentao.stpedu.common.entity.CenterSession">
+		update center_session 
+		<set>
+			<if test="loginTime != null"> login_time = #{loginTime}, </if>
+			<if test="pushToken != null"> push_token = #{pushToken}, </if>
+			<if test="userToken != null"> user_token = #{userToken}</if>
+		</set>
+		where session_id = #{sessionId}
+	</update>
+	
+	<select id="selectSingleCenterSession" resultMap="centerSession">
+		select 
+		session_id
+		,user_id
+		,user_source
+		,source_id
+		,login_time
+		,push_token
+		,user_token
+		,client_type
+		from center_session 
+		<include refid="queryConditionCenterSession"/>
+	</select>
+	
+	<select id="selectAllCenterSession" resultMap="centerSession">
+		select 
+		session_id
+		,user_id
+		,user_source
+		,source_id
+		,login_time
+		,push_token
+		,user_token
+		,client_type
+		from center_session
+	</select>
+	
+</mapper>
+	

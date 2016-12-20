@@ -1,0 +1,55 @@
+{
+    "getClubs": {
+        "request": {
+            "0": "userId",
+            "1": "memberId",
+            "2": "searchWord",
+            "3": "clubId",
+            "4": "hasConcernTheClub", 
+            "5": "start",
+            "6": "limit",
+            "7": "inquireType",
+            "8":"gameEventId"
+        },
+        "result": {
+            "returnCount": "returnCount",
+            "allPage": "allPage",
+            "currentPage": "currentPage",
+            "clubs": "clubs"
+        },
+        "clubs": {
+            "clubId": "clubId",
+            "clubName": "clubName",
+            "clubType": "clubType",
+            "clubLogoLinkId": "logoId",
+            "clubLogoLink": "clubLogoLink",
+            "clubDesc": "clubExplain",
+            "hasBeenAttention": "hasBeenAttention",
+            "clubRole": "clubRole",
+            "clubStatus": "status",
+            "clubMember": "memberNum",
+            "clubCreaterId": "createUserId",
+            "clubCreaterName": "realName",
+            "clubCreaterNickname": "nickName",
+            "fansNum" : "fansNum",
+            "clubApplyStatus" : "clubApplyStatus",
+            "gameBannerId" : "gameBannerId",
+            "gameBannerLink" : "gameBannerLink",
+            "teachingBannerId" : "teachBannerId",
+            "teachingBannerLink" : "teachingBannerLink",
+            "styleBannerId" : "styleBannerId",
+            "styleBannerLink" : "styleBannerLink",
+            "backgroundColorId" : "bgColorId",
+            "colorValue" : "colorValue",
+            "addMemberType" : "addMemberType",
+            "fLevelAccount" : "addAmount",
+            "gameEventId" : "gameEventId",
+            "provinceId" : "provinceId",
+            "cityId" : "cityId",
+            "schoolId" : "schoolId",
+            "schoolName":"schoolName",
+            "clubCityId" : "clubCityId",
+            "clubProvinceId" : "clubProvinceId"
+        }
+    }
+}

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.TeachRelHomeworkAttachmentMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.TeachRelHomeworkAttachment" id="teachRelHomeworkAttachment" >
+		<result property="relId" column="rel_id"/>
+		<result property="homeworkId" column="homework_id"/>
+		<result property="attaId" column="atta_id"/>
+	</resultMap>
+	
+	<sql id="queryConditionTeachRelHomeworkAttachment">
+		<where>
+			<if test="relId != null"> and rel_id = #{relId} </if>
+			<if test="homeworkId != null"> and homework_id = #{homeworkId} </if>
+			<if test="attaId != null"> and atta_id = #{attaId} </if>
+			<if test="homeworkIds != null"> and homework_id in (${homeworkIds}) </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyTeachRelHomeworkAttachment">
+		where rel_id = #{relId}
+	</sql>
+	
+	<insert id="insertTeachRelHomeworkAttachment" parameterType="com.seentao.stpedu.common.entity.TeachRelHomeworkAttachment">
+		insert into teach_rel_homework_attachment(
+		rel_id
+		<if test="homeworkId != null"> ,homework_id</if>
+		<if test="attaId != null"> ,atta_id</if>
+		)
+		values(
+		nextval('teach_rel_homework_attachment_rel_id_seq')
+		<if test="homeworkId != null"> ,#{homeworkId}</if>
+		<if test="attaId != null"> ,#{attaId}</if>
+		)
+	</insert>
+	
+	<insert id="insertTeachRelHomeworkAttachments" parameterType="ArrayList">
+		insert into teach_rel_homework_attachment(
+			rel_id
+			,homework_id
+			,atta_id
+		)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+			(
+			nextval('teach_rel_homework_attachment_rel_id_seq')
+			 ,#{item.homeworkId}
+			 ,#{item.attaId}
+			)
+		</foreach>
+	</insert>
+	
+	<delete id="deleteTeachRelHomeworkAttachment">
+		delete from teach_rel_homework_attachment
+		<include refid="queryConditionTeachRelHomeworkAttachment"/>
+	</delete>
+	
+	<update id="updateTeachRelHomeworkAttachmentByKey" parameterType="com.seentao.stpedu.common.entity.TeachRelHomeworkAttachment">
+		update teach_rel_homework_attachment 
+		<set>
+			<if test="relId != null"> rel_id = #{relId}, </if>
+			<if test="homeworkId != null"> homework_id = #{homeworkId}, </if>
+			<if test="attaId != null"> atta_id = #{attaId}, </if>
+		</set>
+		<include refid="queryByKeyTeachRelHomeworkAttachment"/>
+	</update>
+	
+	<select id="selectSingleTeachRelHomeworkAttachment" resultMap="teachRelHomeworkAttachment">
+		select 
+		rel_id
+		,homework_id
+		,atta_id
+		from teach_rel_homework_attachment 
+		<include refid="queryConditionTeachRelHomeworkAttachment"/>
+	</select>
+	
+	<select id="selectAllTeachRelHomeworkAttachment" resultMap="teachRelHomeworkAttachment">
+		select 
+		rel_id
+		,homework_id
+		,atta_id
+		from teach_rel_homework_attachment
+	</select>
+	
+	<select id="findAllRelAttachment" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+	
+		SELECT 
+		
+			atta_id
+			
+		FROM	teach_rel_homework_attachment
+		
+		WHERE	 homework_id = #{homeworkId}
+	</select>
+</mapper>
+	

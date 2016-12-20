@@ -1,0 +1,13 @@
+{
+    "submitClubMember": {
+    	"request": {
+            "0": "userId",
+            "1": "clubId",
+            "2": "actionType",
+            "3": "clubMemberId"
+        },
+        "result": {
+             
+        }
+    }
+  }  

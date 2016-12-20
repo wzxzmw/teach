@@ -1,0 +1,60 @@
+{
+    "getQuestions": {
+    
+    	"request": {
+            "0": "userId"
+            ,"1": "classId"
+            ,"2": "isExcellent"
+            ,"3": "inquireType"
+            ,"4": "chapterId"
+            ,"5": "questionId"
+            ,"6": "start"
+            ,"7": "limit"
+            ,"8": "classType"
+            ,"9": "_type"
+        }
+        
+        ,"result": {
+        	"returnCount"	:"returnCount"
+        	,"allPage"		:"allPage"
+        	,"currentPage"	:"currentPage"
+        	,"teachingRole"	:"teachingRole"
+        	,"questions"	:"questions"
+        }
+        
+        ,"questions": {
+            "questionId"			: "questionId"
+            ,"questionTitle"		: "title"
+            ,"questionBodyForM"		: "content"
+            ,"qCreateDate"			: "createTime"
+            ,"qCreaterid"			: "createUserId"
+            ,"qCreaterName"			: "qCreaterName"
+            ,"qCreaterNickname"		: "qCreaterNickname"
+            ,"qCreaterHeadLink"		: "qCreaterHeadLink"
+            ,"questionModule"		: "questionModule"
+            ,"classId"				: "classId"
+            ,"chapterId"			: "chapterId"
+            ,"chapterName"			: "chapterName"
+            ,"isExcellent"			: "isEssence"
+            ,"supportCount"			: "praiseNum"
+            ,"answerCount"			: "answerNum"
+            ,"links"				: "links"
+            ,"imgs"					: "imgs"
+        }
+        
+        ,"links": {
+        	"linkId"	:	"linkId"
+        	,"ref"		:	"ref"
+        	,"title"	:	"title"
+        	,"type"		:	"type"
+        	,"href"		:	"href"
+        }
+        ,"imgs": {
+        	"ref"			:	"ref"
+        	,"pixel"		:	"pixel"
+        	,"alt"			:	"alt"
+        	,"src"			:	"src"
+        	,"photosetId"	:	"photosetId"
+        }
+    }
+}

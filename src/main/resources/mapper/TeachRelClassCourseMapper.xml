@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.TeachRelClassCourseMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.TeachRelClassCourse" id="teachRelClassCourse" >
+		<result property="relId" column="rel_id"/>
+		<result property="classId" column="class_id"/>
+		<result property="courseId" column="course_id"/>
+		<result property="showType" column="show_type"/>
+		<result property="createTime" column="create_time"/>
+		<result property="totalStudyNum" column="total_study_num"/>
+	</resultMap>
+	
+	<sql id="queryConditionTeachRelClassCourse">
+		<where>
+			<if test="relId != null"> and rel_id = #{relId} </if>
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="courseId != null"> and course_id = #{courseId} </if>
+			<if test="showType != null"> and show_type = #{showType} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="totalStudyNum != null"> and total_study_num = #{totalStudyNum} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyTeachRelClassCourse">
+		where rel_id = #{relId}
+	</sql>
+	
+	<insert id="insertTeachRelClassCourse" parameterType="com.seentao.stpedu.common.entity.TeachRelClassCourse">
+		insert into teach_rel_class_course(
+		rel_id
+		<if test="classId != null"> ,class_id</if>
+		<if test="courseId != null"> ,course_id</if>
+		<if test="showType != null"> ,show_type</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="totalStudyNum != null"> ,total_study_num</if>
+		)
+		values(
+		nextval('teach_rel_class_course_rel_id_seq')
+		<if test="classId != null"> ,#{classId}</if>
+		<if test="courseId != null"> ,#{courseId}</if>
+		<if test="showType != null"> ,#{showType}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="totalStudyNum != null"> ,#{totalStudyNum}</if>
+		)
+	</insert>
+	
+	<insert id="insertTeachRelClassCourseAll" parameterType="ArrayList">
+		insert into teach_rel_class_course(
+		rel_id
+		,class_id
+		,course_id
+		,show_type
+		,create_time
+		 ,total_study_num
+		)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+		(
+		nextval('teach_rel_class_course_rel_id_seq')
+		 ,#{item.classId}
+		 ,#{item.courseId}
+		 ,#{item.showType}
+		 ,#{item.createTime}
+		 ,#{item.totalStudyNum}
+		)
+		</foreach>
+	</insert>
+	
+	<delete id="deleteTeachRelClassCourse">
+		delete from teach_rel_class_course
+		<include refid="queryConditionTeachRelClassCourse"/>
+	</delete>
+	
+	<update id="updateTeachRelClassCourseByKey" parameterType="com.seentao.stpedu.common.entity.TeachRelClassCourse">
+		update teach_rel_class_course 
+		<set>
+			<if test="relId != null"> rel_id = #{relId}, </if>
+			<if test="classId != null"> class_id = #{classId}, </if>
+			<if test="courseId != null"> course_id = #{courseId}, </if>
+			<if test="showType != null"> show_type = #{showType}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			total_study_num = total_study_num+1
+		</set>
+		<where>
+			<if test="relId != null"> and rel_id = #{relId} </if>
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="courseId != null"> and course_id = #{courseId} </if>
+		</where>
+	</update>
+	
+	<select id="selectSingleTeachRelClassCourse" resultMap="teachRelClassCourse">
+		select 
+		rel_id
+		,class_id
+		,course_id
+		,show_type
+		,create_time
+		,total_study_num
+		from teach_rel_class_course 
+		<include refid="queryConditionTeachRelClassCourse"/>
+		order by course_id
+	</select>
+	
+	<select id="selectAllTeachRelClassCourse" resultMap="teachRelClassCourse">
+		select 
+		rel_id
+		,class_id
+		,course_id
+		,show_type
+		,create_time
+		,total_study_num
+		from teach_rel_class_course
+	</select>
+	
+	<select id="getCourseByClassIdCount" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+		select 
+		count(*)
+		from teach_rel_class_course
+		<where>
+			<if test="classId != null"> class_id = #{classId}</if>
+		</where>
+	</select>
+	
+	
+	
+	<select id="queryCount" parameterType="HashMap" resultType="java.lang.Integer">
+		SELECT 
+		
+			count(*) 
+		
+		FROM teach_rel_class_course 	AS rel 
+		JOIN teach_course 			AS course 	ON rel.course_id = course.course_id
+		<where>
+			<if test="relId != null"> and rel.rel_id = #{relId} </if>
+			<if test="classId != null"> and rel.class_id = #{classId} </if>
+			<if test="courseId != null"> and rel.course_id = #{courseId} </if>
+			<if test="showType != null"> and rel.show_type = #{showType} </if>
+			<if test="createTime != null"> and rel.create_time = #{createTime} </if>
+			<if test="totalStudyNum != null"> and rel.total_study_num = #{totalStudyNum} </if>
+			<if test="showTypeApp != null"> and rel.show_type != ${showTypeApp} </if>
+			<if test="courseType != null"> and course.course_type = #{courseType} </if>
+		</where>
+	</select>
+	
+	<select id="queryByPage" parameterType="HashMap" resultMap="teachRelClassCourse">
+		SELECT 
+		
+			rel.rel_id
+			,rel.class_id
+			,rel.course_id
+			,rel.show_type
+			,rel.create_time
+			,rel.total_study_num
+			
+		FROM teach_rel_class_course 	AS rel 
+		JOIN teach_course 			AS course 	ON rel.course_id = course.course_id
+		
+		<where>
+			<if test="relId != null"> and rel.rel_id = #{relId} </if>
+			<if test="classId != null"> and rel.class_id = #{classId} </if>
+			<if test="courseId != null"> and rel.course_id = #{courseId} </if>
+			<if test="showType != null"> and rel.show_type = #{showType} </if>
+			<if test="createTime != null"> and rel.create_time = #{createTime} </if>
+			<if test="totalStudyNum != null"> and rel.total_study_num = #{totalStudyNum} </if>
+			<if test="showTypeApp != null"> and rel.show_type != ${showTypeApp} </if>
+			<if test="courseType != null"> and course.course_type = #{courseType} </if>
+		</where>
+		ORDER BY rel_id  DESC
+		
+		limit #{limit} offset #{offset}
+		
+		
+	</select>
+	
+</mapper>
+	

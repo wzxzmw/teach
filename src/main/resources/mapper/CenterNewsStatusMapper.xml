@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.CenterNewsStatusMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.CenterNewsStatus" id="centerNewsStatus" >
+		<result property="statusId" column="status_id"/>
+		<result property="userId" column="user_id"/>
+		<result property="isNewPrivateMessage" column="is_new_private_message"/>
+		<result property="isNewAttention" column="is_new_attention"/>
+		<result property="isNewQuestionInvite" column="is_new_question_invite"/>
+		<result property="isNewGameInvite" column="is_new_game_invite"/>
+		<result property="isNewSysNews" column="is_new_sys_news"/>
+	</resultMap>
+	
+	<sql id="queryConditionCenterNewsStatus">
+		<where>
+			<if test="statusId != null"> and status_id = #{statusId} </if>
+			<if test="userId != null"> and user_id = #{userId} </if>
+			<if test="isNewPrivateMessage != null"> and is_new_private_message = #{isNewPrivateMessage} </if>
+			<if test="isNewAttention != null"> and is_new_attention = #{isNewAttention} </if>
+			<if test="isNewQuestionInvite != null"> and is_new_question_invite = #{isNewQuestionInvite} </if>
+			<if test="isNewGameInvite != null"> and is_new_game_invite = #{isNewGameInvite} </if>
+			<if test="isNewSysNews != null"> and is_new_sys_news = #{isNewSysNews} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyCenterNewsStatus">
+		where status_id = #{statusId}
+	</sql>
+	
+	<insert id="insertCenterNewsStatus" parameterType="com.seentao.stpedu.common.entity.CenterNewsStatus">
+		insert into center_news_status(
+		status_id
+		<if test="userId != null"> ,user_id</if>
+		<if test="isNewPrivateMessage != null"> ,is_new_private_message</if>
+		<if test="isNewAttention != null"> ,is_new_attention</if>
+		<if test="isNewQuestionInvite != null"> ,is_new_question_invite</if>
+		<if test="isNewGameInvite != null"> ,is_new_game_invite</if>
+		<if test="isNewSysNews != null"> ,is_new_sys_news</if>
+		)
+		values(
+		nextval('center_news_status_status_id_seq')
+		<if test="userId != null"> ,#{userId}</if>
+		<if test="isNewPrivateMessage != null"> ,#{isNewPrivateMessage}</if>
+		<if test="isNewAttention != null"> ,#{isNewAttention}</if>
+		<if test="isNewQuestionInvite != null"> ,#{isNewQuestionInvite}</if>
+		<if test="isNewGameInvite != null"> ,#{isNewGameInvite}</if>
+		<if test="isNewSysNews != null"> ,#{isNewSysNews}</if>
+		)
+	</insert>
+	
+	<delete id="deleteCenterNewsStatus">
+		delete from center_news_status
+		<include refid="queryConditionCenterNewsStatus"/>
+	</delete>
+	
+	<update id="updateCenterNewsStatusByKey" parameterType="com.seentao.stpedu.common.entity.CenterNewsStatus">
+		update center_news_status 
+		<set>
+			<if test="statusId != null"> status_id = #{statusId}, </if>
+			<if test="userId != null"> user_id = #{userId}, </if>
+			<if test="isNewPrivateMessage != null"> is_new_private_message = #{isNewPrivateMessage}, </if>
+			<if test="isNewAttention != null"> is_new_attention = #{isNewAttention}, </if>
+			<if test="isNewQuestionInvite != null"> is_new_question_invite = #{isNewQuestionInvite}, </if>
+			<if test="isNewGameInvite != null"> is_new_game_invite = #{isNewGameInvite}, </if>
+			<if test="isNewSysNews != null"> is_new_sys_news = #{isNewSysNews}, </if>
+		</set>
+		WHERE user_id = #{userId}
+		<!-- <include refid="queryByKeyCenterNewsStatus"/> -->
+	</update>
+	
+	<update id="updateCenterNewsStatusByKeyAll" parameterType="com.seentao.stpedu.common.entity.CenterNewsStatus">
+		update center_news_status 
+		set is_new_question_invite = #{isNewQuestionInvite} WHERE user_id = #{userId}
+	</update>
+	
+	<update id="updateCenterNewsStatusByKeyAttention" parameterType="com.seentao.stpedu.common.entity.CenterNewsStatus">
+		update center_news_status 
+		set is_new_attention = #{isNewAttention} WHERE user_id = #{userId}
+	</update>
+	
+	<select id="selectSingleCenterNewsStatus" resultMap="centerNewsStatus">
+		select 
+		status_id
+		,user_id
+		,is_new_private_message
+		,is_new_attention
+		,is_new_question_invite
+		,is_new_game_invite
+		,is_new_sys_news
+		from center_news_status 
+		<include refid="queryConditionCenterNewsStatus"/>
+	</select>
+	
+	<select id="selectAllCenterNewsStatus" resultMap="centerNewsStatus">
+		select 
+		status_id
+		,user_id
+		,is_new_private_message
+		,is_new_attention
+		,is_new_question_invite
+		,is_new_game_invite
+		,is_new_sys_news
+		from center_news_status
+	</select>
+	
+	<select id="getCenterNewsStatusRedDotByUserId"  resultMap="centerNewsStatus" parameterType="int">
+		select 
+		status_id
+		,user_id
+		,is_new_private_message
+		,is_new_attention
+		,is_new_question_invite
+		,is_new_game_invite
+		,is_new_sys_news
+		from center_news_status
+		where user_id=#{userId}
+	</select>
+	<!-- 根据用户id查询红点 -->
+	<select id="queryCenterNewsStatusByUserId" resultMap="centerNewsStatus">
+	select 
+		status_id
+		,user_id
+		,is_new_private_message
+		,is_new_attention
+		,is_new_question_invite
+		,is_new_game_invite
+		,is_new_sys_news
+		from center_news_status
+		where user_id=#{userId}
+	
+	</select>
+</mapper>
+	

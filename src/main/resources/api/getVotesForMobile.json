@@ -1,0 +1,29 @@
+{
+	"getVotesForMobile":{
+		"request":{
+		"0":"userId",
+		"1":"start",
+		"2":"limit",
+		"3":"inquireType",
+		"4":"userName",
+		"5":"userType",
+		"6":"userToken"
+		},
+		"result": {
+        	"returnCount":"returnCount",
+        	"allPage":"allPage",
+        	"currentPage": "currentPage",
+        	"votes": "votes"
+        },
+        "votes":{
+        "voteId":"voteId",
+        "voteTitle":"voteTitle",
+        "voteStatus":"voteStatus",
+        "voteLogo":"voteLogo",
+        "voteStartDate":"voteStartDate",
+        "voteEndDate":"voteEndDate",
+        "voteDesc":"voteDesc",
+        "voteOptionUrl":"voteOptionUrl"
+        }
+	}
+}

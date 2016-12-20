@@ -1,0 +1,35 @@
+{
+    "getClubsForMobile": {
+        "request": {
+            "0": "userId",
+            "1": "userType",
+            "2": "memberId",
+            "3": "hasConcernTheClub",
+            "4": "searchWord",
+            "5": "clubId",
+            "6": "start",
+            "7": "limit",
+            "8": "recordingActivity",
+            "9": "inquireType"
+        },
+        "result": {
+            "returnCount": "returnCount",
+            "allPage": "allPage",
+            "currentPage": "currentPage",
+            "clubs": "clubs"
+        },
+        "clubs": {
+            "clubId": "clubId",
+            "clubName": "clubName",
+            "clubType": "clubType",
+            "clubLogoLinkId": "logoId",
+            "clubLogoLink": "clubLogoLink",
+            "clubDesc": "clubExplain",
+            "hasBeenAttention": "hasBeenAttention",
+            "clubRole": "clubRole",
+            "clubStatus": "status",
+            "clubMember": "memberNum"
+             
+        }
+    }
+}

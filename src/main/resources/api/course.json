@@ -1,0 +1,197 @@
+{
+    "getChapters": {
+        "request": {
+            "0": "userType",
+            "1": "userName",
+            "2": "userId",
+            "3": "userToken",
+            "4": "classId"
+        },
+        "result": {
+            "chapters": "chapters",
+        },
+        "chapters": {
+            "chapterId": "chapterId",
+            "chapterTitle": "chapterName",
+            "chapterNum": "chapterNo"
+        }
+    },
+    "getCourseCards": {
+        "request": {
+            "0": "userType",
+            "1": "userName",
+            "2": "userId",
+            "3": "userToken",
+            "4": "classId",
+            "5": "chapterId",
+            "6": "courseCardId",
+            "7": "inquireType"
+        },
+        "result": {
+            "chapters": "chapters"
+        },
+        "chapters": {
+            "chapterId": "chapterId",
+            "chapterTitle": "chapterName",
+            "chapterNum": "chapterNo",
+            "courseCards": "courseCards"
+        },
+        "courseCards": {
+            "courseCardId": "cardId",
+            "ccTitle": "cardTitle",
+            "ccDesc": "cardExplain",
+            "ccLinkId": "imageId",
+            "ccLink": "ccLink",
+            "ccType": "cardType",
+            "ccStartDate": "startTime",
+            "ccEndDate": "endTime",
+            "teacherName": "teacherName",
+            "teacherHeadLink": "teacherHeadLink",
+            "schoolName": "schoolName",
+            "ccStatus": "statusId",
+            "learningNum": "learningNum",
+            "gameId": "matchId",
+            "gameRunYear": "matchYear",
+            "isTheFirstYear": "isTheFirstYear"
+        }
+    },
+    "submitCourseCard": {
+        "request": {
+            "0": "userType",
+            "1": "userName",
+            "2": "userId",
+            "3": "userToken",
+            "4": "courseCardId",
+            "5": "ccTitle",
+            "6": "ccDesc",
+            "7": "ccLinkId",
+            "8": "ccStartDate",
+            "9": "ccEndDate"
+        },
+        "result": {}
+    },
+    "getCourse": {
+        "request": {
+            "0": "userType",
+            "1": "userName",
+            "2": "userId",
+            "3": "userToken",
+            "4": "classId",
+            "5": "courseCardId",
+            "6": "courseId",
+            "7": "start",
+            "8": "limit",
+            "9": "requestSide",
+            "10": "platformModule",
+            "11": "inquireType",
+            "12": "classType"
+        },
+        "result": {
+            "returnCount": "returnCount",
+            "allPage": "allPage",
+            "currentPage": "currentPage",
+            "teachingRole": "teachingRole",
+            "courses": "courses"
+        },
+        "courses": {
+            "courseId": "courseId",
+            "courseTitle": "courseTitle",
+            "courseDesc": "courseExplain",
+            "courseLink": "resCourseLink",
+            "classType": "classType",
+            "courseSource": "courseSource",
+            "courseShowType": "courseShowType",
+            "videoFiles": "videoList",
+            "audioFiles": "audiotList",
+            "otherFiles": "otherList",
+            "teacherName": "resTeacherName",
+            "teacherHeadLink": "resTeacherHeadLink",
+            "schoolName": "resSchoolName",
+            "learningNum": "resLearningNum",
+            "learningStatus": "resLearningStatus",
+            "courseBody": "courseContent",
+            "chapterId": "resChapterId",
+            "chapterTitle": "resChapterTitle",
+            "courseCardId": "resCourseCardId",
+            "ccTitle": "resCcTitle",
+            "ccType": "courseType"
+        },
+        "videoList": {
+            "attachmentId": "attaId",
+            "attachmentName": "fileName",
+            "attachmentLink": "filePath",
+            "attachmentSeconds": "timeLength",
+            "attachmentMajorType": "attaType",
+            "attachmentType": "suffixName"
+        },
+        "audiotList": {
+            "attachmentId": "attaId",
+            "attachmentName": "fileName",
+            "attachmentLink": "filePath",
+            "attachmentSeconds": "timeLength",
+            "attachmentMajorType": "attaType",
+            "attachmentType": "suffixName"
+        },
+        "otherList": {
+             "attachmentId": "attaId",
+            "attachmentName": "fileName",
+            "attachmentLink": "filePath",
+            "attachmentSeconds": "timeLength",
+            "attachmentMajorType": "attaType",
+            "attachmentType": "suffixName"
+        }
+    },
+    "submitCourse": {
+        "request": {
+            "0": "userType",
+            "1": "userName",
+            "2": "userId",
+            "3": "userToken",
+            "4": "courseId",
+            "5": "courseTitle",
+            "6": "courseDesc",
+            "7": "courseShowType",
+            "8": "courseBody",
+            "9": "courseCardId",
+            "10": "audioFileIds",
+            "11": "otherFileIds",
+            "12": "classType",
+            "13": "classId"
+        },
+        "result": {}
+    },
+    "submitCourseShowType": {
+        "request": {
+            "0": "userType",
+            "1": "userName",
+            "2": "userId",
+            "3": "userToken",
+            "4": "courseId",
+            "5": "courseShowType",
+            "6": "classType",
+            "7": "classId",
+            "8": "courseCardId"
+        },
+        "result": {}
+    },
+    "getChaptersForMobile": {
+        "request": {
+            "0": "userType",
+            "1": "userName",
+            "2": "userId",
+            "3": "userToken",
+            "4": "classId"
+        },
+        "result": {
+        	"gameId":"matchId",
+            "chapters": "chapters"
+        },
+        "chapters": {
+            "chapterId": "chapterId",
+            "chapterTitle": "chapterName",
+            "gameRunYear": "matchYear",
+            "chapterNum": "chapterNo",
+            "isTheFirstYear": "isTheFirstYear"
+        }
+    }
+}

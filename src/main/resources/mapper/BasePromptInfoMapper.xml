@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.BasePromptInfoMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.BasePromptInfo" id="basePromptInfo" >
+		<result property="infoId" column="info_id"/>
+		<result property="language" column="language"/>
+		<result property="content" column="content"/>
+		<result property="code" column="code"/>
+	</resultMap>
+	
+	<sql id="queryConditionBasePromptInfo">
+		<where>
+			<if test="infoId != null"> and info_id = #{infoId} </if>
+			<if test="language != null"> and language = #{language} </if>
+			<if test="content != null"> and content = #{content} </if>
+			<if test="code != null"> and code = #{code} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyBasePromptInfo">
+		where info_id = #{infoId}
+	</sql>
+	
+	<insert id="insertBasePromptInfo" parameterType="com.seentao.stpedu.common.entity.BasePromptInfo">
+		insert into base_prompt_info(
+		info_id
+		<if test="language != null"> ,language</if>
+		<if test="content != null"> ,content</if>
+		<if test="code != null"> ,code</if>
+		)
+		values(
+		nextval('base_prompt_info_info_id_seq')
+		<if test="language != null"> ,#{language}</if>
+		<if test="content != null"> ,#{content}</if>
+		<if test="code != null"> ,#{code}</if>
+		)
+	</insert>
+	
+	<delete id="deleteBasePromptInfo">
+		delete from base_prompt_info
+		<include refid="queryConditionBasePromptInfo"/>
+	</delete>
+	
+	<update id="updateBasePromptInfoByKey" parameterType="com.seentao.stpedu.common.entity.BasePromptInfo">
+		update base_prompt_info 
+		<set>
+			<if test="infoId != null"> info_id = #{infoId}, </if>
+			<if test="language != null"> language = #{language}, </if>
+			<if test="content != null"> content = #{content}, </if>
+			<if test="code != null"> code = #{code}, </if>
+		</set>
+		<include refid="queryByKeyBasePromptInfo"/>
+	</update>
+	
+	<select id="selectSingleBasePromptInfo" resultMap="basePromptInfo">
+		select 
+		info_id
+		,language
+		,content
+		,code
+		from base_prompt_info 
+		<include refid="queryConditionBasePromptInfo"/>
+	</select>
+	
+	<select id="selectAllBasePromptInfo" resultMap="basePromptInfo">
+		select 
+		info_id
+		,language
+		,content
+		,code
+		from base_prompt_info
+	</select>
+	
+</mapper>
+	

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.ClubTrainingQuestionAnswerMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.ClubTrainingQuestionAnswer" id="clubTrainingQuestionAnswer" >
+		<result property="answerId" column="answer_id"/>
+		<result property="questionId" column="question_id"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="createTime" column="create_time"/>
+		<result property="praiseNum" column="praise_num"/>
+		<result property="content" column="content"/>
+		<result property="isDelete" column="is_delete"/>
+	</resultMap>
+	
+	<sql id="queryConditionClubTrainingQuestionAnswer">
+		<where>
+			<if test="answerId != null"> and answer_id = #{answerId} </if>
+			<if test="questionId != null"> and question_id = #{questionId} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="praiseNum != null"> and praise_num = #{praiseNum} </if>
+			<if test="content != null"> and content = #{content} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+			<if test="questionIds != null"> and question_id in (${questionIds}) </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyClubTrainingQuestionAnswer">
+		where answer_id = #{answerId}
+	</sql>
+	
+	<insert id="insertClubTrainingQuestionAnswer" parameterType="com.seentao.stpedu.common.entity.ClubTrainingQuestionAnswer">
+		insert into club_training_question_answer(
+		answer_id
+		<if test="questionId != null"> ,question_id</if>
+		<if test="createUserId != null"> ,create_user_id</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="praiseNum != null"> ,praise_num</if>
+		<if test="content != null"> ,content</if>
+		<if test="isDelete != null"> ,is_delete</if>
+		)
+		values(
+		nextval('club_training_question_answer_answer_id_seq')
+		<if test="questionId != null"> ,#{questionId}</if>
+		<if test="createUserId != null"> ,#{createUserId}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="praiseNum != null"> ,#{praiseNum}</if>
+		<if test="content != null"> ,#{content}</if>
+		<if test="isDelete != null"> ,#{isDelete}</if>
+		)
+	</insert>
+	
+	<delete id="deleteClubTrainingQuestionAnswer">
+		delete from club_training_question_answer
+		<include refid="queryConditionClubTrainingQuestionAnswer"/>
+	</delete>
+	
+	<update id="updateClubTrainingQuestionAnswerByKey" parameterType="com.seentao.stpedu.common.entity.ClubTrainingQuestionAnswer">
+		update club_training_question_answer 
+		<set>
+			<if test="answerId != null"> answer_id = #{answerId}, </if>
+			<if test="questionId != null"> question_id = #{questionId}, </if>
+			<if test="createUserId != null"> create_user_id = #{createUserId}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="praiseNum != null"> praise_num = #{praiseNum}, </if>
+			<if test="content != null"> content = #{content}, </if>
+			<if test="isDelete != null"> is_delete = #{isDelete}, </if>
+		</set>
+		<include refid="queryByKeyClubTrainingQuestionAnswer"/>
+	</update>
+	
+	<select id="selectSingleClubTrainingQuestionAnswer" resultMap="clubTrainingQuestionAnswer">
+		select 
+		answer_id
+		,question_id
+		,create_user_id
+		,create_time
+		,praise_num
+		,content
+		,is_delete
+		from club_training_question_answer 
+		<include refid="queryConditionClubTrainingQuestionAnswer"/>
+		ORDER BY answer_id DESC
+	</select>
+	
+	<select id="selectAllClubTrainingQuestionAnswer" resultMap="clubTrainingQuestionAnswer">
+		select 
+		answer_id
+		,question_id
+		,create_user_id
+		,create_time
+		,praise_num
+		,content
+		,is_delete
+		from club_training_question_answer
+	</select>
+	
+	<update id="delClubTrainingQuestionAnswerAll" parameterType="ArrayList">
+	
+		 update club_training_question_answer 
+		 
+           <trim prefix="set" suffixOverrides=",">
+           
+            	<trim prefix="is_delete = CASE answer_id " suffix="end,">
+	                <foreach collection="list" item="i" index="index">
+	                        <if test="i.isDelete != null">
+	                         WHEN #{i.answerId}  THEN #{i.isDelete}
+	                        </if>
+	                </foreach>
+             	</trim>
+             	
+           </trim>
+           
+         WHERE answer_id in
+         
+         	<foreach collection="list" separator="," item="i" index="index" open="(" close=")" >
+             	#{i.answerId}
+         	</foreach>
+	</update>
+	
+	
+	
+	<select id="queryCount" parameterType="HashMap" resultType="java.lang.Integer">
+	
+		SELECT 
+		
+			COUNT(*) 
+			
+		FROM club_training_question_answer
+		
+		<include refid="queryConditionClubTrainingQuestionAnswer"/>
+		
+	</select>
+	
+	<select id="queryByPageids" parameterType="HashMap" resultType="java.lang.Integer">
+	
+		SELECT 
+		
+			answer_id
+			
+		FROM club_training_question_answer
+		
+		<include refid="queryConditionClubTrainingQuestionAnswer"/>
+		
+		ORDER BY answer_id DESC
+		
+		LIMIT #{limit} OFFSET #{offset}
+	</select>
+	
+	
+	<select id="queryByPage" parameterType="HashMap" resultMap="clubTrainingQuestionAnswer">
+	
+		SELECT 
+		
+			answer_id
+			,question_id
+			,create_user_id
+			,create_time
+			,praise_num
+			,content
+			,is_delete
+			
+		FROM club_training_question_answer
+		
+		<where>
+			<if test="answerId != null"> and answer_id = #{answerId} </if>
+			<if test="questionId != null"> and question_id = #{questionId} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="praiseNum != null"> and praise_num = #{praiseNum} </if>
+			<if test="content != null"> and content = #{content} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+			<if test="ids_key != null"> and answer_id in (${ids_key}) </if>
+		</where>
+		
+		ORDER BY answer_id DESC
+		
+		<if test="ids_key == null"> LIMIT #{limit} OFFSET #{offset} </if>
+		
+		
+	</select>
+	
+	
+</mapper>
+	

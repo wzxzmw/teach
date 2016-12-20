@@ -1,0 +1,15 @@
+{
+    "submitQuestion": {
+    	"request": {
+            "0": "userId"
+            ,"1": "questionTitle"
+            ,"2": "questionBody"
+            ,"3": "classId"
+            ,"4": "chapterId"
+            ,"5": "classType"
+        },
+        "result": {
+             
+        }
+    }
+  }  

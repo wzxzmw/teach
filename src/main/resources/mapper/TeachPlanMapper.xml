@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.TeachPlanMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.TeachPlan" id="teachPlan" >
+		<result property="planId" column="plan_id"/>
+		<result property="classId" column="class_id"/>
+		<result property="planDate" column="plan_date"/>
+		<result property="planTask" column="plan_task"/>
+		<result property="planTarget" column="plan_target"/>
+		<result property="isSign" column="is_sign"/>
+		<result property="planSignNum" column="plan_sign_num"/>
+		<result property="actualSignNum" column="actual_sign_num"/>
+		<result property="createTime" column="create_time"/>
+		<result property="isDelete" column="is_delete"/>
+	</resultMap>
+	
+	<sql id="queryConditionTeachPlan">
+		<where>
+			<if test="planId != null"> and plan_id = #{planId} </if>
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="planDate != null"> and plan_date = #{planDate} </if>
+			<if test="planTask != null"> and plan_task = #{planTask} </if>
+			<if test="planTarget != null"> and plan_target = #{planTarget} </if>
+			<if test="isSign != null"> and is_sign = #{isSign} </if>
+			<if test="planSignNum != null"> and plan_sign_num = #{planSignNum} </if>
+			<if test="actualSignNum != null"> and actual_sign_num = #{actualSignNum} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyTeachPlan">
+		where plan_id = #{planId}
+	</sql>
+	
+	<insert id="insertTeachPlan" parameterType="com.seentao.stpedu.common.entity.TeachPlan">
+		insert into teach_plan(
+		plan_id
+		<if test="classId != null"> ,class_id</if>
+		<if test="planDate != null"> ,plan_date</if>
+		<if test="planTask != null"> ,plan_task</if>
+		<if test="planTarget != null"> ,plan_target</if>
+		<if test="isSign != null"> ,is_sign</if>
+		<if test="planSignNum != null"> ,plan_sign_num</if>
+		<if test="actualSignNum != null"> ,actual_sign_num</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="isDelete != null">, is_delete  </if>
+		)
+		values(
+		nextval('teach_plan_plan_id_seq')
+		<if test="classId != null"> ,#{classId}</if>
+		<if test="planDate != null"> ,#{planDate}</if>
+		<if test="planTask != null"> ,#{planTask}</if>
+		<if test="planTarget != null"> ,#{planTarget}</if>
+		<if test="isSign != null"> ,#{isSign}</if>
+		<if test="planSignNum != null"> ,#{planSignNum}</if>
+		<if test="actualSignNum != null"> ,#{actualSignNum}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="isDelete != null"> , #{isDelete} </if>
+		)
+	</insert>
+	
+	<delete id="deleteTeachPlan">
+		delete from teach_plan
+		<include refid="queryConditionTeachPlan"/>
+	</delete>
+	
+	<update id="updateTeachPlanByKey" parameterType="com.seentao.stpedu.common.entity.TeachPlan">
+		update teach_plan 
+		<set>
+			<if test="planId != null"> plan_id = #{planId}, </if>
+			<if test="classId != null"> class_id = #{classId}, </if>
+			<if test="planDate != null"> plan_date = #{planDate}, </if>
+			<if test="planTask != null"> plan_task = #{planTask}, </if>
+			<if test="planTarget != null"> plan_target = #{planTarget}, </if>
+			<if test="isSign != null"> is_sign = #{isSign}, </if>
+			<if test="planSignNum != null"> plan_sign_num = #{planSignNum}, </if>
+			<if test="actualSignNum != null"> actual_sign_num = #{actualSignNum}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="isDelete != null">  is_delete = #{isDelete}, </if>
+		</set>
+		<include refid="queryByKeyTeachPlan"/>
+	</update>
+	
+	<select id="selectSingleTeachPlan" resultMap="teachPlan">
+		select 
+		plan_id
+		,class_id
+		,plan_date
+		,plan_task
+		,plan_target
+		,is_sign
+		,plan_sign_num
+		,actual_sign_num
+		,create_time
+		,is_delete
+		from teach_plan 
+		<include refid="queryConditionTeachPlan"/>
+	</select>
+	
+	<select id="selectAllTeachPlan" resultMap="teachPlan">
+		select 
+		plan_id
+		,class_id
+		,plan_date
+		,plan_task
+		,plan_target
+		,is_sign
+		,plan_sign_num
+		,actual_sign_num
+		,create_time
+		,is_delete
+		from teach_plan
+	</select>
+	
+	<select id="queryCount" resultType="java.lang.Integer">
+		select count(*) from teach_plan tp where tp.is_sign = 1 and tp.class_id = #{classId} and tp.is_delete = 0
+	</select>
+	
+	<select id="queryHaveCount" resultType="java.lang.Integer">
+		select
+		count (*)
+		from
+			(
+				select
+					tp.plan_id
+				from
+					teach_plan_sign tps
+				left join teach_plan tp on tp.plan_id = tps.plan_id
+				<where>
+					<if test="classId != null"> and tp.class_id = #{classId}</if>
+					<if test="studentId != null"> and tps.student_id = #{studentId} </if>
+					and tps.sign_time is not null
+					and tp.is_sign = 1
+					and tp.is_delete = 0
+					and tps.is_delete = 0
+				</where>
+			) a
+	</select>
+	<insert id="insertTeachPlanReturn" parameterType="com.seentao.stpedu.common.entity.TeachPlan">
+		<selectKey resultType="java.lang.Integer"  order="AFTER" keyProperty="planId" >
+	        SELECT currval('teach_plan_plan_id_seq') AS plan_id   
+	    </selectKey>
+		insert into teach_plan(
+		plan_id
+		<if test="classId != null"> ,class_id</if>
+		<if test="planDate != null"> ,plan_date</if>
+		<if test="planTask != null"> ,plan_task</if>
+		<if test="planTarget != null"> ,plan_target</if>
+		<if test="isSign != null"> ,is_sign</if>
+		<if test="planSignNum != null"> ,plan_sign_num</if>
+		<if test="actualSignNum != null"> ,actual_sign_num</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="isDelete != null"> ,is_delete</if>
+		)
+		values(
+		nextval('teach_plan_plan_id_seq')
+		<if test="classId != null"> ,#{classId}</if>
+		<if test="planDate != null"> ,#{planDate}</if>
+		<if test="planTask != null"> ,#{planTask}</if>
+		<if test="planTarget != null"> ,#{planTarget}</if>
+		<if test="isSign != null"> ,#{isSign}</if>
+		<if test="planSignNum != null"> ,#{planSignNum}</if>
+		<if test="actualSignNum != null"> ,#{actualSignNum}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="isDelete != null"> ,#{isDelete}</if>
+		)
+	</insert>
+	<select id="mapUpdateTeachPlan" resultMap="teachPlan"  parameterType="HashMap">
+		select 
+		plan_id
+		,class_id
+		,plan_date
+		,plan_task
+		,plan_target
+		,is_sign
+		,plan_sign_num
+		,actual_sign_num
+		,create_time
+		,is_delete
+		from teach_plan
+		where class_id = #{classId}  
+		and  plan_date >= #{staDate}
+		and plan_date &lt;= #{endDate}
+		and is_delete = #{isDelete}
+	</select>
+	
+	<update id="delTeachPlanAll" parameterType="ArrayList">
+	
+		 update teach_plan 
+		 
+           <trim prefix="set" suffixOverrides=",">
+           
+            	<trim prefix="is_delete = CASE plan_id " suffix="end,">
+	                <foreach collection="list" item="i" index="index">
+	                        <if test="i.isDelete != null">
+	                         WHEN #{i.planId}  THEN #{i.isDelete}
+	                        </if>
+	                </foreach>
+             	</trim>
+             	
+           </trim>
+           
+         WHERE plan_id in
+         
+         	<foreach collection="list" separator="," item="i" index="index" open="(" close=")" >
+             	#{i.planId}
+         	</foreach>
+	</update>
+</mapper>
+	

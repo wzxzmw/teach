@@ -1,0 +1,370 @@
+{
+    "login": {
+    	"request": {
+            "0": "userName",
+            "1": "password",
+            "2": "pushToken",
+            "3": "sourceID"
+        },
+        "result": {
+        	"userId":"userId",
+        	"userName":"userName",
+        	"userType":"userType",
+        	"userToken":"userToken",
+        	"imgLink":"imgLink",
+        	"nickName":"nickName"
+        }
+    },
+    "logout": {
+    	"request": {
+            "0": "userId",
+            "1": "userType",
+            "2": "userName",
+            "3": "userToken"
+        },
+        "result": {
+        	
+        }
+    },
+    "logoutForMobile": {
+    	"request": {
+            "0": "userId",
+            "1": "userType",
+            "2": "userName",
+            "3": "userToken"
+        },
+        "result": {
+        	
+        }
+    },
+    "regist": {
+    	"request": {
+            "0": "phoneNumber",
+            "1": "iCode",
+            "2": "password",
+            "3": "invitationCode",
+            "4": "registType",
+            "5": "nickname"
+        },
+        "result": {
+        	
+        }
+    },
+    "resetPassword": {
+    	"request": {
+            "0": "userId",
+            "1": "userType",
+            "2": "userName",
+            "3": "userToken",
+            "4": "oldPassword",
+            "5": "newPassword"
+        },
+        "result": {
+        	
+        }
+    },
+    "getLoginUser": {
+    	"request": {
+            "0": "userId",
+            "1": "userType",
+            "2": "userName",
+            "3": "userToken",
+            "4": "inquireType"
+        },
+        "result": {
+	        "userId":"userId",
+			"userName":"userName",
+			"userType":"userType",
+			"userToken":"userToken",
+			"headLinkId":"headLinkId",
+			"headLink":"headLink",
+			"nickname":"nickname",
+			"sex":"sex",
+			"phoneNumber":"phoneNumber",
+			"realName":"realName",
+			"schoolId":"schoolId",
+			"schoolName":"schoolName",
+			"collegeId":"collegeId",
+			"collegeName":"collegeName",
+			"idcard":"idcard",
+			"desc":"desc",
+			"birthday":"birthday",
+			"profession":"profession",
+			"studentID":"studentID",
+			"studentCard":"studentCard",
+			"teacherCard":"teacherCard",
+			"positionalTitle":"positionalTitle",
+			"speciality":"speciality",
+			"grade":"grade",
+			"educationLevel":"educationLevel",
+			"teachingRole":"teachingRole",
+			"hasJoinClass":"hasJoinClass",
+			"classId":"classId",
+			"clubRole":"clubRole",
+			"hasJoinClub":"hasJoinClub",
+			"clubId":"clubId",
+			"gameEventId":"gameEventId",
+			"provinceId":"provinceId",
+			"cityId":"cityId",
+			"address":"address"
+        }
+    },
+    "getUsers": {
+    	"request": {
+            "0": "userType",
+            "1": "userName",
+            "2": "userId",
+            "3": "userToken",
+            "4": "platformModule",
+            "5": "start",
+            "6": "limit",
+            "7": "inquireType",
+            "8": "hasQualification",
+            "9": "clubApplyStatus",
+            "10": "memberId",
+            "11": "schoolId",
+            "12": "classId",
+            "13": "clubId",
+            "14": "gameId",
+            "15": "gameFieldId",
+            "16": "searchWord",
+            "17": "gameEventId",
+            "18": "taskId",
+            "19": "classType",
+            "20": "quizId"
+        },
+        "result": {
+        	"returnCount":"returnCount",
+        	"allPage":"allPage",
+        	"currentPage":"currentPage",
+        	"users":"users"
+        },
+        "users":{
+        	"userId": "userId",
+			"realName": "realName",
+			"nickname": "nickname",
+			"desc": "desc",
+			"sex": "sex",
+			"studentCard": "studentCard",
+			"headLinkId": "headLinkId",
+			"headLink": "headLink",
+			"schoolId": "schoolId",
+			"schoolName": "schoolName",
+			"classId": "classId",
+			"className": "className",
+			"hasQualification": "hasQualification",
+			"certRequestStatus": "certRequestStatus",
+			"collegeId": "collegeId",
+			"collegeName": "collegeName",
+			"score": "score",
+			"teachingAchievementId": "teachingAchievementId",
+			"completedCourseCards": "completedCourseCards",
+			"allCourseCards": "allCourseCards",
+			"learningSeconds": "learningSeconds",
+			"completedChapters": "completedChapters",
+			"notStartCourseCards": "notStartCourseCards",
+			"notCompletedCourseCards": "notCompletedCourseCards",
+			"notSetCourseCards": "notSetCourseCards",
+			"allTasks": "allTasks",
+			"hasSigninTasks": "hasSigninTasks",
+			"hasBeenAttention": "hasBeenAttention",
+			"attentionEachOther": "attentionEachOther",
+			"clubId":"clubId",
+			"clubName": "clubName",
+			"clubLogoLink": "clubLogoLink",
+			"clubRole": "clubRole",
+			"clubApplyStatus": "clubApplyStatus",
+			"applicationContent": "applicationContent",
+			"joinClassDate": "joinClassDate",
+			"fLevelAccountForJoinClass": "fLevelAccountForJoinClass",
+			"isLoginUser": "isLoginUser",
+			"supportCount": "supportCount",
+			"attentionNum": "attentionNum",
+			"fansNum": "fansNum",
+			"practiceCount": "practiceCount",
+			"hasJoinClub": "hasJoinClub",
+			"clubMember": "clubMember",
+			"attentionClubCount": "attentionClubCount",
+			"attentionCompanyCount": "attentionCompanyCount",
+			"teachingRole": "teachingRole",
+			"signinDate": "signinDate",
+			"joinGameCount": "joinGameCount",
+			"joinTrainingClassCount": "joinTrainingClassCount",
+			"joinQuizCount": "joinQuizCount",
+			"attentionGameEvenCount": "attentionGameEvenCount",
+			"clubStatus": "clubStatus",
+			"bettingRank":"bettingRank",
+			"lastBettingDate":"lastBettingDate",
+			"bettingCanCount":"bettingCanCount",
+			"bettingCannotCount":"bettingCannotCount",
+			"bettingGain":"bettingGain"
+        }
+    },
+    "submitUserDesc": {
+        "request": {
+            "0": "userId",
+            "1": "desc"
+        },
+        "result": {
+        	
+        }
+    },
+    "submitBindingNumber": {
+        "request": {
+            "0": "userId",
+            "1": "oldBindingNumber",
+            "2": "newBindingNumber",
+            "3": "verifyPictureNumber",
+            "4": "verifyNumber"
+        },
+        "result": {
+        }
+    },
+    "submitFeedback": {
+        "request": {
+            "0": "userId",
+            "1": "content"
+        },
+        "result": {
+        }
+    },
+    "getProtocol": {
+        "request": {
+            "0": "userId",
+            "1": "protocolType"
+        },
+        "result": {
+        	"protocolContent": "protocolContent",
+        	"protocolLink": "protocolLink"
+        }
+    },
+     "getCompanies": {
+        "request": {
+            "0": "userId",
+            "1": "memberId",
+            "2": "start",
+            "3": "limit",
+            "4": "inquireType"
+        },
+        "result": {
+        	"returnCount": "returnCount",
+        	"allPage": "allPage",
+        	"currentPage": "currentPage",
+        	"companies": "companies"
+        },
+        "companies": {
+            "companyId": "companyId",
+            "companyName": "companyName",
+            "companyLogoLink": "companyLogoLink",
+            "postCount": "postCount",
+            "postTypeCount": "postTypeCount",
+            "hasBeenAttention": "hasBeenAttention",
+            "supportCount": "supportCount",
+            "companyDetailLink": "companyDetailLink"
+        }
+    },
+    "getCompaniesForMobile": {
+        "request": {
+            "0": "userId",
+            "1": "memberId",
+            "2": "start",
+            "3": "limit",
+            "4": "inquireType"
+        },
+        "result": {
+        	"returnCount": "returnCount",
+        	"allPage": "allPage",
+        	"currentPage": "currentPage",
+        	"companies": "companies"
+        },
+        "companies": {
+            "companyId": "companyId",
+            "companyName": "companyName",
+            "companyLogoLink": "companyLogoLink",
+            "postCount": "postCount",
+            "postTypeCount": "postTypeCount",
+            "hasBeenAttention": "hasBeenAttention",
+            "supportCount": "supportCount",
+            "companyDetailLink": "companyDetailLink"
+        }
+    },
+    "getVerifyPicture": {
+        "request": {
+            "0": "userId"
+        },
+        "result": {
+        	"verifyPictureLink": "verifyPictureLink",
+        	"verifyPictureNumber": "verifyPictureNumber"
+        }
+    },
+    "loginForMobile": {
+    	"request": {
+            "0": "userName",
+            "1": "password",
+            "2": "pushToken",
+            "3": "sourceID"
+        },
+        "result": {
+        	"userId":"userId",
+        	"userName":"userName",
+        	"userType":"userType",
+        	"userToken":"userToken",
+        	"imgLink":"imgLink",
+        	"nickName":"nickName"
+        }
+    },
+    
+    "getLoginUserForMobile": {
+    	"request": {
+            "0": "userId",
+            "1": "userType",
+            "2": "userName",
+            "3": "userToken",
+            "4": "inquireType"
+        },
+        "result": {
+	        "userId":"userId",
+			"userName":"userName",
+			"userType":"userType",
+			"userToken":"userToken",
+			"headLinkId":"headLinkId",
+			"headLink":"headLink",
+			"nickname":"nickname",
+			"sex":"sex",
+			"phoneNumber":"phoneNumber",
+			"realName":"realName",
+			"schoolId":"schoolId",
+			"schoolName":"schoolName",
+			"collegeId":"collegeId",
+			"collegeName":"collegeName",
+			"idcard":"idcard",
+			"desc":"desc",
+			"birthday":"birthday",
+			"profession":"profession",
+			"studentID":"studentID",
+			"studentCard":"studentCard",
+			"teacherCard":"teacherCard",
+			"positionalTitle":"positionalTitle",
+			"speciality":"speciality",
+			"grade":"grade",
+			"educationLevel":"educationLevel",
+			"teachingRole":"teachingRole",
+			"hasJoinClass":"hasJoinClass",
+			"classId":"classId",
+			"clubRole":"clubRole",
+			"hasJoinClub":"hasJoinClub",
+			"clubId":"clubId",
+			"gameEventId":"gameEventId",
+			"provinceId":"provinceId",
+			"cityId":"cityId",
+			"address":"address"
+        }
+    }
+}
+
+
+
+
+
+
+

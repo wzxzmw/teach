@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.ClubRelRemindMemberMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.ClubRelRemindMember" id="clubRelRemindMember" >
+		<result property="relId" column="rel_id"/>
+		<result property="remindId" column="remind_id"/>
+		<result property="userId" column="user_id"/>
+	</resultMap>
+	
+	<resultMap type="com.seentao.stpedu.common.entity.ClubRemind" id="clubRemind" >
+		<result property="remindId" column="remind_id"/>
+		<result property="clubId" column="club_id"/>
+		<result property="content" column="content"/>
+		<result property="createTime" column="create_time"/>
+		<result property="createUserId" column="create_user_id"/>
+	</resultMap>
+	
+	<sql id="queryConditionClubRelRemindMember">
+		<where>
+			<if test="relId != null"> and rel_id = #{relId} </if>
+			<if test="remindId != null"> and remind_id = #{remindId} </if>
+			<if test="userId != null"> and user_id = #{userId} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyClubRelRemindMember">
+		where rel_id = #{relId}
+	</sql>
+	
+	<insert id="insertClubRelRemindMember" parameterType="com.seentao.stpedu.common.entity.ClubRelRemindMember">
+		insert into club_rel_remind_member(
+		<if test="remindId != null"> ,remind_id</if>
+		<if test="userId != null"> ,user_id</if>
+		)
+		values(
+		<if test="remindId != null"> ,#{remindId}</if>
+		<if test="userId != null"> ,#{userId}</if>
+		)
+	</insert>
+	
+	
+	<delete id="deleteClubRelRemindMember">
+		delete from club_rel_remind_member
+		<include refid="queryConditionClubRelRemindMember"/>
+	</delete>
+	
+	<update id="updateClubRelRemindMemberByKey" parameterType="com.seentao.stpedu.common.entity.ClubRelRemindMember">
+		update club_rel_remind_member 
+		<set>
+			<if test="relId != null"> rel_id = #{relId}, </if>
+			<if test="remindId != null"> remind_id = #{remindId}, </if>
+			<if test="userId != null"> user_id = #{userId}, </if>
+		</set>
+		<include refid="queryByKeyClubRelRemindMember"/>
+	</update>
+	
+	<select id="selectSingleClubRelRemindMember" resultMap="clubRelRemindMember">
+		select 
+		rel_id
+		,remind_id
+		,user_id
+		from club_rel_remind_member 
+		<include refid="queryConditionClubRelRemindMember"/>
+	</select>
+	
+	<select id="selectAllClubRelRemindMember" resultMap="clubRelRemindMember">
+		select 
+		rel_id
+		,remind_id
+		,user_id
+		from club_rel_remind_member
+	</select>
+	<insert id="insertBatchClubRelRemindMember" parameterType="java.util.List">
+		insert into club_rel_remind_member(
+		remind_id, user_id
+		)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+		(
+		#{item.remindId}, #{item.userId}
+		)
+		</foreach>
+
+	</insert>
+	<select id="queryRemindMemberCount" parameterType="HashMap" resultType="java.lang.Integer" >
+		select count(*) from club_remind a,club_rel_remind_member b 
+		where a.remind_id = b.remind_id and a.club_id=#{clubId}
+	</select>
+	<select id="selectEveryOneClubRemind" parameterType="HashMap" resultMap="clubRelRemindMember">
+		select b.rel_id,b.remind_id,b.user_id from club_remind a,club_rel_remind_member b 
+		where a.remind_id = b.remind_id and a.club_id=#{clubId}
+		order by a.create_time desc limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="queryMeRemindMemberCount" parameterType="HashMap" resultType="java.lang.Integer" >
+		select count(*) from club_remind a,club_rel_remind_member b 
+		where a.remind_id = b.remind_id and a.club_id=#{clubId} and a.create_user_id=#{createUserId}
+	</select>
+	<select id="selectMeClubRemind" parameterType="HashMap" resultMap="clubRelRemindMember">
+		select b.rel_id,b.remind_id,b.user_id from club_remind a,club_rel_remind_member b 
+		where a.remind_id = b.remind_id and a.club_id=#{clubId} and a.create_user_id=#{createUserId}
+		order by a.create_time desc limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="queryMyRemindMemberCount" parameterType="HashMap" resultType="java.lang.Integer" >
+		select count(*) from club_remind a,club_rel_remind_member b 
+		where a.remind_id = b.remind_id and a.club_id=#{clubId} and b.user_id=#{userId}
+	</select>
+	<select id="selectMyClubRemind" parameterType="HashMap" resultMap="clubRelRemindMember">
+		select b.rel_id,b.remind_id,b.user_id from club_remind a,club_rel_remind_member b 
+		where a.remind_id = b.remind_id and a.club_id=#{clubId} and b.user_id=#{userId}
+		order by a.create_time desc limit #{limit} offset #{offset}
+	</select>
+</mapper>
+	

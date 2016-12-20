@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.CenterAttentionMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.CenterAttention"
+		id="centerAttention">
+		<result property="atteId" column="atte_id" />
+		<result property="createUserId" column="create_user_id" />
+		<result property="createTime" column="create_time" />
+		<result property="relObjetType" column="rel_objet_type" />
+		<result property="relObjetId" column="rel_objet_id" />
+	</resultMap>
+
+	<sql id="queryConditionCenterAttention">
+		<where>
+			<if test="atteId != null"> and atte_id = #{atteId} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="relObjetType != null"> and rel_objet_type = #{relObjetType} </if>
+			<if test="relObjetId != null"> and rel_objet_id = #{relObjetId} </if>
+			<if test="relObjetIdIds != null"> and rel_objet_id in (${relObjetIdIds})</if>
+		</where>
+	</sql>
+
+	<sql id="queryByKeyCenterAttention">
+		where atte_id = #{atteId}
+	</sql>
+
+	<insert id="insertCenterAttention" parameterType="com.seentao.stpedu.common.entity.CenterAttention">
+		<selectKey resultType="java.lang.Integer"  order="AFTER" keyProperty="atteId" >
+	        SELECT currval('center_attention_atte_id_seq') AS atte_id   
+	    </selectKey>
+		insert into center_attention(
+		atte_id
+		<if test="createUserId != null">,create_user_id</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="relObjetType != null"> ,rel_objet_type</if>
+		<if test="relObjetId != null"> ,rel_objet_id</if>
+		)
+		values(
+		nextval('center_attention_atte_id_seq')
+		<if test="createUserId != null">, #{createUserId}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="relObjetType != null"> ,#{relObjetType}</if>
+		<if test="relObjetId != null"> ,#{relObjetId}</if>
+		)
+	</insert>
+
+	<delete id="deleteCenterAttention">
+		delete from center_attention
+		<include refid="queryConditionCenterAttention" />
+	</delete>
+
+	<update id="updateCenterAttentionByKey" parameterType="com.seentao.stpedu.common.entity.CenterAttention">
+		update center_attention
+		<set>
+			<if test="atteId != null"> atte_id = #{atteId}, </if>
+			<if test="createUserId != null"> create_user_id = #{createUserId}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="relObjetType != null"> rel_objet_type = #{relObjetType}, </if>
+			<if test="relObjetId != null"> rel_objet_id = #{relObjetId}, </if>
+		</set>
+		<include refid="queryByKeyCenterAttention" />
+	</update>
+
+	<select id="selectSingleCenterAttention" resultMap="centerAttention">
+		select
+		atte_id
+		,create_user_id
+		,create_time
+		,rel_objet_type
+		,rel_objet_id
+		from
+		center_attention
+		<include refid="queryConditionCenterAttention" />
+	</select>
+
+	<select id="selectAllCenterAttention" resultMap="centerAttention">
+		select
+		atte_id
+		,create_user_id
+		,create_time
+		,rel_objet_type
+		,rel_objet_id
+		from
+		center_attention
+	</select>
+
+	<select id="getConcernCount" resultType="java.lang.Integer">
+		select
+		count(*)
+		from center_attention
+		<where>
+			<if test="createUserId != null"> and create_user_id = #{createUserId}</if>
+			<if test="relObjetType != null"> and rel_objet_type = #{relObjetType}</if>
+		</where>
+	</select>
+
+	<select id="getFansCount" resultType="java.lang.Integer">
+		select
+		count(*)
+		from center_attention
+		<where>
+			<if test="relObjetId != null"> rel_objet_id = #{relObjetId} </if>
+			<if test="relObjetType != null"> and rel_objet_type = #{relObjetType} </if>
+		</where>
+	</select>
+
+	<select id="getFansCountInfo" resultType="java.lang.Integer">
+		SELECT count(*) from center_attention
+		where rel_objet_type = #{relObjetType} and rel_objet_id = #{relObjetId}
+	</select>
+
+	<select id="selectCenterAfollow" resultMap="centerAttention">
+		SELECT rel_objet_id from center_attention where create_user_id =
+		#{createUserId} and rel_objet_type = #{relObjetType}
+	</select>
+
+	<select id="queryCount" parameterType="HashMap" resultType="java.lang.Integer">
+		select count(*) from center_attention
+		<include refid="queryConditionCenterAttention" />
+	</select>
+	<select id="selectCenterAttentions" parameterType="HashMap"
+		resultMap="centerAttention">
+		select
+		atte_id
+		,rel_objet_id
+		from center_attention
+		where create_user_id = #{createUserId} and rel_objet_type = #{relObjetType}
+		order by create_time desc limit #{limit} offset #{offset}
+	</select>
+
+	<select id="getCenterAttention" resultMap="centerAttention">
+		select
+		dd.*
+		from
+		center_attention dd
+		<where>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="relObjetId != null"> and rel_objet_id = #{relObjetId} </if>
+			and rel_objet_type = 1
+		</where>
+		order by
+		dd.create_time desc
+		limit #{limit} offset #{offset}
+	</select>
+
+	<select id="getCenterAttentionCount" resultType="java.lang.Integer">
+		select count(*) from (
+		select
+		dd.*
+		from
+		center_attention dd
+		<where>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="relObjetId != null"> and rel_objet_id = #{relObjetId} </if>
+			and rel_objet_type = 1
+		</where>
+		)a
+	</select>
+	
+	<select id="attentionCount" resultType="java.lang.Integer">
+		SELECT
+			COUNT (*)
+		FROM
+			center_attention cc
+		<where>
+			<if test="createUserId != null"> and cc.create_user_id = #{createUserId} </if>
+			and cc.rel_objet_type = 4
+		</where>
+	</select>
+	
+	<select id="getCenterAttentions" resultMap="centerAttention">
+		select
+		dd.*
+		from
+		center_attention dd
+		<where>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="relObjetId != null"> and rel_objet_id = #{relObjetId} </if>
+			and rel_objet_type = 1
+		</where>
+		order by
+		dd.create_time desc
+		limit #{limit} offset #{start}
+	</select>
+	<!-- 根据clubId 和userId 俱乐部类型查询为2 -->
+	<select id="queryCenterAttentionByUserIdAndClubId" resultMap="centerAttention">
+	select
+		atte_id
+		,rel_objet_id
+		from center_attention
+		where create_user_id = #{createUserId} and rel_objet_type = #{relObjetType} and rel_objet_id = #{relObjetId}
+	</select>
+</mapper>
+	

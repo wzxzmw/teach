@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.ArenaJoinClubMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.ArenaJoinClub" id="arenaJoinClub" >
+		<result property="joinId" column="join_id"/>
+		<result property="compId" column="comp_id"/>
+		<result property="clubId" column="club_id"/>
+	</resultMap>
+	
+	<sql id="queryConditionArenaJoinClub">
+		<where>
+			<if test="joinId != null"> and join_id = #{joinId} </if>
+			<if test="compId != null"> and comp_id = #{compId} </if>
+			<if test="clubId != null"> and club_id = #{clubId} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyArenaJoinClub">
+		where join_id = #{joinId}
+	</sql>
+	
+	<insert id="insertArenaJoinClub" parameterType="com.seentao.stpedu.common.entity.ArenaJoinClub">
+		insert into arena_join_club(
+		join_id
+		<if test="compId != null"> ,comp_id</if>
+		<if test="clubId != null"> ,club_id</if>
+		)
+		values(
+		nextval('arena_join_club_join_id_seq')
+		<if test="compId != null"> ,#{compId}</if>
+		<if test="clubId != null"> ,#{clubId}</if>
+		)
+	</insert>
+	
+	<delete id="deleteArenaJoinClub">
+		delete from arena_join_club
+		<include refid="queryConditionArenaJoinClub"/>
+	</delete>
+	
+	<update id="updateArenaJoinClubByKey" parameterType="com.seentao.stpedu.common.entity.ArenaJoinClub">
+		update arena_join_club 
+		<set>
+			<if test="joinId != null"> join_id = #{joinId}, </if>
+			<if test="compId != null"> comp_id = #{compId}, </if>
+			<if test="clubId != null"> club_id = #{clubId}, </if>
+		</set>
+		<include refid="queryByKeyArenaJoinClub"/>
+	</update>
+	
+	<select id="selectSingleArenaJoinClub" resultMap="arenaJoinClub">
+		select 
+		join_id
+		,comp_id
+		,club_id
+		from arena_join_club 
+		<include refid="queryConditionArenaJoinClub"/>
+	</select>
+	
+	<select id="selectAllArenaJoinClub" resultMap="arenaJoinClub">
+		select 
+		join_id
+		,comp_id
+		,club_id
+		from arena_join_club
+	</select>
+	<!-- 根据赛事id查询俱乐部 -->
+	<select id="queryArenaJoinClubByCompId" resultType="Integer">
+	select 
+		club_id
+		from arena_join_club where comp_id = #{gameEventId}
+	</select>
+</mapper>
+	

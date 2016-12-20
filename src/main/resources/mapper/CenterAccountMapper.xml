@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.CenterAccountMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.CenterAccount" id="centerAccount" >
+		<result property="accountId" column="account_id"/>
+		<result property="userId" column="user_id"/>
+		<result property="userType" column="user_type"/>
+		<result property="createTime" column="create_time"/>
+		<result property="accountType" column="account_type"/>
+		<result property="balance" column="balance"/>
+		<result property="lockAmount" column="lock_amount"/>
+	</resultMap>
+	
+	<sql id="queryConditionCenterAccount">
+		<where>
+			<if test="accountId != null"> and account_id = #{accountId} </if>
+			<if test="userId != null"> and user_id = #{userId} </if>
+			<if test="userType != null"> and user_type = #{userType} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="accountType != null"> and account_type = #{accountType} </if>
+			<if test="balance != null"> and balance = #{balance} </if>
+			<if test="lockAmount != null"> and lock_amount = #{lockAmount} </if>
+			<if test="ids != null"> and account_id in (${ids}) </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyCenterAccount">
+		where account_id = #{accountId}
+	</sql>
+	
+	<insert id="insertCenterAccount" parameterType="com.seentao.stpedu.common.entity.CenterAccount">
+		insert into center_account(
+		account_id
+		<if test="userId != null"> ,user_id</if>
+		<if test="userType != null"> ,user_type</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="accountType != null"> ,account_type</if>
+		<if test="balance != null"> ,balance</if>
+		<if test="lockAmount != null"> ,lock_amount</if>
+		)
+		values(
+		nextval('center_account_account_id_seq')
+		<if test="userId != null"> ,#{userId}</if>
+		<if test="userType != null"> ,#{userType}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="accountType != null"> ,#{accountType}</if>
+		<if test="balance != null"> ,#{balance}</if>
+		<if test="lockAmount != null"> ,#{lockAmount}</if>
+		)
+	</insert>
+	
+	<delete id="deleteCenterAccount">
+		delete from center_account
+		<include refid="queryConditionCenterAccount"/>
+	</delete>
+	
+	<update id="updateCenterAccountByKey" parameterType="com.seentao.stpedu.common.entity.CenterAccount">
+		update center_account 
+		<set>
+			<if test="accountId != null"> account_id = #{accountId}, </if>
+			<if test="userId != null"> user_id = #{userId}, </if>
+			<if test="userType != null"> user_type = #{userType}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="accountType != null"> account_type = #{accountType}, </if>
+			<if test="balance != null"> balance = #{balance}, </if>
+			<if test="lockAmount != null"> lock_amount = #{lockAmount}, </if>
+		</set>
+		<include refid="queryByKeyCenterAccount"/>
+	</update>
+	
+	<update id="executeGuessAccountIncome" parameterType="ArrayList">
+	
+		 update center_account
+		 
+           <trim prefix="set" suffixOverrides=",">
+           
+            	<trim prefix="lock_amount = CASE account_id " suffix="end,">
+	                <foreach collection="list" item="i" index="index">
+	                        <if test="i.lockAmount != null">
+	                         WHEN  #{i.accountId} THEN  #{i.lockAmount}
+	                        </if>
+	                </foreach>
+             	</trim>
+             	
+             	<trim prefix=" balance = CASE account_id " suffix="end,">
+	                <foreach collection="list" item="i" index="index">
+	                        <if test="i.balance != null">
+	                         WHEN #{i.accountId} THEN #{i.balance}
+	                        </if>
+	                </foreach>
+             	</trim>
+             
+           </trim>
+           
+         WHERE account_id in
+         	<foreach collection="list" separator="," item="i" index="index" open="(" close=")" >
+             	#{i.accountId}
+         	</foreach>
+         	
+	</update>
+	
+	
+	<select id="selectSingleCenterAccount" resultMap="centerAccount">
+		select 
+		account_id
+		,user_id
+		,user_type
+		,create_time
+		,account_type
+		,balance
+		,lock_amount
+		from center_account 
+		<include refid="queryConditionCenterAccount"/>
+	</select>
+	
+	<select id="selectAllCenterAccount" resultMap="centerAccount">
+		select 
+		account_id
+		,user_id
+		,user_type
+		,create_time
+		,account_type
+		,balance
+		,lock_amount
+		from center_account
+	</select>
+	
+	<select id="findAllGuessResultAccount"  resultMap="centerAccount">
+		select 
+		account_id
+		,user_id
+		,user_type
+		,create_time
+		,account_type
+		,balance
+		,lock_amount
+		from center_account
+		<include refid="queryConditionCenterAccount"/>
+	</select>
+	
+	<select id="selectCenterAccountType" resultMap="centerAccount">
+	SELECT ca.balance,ca.lock_amount  from center_account ca WHERE ca.user_id = #{userId} and ca.account_type = #{accountType} and ca.user_type = #{userType}
+	</select>
+	
+	<select id="selectCenterAType" resultMap="centerAccount">
+	 SELECT ca.balance,ca.account_id,ca.lock_amount  from center_account ca WHERE ca.user_id = #{userId} and ca.account_type = #{accountType} 
+	</select>
+	
+	<select id="getMaxBalanceList" resultMap="centerAccount">
+		select 
+		user_id
+		from center_account
+		<include refid="queryConditionCenterAccount"/>
+		order by balance-lock_amount desc
+		limit #{limit} offset #{start}
+	</select>
+	
+	<select id="getMaxBalanceCount" resultType="java.lang.Integer">
+		select 
+		count(*)
+		from center_account
+		<include refid="queryConditionCenterAccount"/>
+	</select>
+	
+	<select id="selectCenterOneMoney" resultMap="centerAccount">
+     SELECT account_id,balance,lock_amount from center_account where user_id = #{userId} and account_type = #{accountType} and user_type = #{userType}
+	</select>
+	
+	<select id="getCenterAccountList" resultMap="centerAccount">
+     select * from center_account where user_id in  
+	 <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">  
+	 	 #{item}  
+	 </foreach> 
+      and account_type = #{account_type} 
+	</select>
+	
+	<update id="batchUpdateByUserIdAndAccountType"  parameterType="java.util.List">
+          <foreach collection="list" item="item" index="index" open="" close="" separator=";">
+                update center_account 
+                <set>
+                  balance=balance+${item.balance}
+                </set>
+                where user_id = ${item.userId} and account_type = ${item.accountType}
+         </foreach>
+    </update>
+    
+</mapper>
+	

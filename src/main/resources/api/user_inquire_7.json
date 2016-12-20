@@ -1,0 +1,49 @@
+{
+    "getUsers": {
+    	"request": {
+            "0": "userType",
+            "1": "userName",
+            "2": "userId",
+            "3": "userToken",
+            "4": "platformModule",
+            "5": "start",
+            "6": "limit",
+            "7": "inquireType",
+            "8": "hasQualification",
+            "9": "clubApplyStatus",
+            "10": "memberId",
+            "11": "schoolId",
+            "12": "classId",
+            "13": "clubId",
+            "14": "gameId",
+            "15": "gameFieldId",
+            "16": "searchWord",
+            "17": "gameEventId",
+            "18": "taskId",
+            "19": "classType",
+            "19": "classType",
+            "20": "quizId"
+        },
+        "result": {
+        	"returnCount":"returnCount",
+        	"allPage":"allPage",
+        	"currentPage":"currentPage",
+        	"users":"users"
+        },
+        "users":{
+        	"userId": "userId",
+			"realName": "realName",
+			"nickname": "nickname",
+			"desc": "desc",
+			"headLinkId": "headLinkId",
+			"headLink": "headLink"
+        }
+    }
+}
+
+
+
+
+
+
+

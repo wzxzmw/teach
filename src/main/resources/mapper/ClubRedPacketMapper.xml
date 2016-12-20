@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.ClubRedPacketMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.ClubRedPacket" id="clubRedPacket" >
+		<result property="redPacketId" column="red_packet_id"/>
+		<result property="clubId" column="club_id"/>
+		<result property="userType" column="user_type"/>
+		<result property="message" column="message"/>
+		<result property="everybodyNum" column="everybody_num"/>
+		<result property="type" column="type"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="createTime" column="create_time"/>
+		<collection property="receiveUserList" resultMap="clubRelRedPacketMemberResult" />
+	</resultMap>
+	
+	<!-- 红包用户关系表 -->
+	<resultMap id="clubRelRedPacketMemberResult" type="com.seentao.stpedu.common.entity.ClubRelRedPacketMember">
+       	<result property="relId" column="rel_id"/>
+		<result property="rpId" column="rp_id"/>
+		<result property="userId" column="user_id"/>
+    </resultMap>
+	
+	<sql id="queryConditionClubRedPacket">
+		<where>
+			<if test="redPacketId != null"> and red_packet_id = #{redPacketId} </if>
+			<if test="clubId != null"> and club_id = #{clubId} </if>
+			<if test="userType != null"> and user_type = #{userType} </if>
+			<if test="message != null"> and message = #{message} </if>
+			<if test="everybodyNum != null"> and everybody_num = #{everybodyNum} </if>
+			<if test="type != null"> and type = #{type} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyClubRedPacket">
+		where red_packet_id = #{redPacketId}
+	</sql>
+	
+	<insert id="insertClubRedPacket" parameterType="com.seentao.stpedu.common.entity.ClubRedPacket">
+		<selectKey resultType="java.lang.Integer"  order="AFTER" keyProperty="redPacketId" >
+	        SELECT currval('club_red_packet_red_packet_id_seq') AS red_packet_id   
+	    </selectKey>
+		insert into club_red_packet(
+		red_packet_id
+		<if test="clubId != null"> ,club_id</if>
+		<if test="userType != null"> ,user_type</if>
+		<if test="message != null"> ,message</if>
+		<if test="everybodyNum != null"> ,everybody_num</if>
+		<if test="type != null"> ,type</if>
+		<if test="createUserId != null"> ,create_user_id</if>
+		<if test="createTime != null"> ,create_time</if>
+		)
+		values(
+		nextval('club_red_packet_red_packet_id_seq')
+		<if test="clubId != null"> ,#{clubId}</if>
+		<if test="userType != null"> ,#{userType}</if>
+		<if test="message != null"> ,#{message}</if>
+		<if test="everybodyNum != null"> ,#{everybodyNum}</if>
+		<if test="type != null"> ,#{type}</if>
+		<if test="createUserId != null"> ,#{createUserId}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		)
+	</insert>
+	
+	<delete id="deleteClubRedPacket">
+		delete from club_red_packet
+		<include refid="queryConditionClubRedPacket"/>
+	</delete>
+	
+	<update id="updateClubRedPacketByKey" parameterType="com.seentao.stpedu.common.entity.ClubRedPacket">
+		update club_red_packet 
+		<set>
+			<if test="redPacketId != null"> red_packet_id = #{redPacketId}, </if>
+			<if test="clubId != null"> club_id = #{clubId}, </if>
+			<if test="userType != null"> user_type = #{userType}, </if>
+			<if test="message != null"> message = #{message}, </if>
+			<if test="everybodyNum != null"> everybody_num = #{everybodyNum}, </if>
+			<if test="type != null"> type = #{type}, </if>
+			<if test="createUserId != null"> create_user_id = #{createUserId}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+		</set>
+		<include refid="queryByKeyClubRedPacket"/>
+	</update>
+	
+	<select id="selectSingleClubRedPacket" resultMap="clubRedPacket">
+		select 
+		red_packet_id
+		,club_id
+		,user_type
+		,message
+		,everybody_num
+		,type
+		,create_user_id
+		,create_time
+		from club_red_packet 
+		<include refid="queryConditionClubRedPacket"/>
+	</select>
+	
+	<select id="selectAllClubRedPacket" resultMap="clubRedPacket">
+		select 
+		red_packet_id
+		,club_id
+		,user_type
+		,message
+		,everybody_num
+		,type
+		,create_user_id
+		,create_time
+		from club_red_packet
+	</select>
+	
+	<select id="getClubRedPacketList" resultMap="clubRedPacket" parameterType="java.util.Map">
+		SELECT
+			crp.*, crr.user_id
+		FROM
+			club_red_packet crp
+		JOIN club_rel_red_packet_member crr ON crp.red_packet_id = crr.rp_id
+		<where>
+			<if test="create_user_id != null"> and crp.create_user_id = #{create_user_id}</if>
+			<if test="user_id != null"> and crr.user_id = #{user_id} </if>
+		</where>
+		ORDER BY
+			crp.create_time DESC,
+			crr.user_id DESC
+		LIMIT #{limit} OFFSET #{start}
+	</select>
+	
+	<select id="getClubRedPacketCount" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+		select 
+		count(*) from (
+			SELECT
+				crr.user_id
+			FROM
+				club_red_packet crp
+			JOIN club_rel_red_packet_member crr ON crp.red_packet_id = crr.rp_id
+			<where>
+				<if test="create_user_id != null"> and crp.create_user_id = ${create_user_id} </if>
+				<if test="user_id != null"> and crr.user_id =${user_id} </if>
+			</where>
+		)a
+	</select>
+	
+</mapper>
+	

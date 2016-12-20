@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.ArenaGuessBetMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.ArenaGuessBet" id="arenaGuessBet" >
+		<result property="betId" column="bet_id"/>
+		<result property="guessId" column="guess_id"/>
+		<result property="userId" column="user_id"/>
+		<result property="amount" column="amount"/>
+		<result property="position" column="bet_position"/>
+		<result property="lockId" column="lock_id"/>
+		<result property="betResult" column="bet_result"/>
+		<result property="bonus" column="bonus"/>
+		<result property="betTime" column="bet_time"/>
+	</resultMap>
+	
+	<sql id="queryConditionArenaGuessBet">
+		<where>
+			<if test="betId != null"> and bet_id = #{betId} </if>
+			<if test="guessId != null"> and guess_id = #{guessId} </if>
+			<if test="userId != null"> and user_id = #{userId} </if>
+			<if test="amount != null"> and amount = #{amount} </if>
+			<if test="position != null"> and bet_position = #{position} </if>
+			<if test="lockId != null"> and lock_id = #{lockId} </if>
+			<if test="betResult != null"> and bet_result = #{betResult} </if>
+			<if test="bonus != null"> and bonus = #{bonus} </if>
+			<if test="betTime != null"> and bet_time = #{betTime} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyArenaGuessBet">
+		where bet_id = #{betId}
+	</sql>
+	
+	<insert id="insertArenaGuessBet" parameterType="com.seentao.stpedu.common.entity.ArenaGuessBet">
+		insert into arena_guess_bet(
+		bet_id
+		<if test="guessId != null"> ,guess_id</if>
+		<if test="userId != null"> ,user_id</if>
+		<if test="amount != null"> ,amount</if>
+		<if test="position != null"> ,bet_position</if>
+		<if test="lockId != null"> ,lock_id</if>
+		<if test="betResult != null"> ,bet_result</if>
+		<if test="bonus != null"> ,bonus</if>
+		<if test="betTime != null"> ,bet_time</if>
+		)
+		values(
+		nextval('arena_guess_bet_bet_id_seq')
+		<if test="guessId != null"> ,#{guessId}</if>
+		<if test="userId != null"> ,#{userId}</if>
+		<if test="amount != null"> ,#{amount}</if>
+		<if test="position != null"> ,#{position}</if>
+		<if test="lockId != null"> ,#{lockId}</if>
+		<if test="betResult != null"> ,#{betResult}</if>
+		<if test="bonus != null"> ,#{bonus}</if>
+		<if test="betTime != null"> ,#{betTime}</if>
+		)
+	</insert>
+	
+	<delete id="deleteArenaGuessBet">
+		delete from arena_guess_bet
+		<include refid="queryConditionArenaGuessBet"/>
+	</delete>
+	
+	<update id="updateArenaGuessBetByKey" parameterType="com.seentao.stpedu.common.entity.ArenaGuessBet">
+		update arena_guess_bet 
+		<set>
+			<if test="betId != null"> bet_id = #{betId}, </if>
+			<if test="guessId != null"> guess_id = #{guessId}, </if>
+			<if test="userId != null"> user_id = #{userId}, </if>
+			<if test="amount != null"> amount = #{amount}, </if>
+			<if test="position != null"> bet_position = #{position}, </if>
+			<if test="lockId != null"> lock_id = #{lockId}, </if>
+			<if test="betResult != null"> bet_result = #{betResult}, </if>
+			<if test="bonus != null"> bonus = #{bonus}, </if>
+			<if test="betTime != null"> bet_time = #{betTime}, </if>
+		</set>
+		<include refid="queryByKeyArenaGuessBet"/>
+	</update>
+	
+	<select id="selectSingleArenaGuessBet" resultMap="arenaGuessBet">
+		select 
+		bet_id
+		,guess_id
+		,user_id
+		,amount
+		,bet_position
+		,lock_id
+		,bet_result
+		,bonus
+		,bet_time
+		from arena_guess_bet 
+		<include refid="queryConditionArenaGuessBet"/>
+	</select>
+	
+	<select id="selectAllArenaGuessBet" resultMap="arenaGuessBet">
+		select 
+		bet_id
+		,guess_id
+		,user_id
+		,amount
+		,bet_position
+		,lock_id
+		,bet_result
+		,bonus
+		,bet_time
+		from arena_guess_bet
+	</select>
+	
+	<select id="getWinNumberList" resultMap="arenaGuessBet">
+		select
+			a.user_id
+		from
+			(
+				select
+					dd.user_id user_id,
+					sum(dd.bet_result) total
+				from
+					arena_guess_bet dd
+				where
+					dd.bet_result = 1
+				group by
+					dd.user_id
+				order by
+					total desc,
+					dd.user_id desc
+			) a
+			limit #{limit} offset #{start}
+	</select>
+	
+	<select id="getWinNumberCount" resultType="java.lang.Integer">
+		select
+			count(*)
+		from
+			(
+				select
+					dd.user_id user_id,
+					sum(dd.bet_result) total
+				from
+					arena_guess_bet dd
+				where
+					dd.bet_result = 1
+				group by
+					dd.user_id
+			) a
+	</select>
+	
+	<select id="getMaxBetList" resultMap="arenaGuessBet">
+		select
+			a.user_id
+		from
+			(
+				select
+					dd.user_id,
+					sum(dd.bonus) total
+				from
+					arena_guess_bet dd
+				group by
+					dd.user_id
+				order by
+					total desc,
+					dd.user_id desc
+			) a
+		limit #{limit} offset #{start}
+	</select>
+	
+	<select id="getMaxBetCount" resultType="java.lang.Integer">
+		select
+			count(*)
+		from
+			(
+				select
+					dd.user_id,
+					sum(dd.bonus) total
+				from
+					arena_guess_bet dd
+				group by
+					dd.user_id
+			) a
+	</select>
+	
+	
+	
+	<update id="executeGuessWinResult" parameterType="ArrayList">
+	
+		UPDATE arena_guess_bet
+		
+			<trim prefix="set" suffixOverrides=",">
+           
+            	<trim prefix="bonus = CASE bet_id " suffix="end,">
+	                <foreach collection="list" item="i" index="index">
+	                        <if test="i.bonus != null">
+	                         WHEN #{i.betId}  THEN #{i.bonus}
+	                        </if>
+	                </foreach>
+             	</trim>
+             	
+             	<trim prefix=" bet_result = CASE bet_id " suffix="end,">
+	                <foreach collection="list" item="i" index="index">
+	                        <if test="i.betResult != null">
+	                         WHEN #{i.betId}  THEN #{i.betResult}
+	                        </if>
+	                </foreach>
+             	</trim>
+             
+           </trim>
+           
+            WHERE bet_id in
+         
+         	<foreach collection="list" separator="," item="i" index="index" open="(" close=")" >
+             	#{i.betId}
+         	</foreach>
+	</update>
+	
+	
+	
+	<update id="executeGuessFailResult" parameterType="ArrayList">
+	
+		UPDATE arena_guess_bet
+		
+			<trim prefix="set" suffixOverrides=",">
+           
+             	
+             	<trim prefix=" bet_result = CASE bet_id " suffix="end,">
+	                <foreach collection="list" item="i" index="index">
+	                        <if test="i.betResult != null">
+	                         WHEN #{i.betId}  THEN #{i.betResult}
+	                        </if>
+	                </foreach>
+             	</trim>
+             
+           </trim>
+           
+            WHERE bet_id in
+         
+         	<foreach collection="list" separator="," item="i" index="index" open="(" close=")" >
+             	#{i.betId}
+         	</foreach>
+	</update>
+	
+	<select id="getArenaGuessBetCount" resultType="java.lang.Integer">
+		select
+			count(*)
+		from
+			(
+				SELECT DISTINCT
+					dd.guess_id
+				FROM
+					arena_guess_bet dd
+				<where>
+					<if test="userId != null"> and dd.user_id = #{userId} </if>
+				</where>
+			) a
+	</select>
+	
+	<select id="sumGuessBetByGuessId" parameterType="com.seentao.stpedu.common.entity.ArenaGuessBet" resultMap="arenaGuessBet">
+		SELECT 
+		
+			sum(amount) AS amount
+			,guess_id
+			
+		FROM arena_guess_bet 
+		
+		WHERE user_id = ${userId} 
+				
+			  AND guess_id in (${guessIds})
+		
+		GROUP BY guess_id
+		
+	</select>
+	
+</mapper>
+	

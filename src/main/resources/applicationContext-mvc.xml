@@ -1,0 +1,401 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:task="http://www.springframework.org/schema/task"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+           http://www.springframework.org/schema/context
+         http://www.springframework.org/schema/context/spring-context-4.2.xsd
+         http://www.springframework.org/schema/aop 
+         http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+         http://www.springframework.org/schema/tx
+     http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+     http://www.springframework.org/schema/task
+     http://www.springframework.org/schema/task/spring-task-4.2.xsd
+     http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd">
+
+	<context:component-scan base-package="com.seentao.stpedu.*.controller" />
+	<context:annotation-config />
+	<task:annotation-driven />
+	<mvc:annotation-driven>
+		<mvc:message-converters register-defaults="true">
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<property name="supportedMediaTypes" value="text/html;charset=UTF-8" />
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	
+	<!-- <bean name="/auth" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.base.controller.ActionController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.base.controller.IActionController"/>
+	</bean> -->
+	
+	<!-- 错误编码获取 lw -->
+	<bean name="/errorMessage" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.errormessage.controller.ErrorMessageController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.errormessage.controller.IErrorMessageController"/>
+	</bean>
+	
+	<!-- 文本作业信息操作 lw -->
+	<bean name="/texthomeworks" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.course.controller.HomeWorksController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.course.controller.IHomeWorksController"/>
+	</bean>
+	
+	<!-- 教师认证 lw -->
+	<bean name="/cert" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.studentauthentication.controller.StudentAuthenticationController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.studentauthentication.controller.IStudentAuthenticationController"/>
+	</bean>
+	
+	<!-- 答疑信息 lw -->
+	<bean name="/questions" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.doubt.controller.TellMeQuestionsController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.doubt.controller.ITellMeQuestionsController"/>
+	</bean>
+	
+	<!-- 竞猜lw -->
+	<bean name="/guess" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.guess.controller.GuessController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.guess.controller.IGuessController"/>
+	</bean>
+	
+	<!-- 赛事 lw -->
+	<bean name="/match" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.match.controller.GameEventsController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.match.controller.IGameEventsController"/>
+	</bean>
+	
+	<!-- 广告 -->
+	<bean name="/advertised" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.accessadvertised.controller.AdvertisedController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.accessadvertised.controller.IAdvertisedController"/>
+	</bean>
+	
+	
+	<!-- 比赛端内部调用平台接口 -->
+	<bean name="/game" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.game.service.GameService"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.game.service.IGameService"/>
+	</bean>
+	<!--  加关注取消关注  ligs-->
+	<bean name="/attention/centerAttention" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.attention.controller.CenterAttentionController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.attention.controller.ICenterAttentionController"/>
+	</bean>
+	<!-- 获取教师信息   ligs -->
+	<bean name="/teacher/getMessage" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.teacher.controller.GetMessageController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.teacher.controller.IGetMessageController"/>
+	</bean>
+	<!-- 获取班级信息 ligs-->
+	<bean name="/teacher/getClasses" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.teacher.controller.GetClassesController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.teacher.controller.IGetClassesController"/>
+	</bean>
+	<!-- 提交班级信息  ligs -->
+	<bean name="/teacher/sbmitClass" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.teacher.controller.SbmitClassController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.teacher.controller.ISbmitClassController"/>
+	</bean>
+	
+	<!-- 竞猜下注  cxw -->
+	<bean name="/account/submitquizbetting" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.account.controller.SubmitQuizBettingController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.account.controller.ISubmitQuizBettingController"/>
+	</bean>
+	
+	<!-- 获取登录用户的虚拟物品  cxw -->
+	<bean name="/account/virtualgoods" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.account.controller.VirtualGoodsController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.account.controller.IVirtualGoodsController"/>
+	</bean>
+	
+	 <!-- 获取私信  cxw -->
+	<bean name="/messages/getprivatemessages" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.messages.controller.GetPrivateMessagesController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.messages.controller.IGetPrivateMessagesController"/>
+	</bean>
+	
+	 <!-- 发私信  cxw -->
+	<bean name="/messages/submitprivatemessages" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.messages.controller.SubmitPrivateMessageController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.messages.controller.ISubmitPrivateMessageController"/>
+	</bean>
+	
+	 <!-- 设置相册封面 cxw -->
+	<bean name="/photo/submitalbumcover" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.photo.controller.SubmitAlbumCoverController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.photo.controller.ISubmitAlbumCoverController"/>
+	</bean>
+	
+	 <!-- 提交相册图片信息 cxw -->
+	<bean name="/photo/submitalbumphoto" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.photo.controller.SubmitAlbumPhotoController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.photo.controller.ISubmitAlbumPhotoController"/>
+	</bean>
+	
+	 <!-- 提交相册信息 cxw -->
+	<bean name="/photo/submitalbum" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.photo.controller.SubmitAlbumController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.photo.controller.ISubmitCenterAlbumController"/>
+	</bean>
+	
+	 <!-- 获取相册信息 cxw -->
+	<bean name="/photo/getalbums" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.photo.controller.GetAlbumsController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.photo.controller.IGetAlbumsController"/>
+	</bean>
+	
+	 <!-- 获取相册图片信息 cxw -->
+	<bean name="/photo/getalbumphotos" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.photo.controller.GetAlbumPhotoesController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.photo.controller.IGetAlbumPhotoesController"/>
+	</bean>
+	
+	 <!-- 获取自定义背景色cxw -->
+	<bean name="/club/getbackgroudcolor" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.club.controller.GetBackgroundColorController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.club.controller.IGetBackgroundColorController"/>
+	</bean>
+	
+	<!-- 提交俱乐部cxw -->
+	<bean name="/club/submitclub" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.club.controller.SubmitClubController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.club.controller.ISubmitClubController"/>
+	</bean>
+	
+	<!-- 俱乐部会员操作cxw -->
+	 <bean name="/club/submitclubmember" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.club.controller.SubmitClubMemberController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.club.controller.ISubmitClubMemberController"/>
+	</bean>
+	
+	<!-- 加入或退出俱乐部cxw -->
+	<bean name="/club/submitClubOperation" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.club.controller.SubmitClubOperationController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.club.controller.ISubmitClubOperationController"/>
+	</bean>
+	
+	<!-- 获取俱乐部信息cxw -->
+	<bean name="/club/getClubs" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.club.controller.GetClubsController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.club.controller.IgetClubsService"/>
+	</bean>
+	
+	<!-- 获取俱乐部信息cxw 移动端-->
+	<bean name="/club/getClubsForMobile" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.club.controller.GetClubsForMobileController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.club.controller.IGetClubsForMobileController"/>
+	</bean>
+	
+	 <!-- 获取私信  移动端  cxw -->
+	<bean name="/messages/getPrivateMessagesForMobile" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.messages.controller.GetPrivateMessagesForMobileController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.messages.controller.IGetPrivateMessagesForMobileController"/>
+	</bean>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- 对内容主体进行点赞加精等态度操作  ligs -->
+	<bean name="/attention/messageHandle" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.attention.controller.MessageHandleController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.attention.controller.IMessageHandleController"/>
+	</bean>
+	<!-- 邀请其他人或推送俱乐部回答问题操作  ligs -->
+	<bean name="/attention/infromaction" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.attention.controller.InformationController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.attention.controller.IInformationController"/>
+	</bean>
+	
+	<!-- 计划任务信息  ligs -->
+	<bean name="/attention/planTask" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.attention.controller.PlanTaskController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.attention.controller.IPlanTaskController"/>
+	</bean>
+	
+	<!-- 群组评论信息  ligs -->
+	<bean name="/attention/groupComment" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.attention.controller.GroupCommentController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.attention.controller.IGroupCommentController"/>
+	</bean>
+	<!-- 获取学校信息  ligs -->
+	<bean name="/attention/schoolsMessage" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.attention.controller.SchoolsMessageController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.attention.controller.ISchoolsMessageController"/>
+	</bean>
+	
+	
+	
+	<!--个人信息模块和俱乐部模块 lijin begin -->
+	<bean name="/persionalcenter/clubCenter" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.persionalcenter.controller.ClubCenterController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.persionalcenter.controller.IClubCenterController"/>
+	</bean>
+	
+	<bean name="/persionalcenter/persionalCenter" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.persionalcenter.controller.PersionalCenterController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.persionalcenter.controller.IPersionalCenterController"/>
+	</bean>
+	
+	
+	
+	<!--个人信息模块和俱乐部模块 lijin end -->
+	
+	<!-- 用户控制器 yy-->
+	<bean name="/user" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.user.controller.UserController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.user.controller.IUserController"/>
+	</bean>
+	
+		<!-- 评选相关-->
+	<bean name="/vote" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.votes.controller.GetVotesController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.votes.controller.IGetVotesController"/>
+	</bean>
+	
+	<!-- 充值控制器 yy-->
+	<bean name="/recharge" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.recharge.controller.RechargeController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.recharge.controller.IRechargeController"/>
+	</bean>
+	
+	<!-- 验证码控制器 yy-->
+	<bean name="/verificationcode" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.verificationcode.controller.VerificationCodeController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.verificationcode.controller.IVerificationCodeController"/>
+	</bean>
+	
+	<!-- 红包控制器 yy-->
+	<bean name="/redpacket" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.redpacket.controller.RedPacketController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.redpacket.controller.IRedPacketController"/>
+	</bean>
+	
+	<!-- 课程控制器 yy-->
+	<bean name="/course" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.course.controller.TeachCourseController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.course.controller.ITeachCourseController"/>
+	</bean>
+	<!-- 俱乐部控制 liulin-->
+	<bean name="/club" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.club.controller.ClubController"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.club.controller.IClubController"/>
+	</bean>
+	
+	<!-- add by Wjx -->
+	<bean name="/stpedu/alipayInterface" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.alipay.service.AlipayResultNotifyServiceForStpedu"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.alipay.service.IAlipayResultNotifyServiceForStpedu"/>
+	</bean>
+	
+	<bean name="/stpedu/voteItem" class="com.seentao.stpedu.hprose.HproseHttpServiceExporter">
+		<property name="service">
+			<bean class="com.seentao.stpedu.votes.service.GetVoteOptionsService"/>
+		</property>
+		<property name="serviceInterface" value="com.seentao.stpedu.votes.service.IGetVoteOptionService"/>
+	</bean>	
+	
+	
+	
+</beans>

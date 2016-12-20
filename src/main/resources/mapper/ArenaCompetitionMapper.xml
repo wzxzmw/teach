@@ -1,0 +1,403 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.ArenaCompetitionMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.ArenaCompetition" id="arenaCompetition" >
+		<result property="compId" column="comp_id"/>
+		<result property="title" column="title"/>
+		<result property="imgId" column="img_id"/>
+		<result property="startTime" column="start_time"/>
+		<result property="endTime" column="end_time"/>
+		<result property="clubId" column="club_id"/>
+		<result property="introduce" column="introduce"/>
+		<result property="notStartNum" column="not_start_num"/>
+		<result property="inProcessNum" column="in_process_num"/>
+		<result property="totalSignNum" column="total_sign_num"/>
+		<result property="attenCompNum" column="atten_comp_num"/>
+	</resultMap>
+	
+	<sql id="queryConditionArenaCompetition">
+		<where>
+			<if test="compId != null"> and comp_id = #{compId} </if>
+			<if test="title != null"> and title = #{title} </if>
+			<if test="imgId != null"> and img_id = #{imgId} </if>
+			<if test="startTime != null"> and start_time = #{startTime} </if>
+			<if test="endTime != null"> and end_time = #{endTime} </if>
+			<if test="clubId != null"> and club_id = #{clubId} </if>
+			<if test="introduce != null"> and introduce = #{introduce} </if>
+			<if test="notStartNum != null"> and not_start_num = #{notStartNum} </if>
+			<if test="inProcessNum != null"> and in_process_num = #{inProcessNum} </if>
+			<if test="totalSignNum != null"> and total_sign_num = #{totalSignNum} </if>
+			<if test="attenCompNum != null"> and atten_comp_num = #{attenCompNum} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyArenaCompetition">
+		where comp_id = #{compId}
+	</sql>
+	
+	<insert id="insertArenaCompetition" parameterType="com.seentao.stpedu.common.entity.ArenaCompetition">
+		<selectKey resultType="java.lang.Integer"  order="AFTER" keyProperty="compId" >
+	        SELECT currval('arena_competition_comp_id_seq') AS compId   
+	    </selectKey>
+		insert into arena_competition(
+		comp_id
+		<if test="title != null"> ,title</if>
+		<if test="imgId != null"> ,img_id</if>
+		<if test="startTime != null"> ,start_time</if>
+		<if test="endTime != null"> ,end_time</if>
+		<if test="clubId != null"> ,club_id</if>
+		<if test="introduce != null"> ,introduce</if>
+		<if test="notStartNum != null"> ,not_start_num</if>
+		<if test="inProcessNum != null"> ,in_process_num</if>
+		<if test="totalSignNum != null"> ,total_sign_num</if>
+		<if test="attenCompNum != null"> ,atten_comp_num</if>
+		)
+		values(
+		nextval('arena_competition_comp_id_seq')
+		<if test="title != null"> ,#{title}</if>
+		<if test="imgId != null"> ,#{imgId}</if>
+		<if test="startTime != null"> ,#{startTime}</if>
+		<if test="endTime != null"> ,#{endTime}</if>
+		<if test="clubId != null"> ,#{clubId}</if>
+		<if test="introduce != null"> ,#{introduce}</if>
+		<if test="notStartNum != null"> ,#{notStartNum}</if>
+		<if test="inProcessNum != null"> ,#{inProcessNum}</if>
+		<if test="totalSignNum != null"> ,#{totalSignNum}</if>
+		<if test="attenCompNum != null"> ,#{attenCompNum}</if>
+		)
+	</insert>
+	
+	<delete id="deleteArenaCompetition">
+		delete from arena_competition
+		<include refid="queryConditionArenaCompetition"/>
+	</delete>
+	
+	<update id="updateArenaCompetitionByKey" parameterType="com.seentao.stpedu.common.entity.ArenaCompetition">
+		update arena_competition 
+		<set>
+			<if test="compId != null"> comp_id = #{compId}, </if>
+			<if test="title != null"> title = #{title}, </if>
+			<if test="imgId != null"> img_id = #{imgId}, </if>
+			<if test="startTime != null"> start_time = #{startTime}, </if>
+			<if test="endTime != null"> end_time = #{endTime}, </if>
+			<if test="clubId != null"> club_id = #{clubId}, </if>
+			<if test="introduce != null"> introduce = #{introduce}, </if>
+			<if test="notStartNum != null"> not_start_num = #{notStartNum}, </if>
+			<if test="inProcessNum != null"> in_process_num = #{inProcessNum}, </if>
+			<if test="totalSignNum != null"> total_sign_num = #{totalSignNum}, </if>
+			<if test="attenCompNum != null"> atten_comp_num = #{attenCompNum}, </if>
+		</set>
+		<include refid="queryByKeyArenaCompetition"/>
+	</update>
+	
+	<select id="selectSingleArenaCompetition" resultMap="arenaCompetition">
+		select 
+		comp_id
+		,title
+		,img_id
+		,start_time
+		,end_time
+		,club_id
+		,introduce
+		,not_start_num
+		,in_process_num
+		,total_sign_num
+		,atten_comp_num
+		from arena_competition 
+		<include refid="queryConditionArenaCompetition"/>
+	</select>
+	
+	<select id="selectAllArenaCompetition" resultMap="arenaCompetition">
+		select 
+		comp_id
+		,title
+		,img_id
+		,start_time
+		,end_time
+		,club_id
+		,introduce
+		,not_start_num
+		,in_process_num
+		,total_sign_num
+		,atten_comp_num
+		from arena_competition
+	</select>
+	
+	
+	
+	<!-- 推荐赛事 -->
+	
+	<select id="queryCountRecommend" parameterType="HashMap" resultType="java.lang.Integer" >
+	
+		SELECT 
+		
+			COUNT(*) 
+			
+		FROM (
+			SELECT  
+			
+				comp_id
+				
+			FROM arena_join_club
+			
+			<where>
+				<if test="compId != null"> and comp_id = #{compId} </if>
+			</where>
+			
+			GROUP BY comp_id
+			
+		) AS tmp
+		
+	 	
+	</select>
+	
+	<select id="queryByPagReidsRecommend" parameterType="HashMap" resultType="java.lang.Integer" >
+	
+		SELECT 
+		
+			comp_id
+
+		FROM arena_join_club
+		
+		<where>
+			<if test="compId != null"> and comp_id = #{compId} </if>
+		</where>
+			
+		GROUP BY comp_id
+		ORDER BY count(*) DESC
+		LIMIT #{limit} OFFSET #{offset}
+		
+	</select>
+	
+	
+	<!-- 最热赛事 -->
+	
+	
+	
+	<select id="queryByPagReidsHot" parameterType="HashMap" resultType="java.lang.Integer" >
+	
+		SELECT 
+		
+			comp_id
+			
+		FROM arena_competition
+		
+		<where>
+			<if test="compId != null"> and comp_id = #{compId} </if>
+			<if test="title != null"> and title = #{title} </if>
+			<if test="imgId != null"> and img_id = #{imgId} </if>
+			<if test="startTime != null"> and start_time = #{startTime} </if>
+			<if test="endTime != null"> and end_time = #{endTime} </if>
+			<if test="clubId != null"> and club_id = #{clubId} </if>
+			<if test="introduce != null"> and introduce = #{introduce} </if>
+			<if test="notStartNum != null"> and not_start_num = #{notStartNum} </if>
+			<if test="inProcessNum != null"> and in_process_num = #{inProcessNum} </if>
+			<if test="totalSignNum != null"> and total_sign_num = #{totalSignNum} </if>
+			<if test="attenCompNum != null"> and atten_comp_num = #{attenCompNum} </if>
+		</where>
+		<if test="orderBy != null"> ORDER BY ${orderBy}  DESC </if>
+		limit #{limit} offset #{offset}
+	</select>
+	
+	<!--  我关注的赛事 -->
+	
+	<select id="queryCountMyFollow" parameterType="HashMap" resultType="java.lang.Integer" >
+	
+		SELECT 
+		
+			count(*)
+			
+		FROM 	center_attention AS att
+		
+		INNER JOIN arena_competition AS comp 	
+			
+		ON CAST(att.rel_objet_id as int) = comp.club_id
+ 		<where>
+			<if test="relObjetType != null"> and att.rel_objet_type = #{relObjetType} </if>
+			<if test="userId != null"> and att.create_user_id = #{userId} </if>
+		</where>
+		
+	 	
+	</select>
+	
+	<select id="queryByPagReidsMyFollow" parameterType="HashMap" resultType="java.lang.Integer" >
+	
+		SELECT 
+		
+			comp.comp_id
+			
+		FROM 	center_attention AS att
+		
+		INNER JOIN arena_competition AS comp 	
+			
+		ON CAST(att.rel_objet_id as int) = comp.club_id
+ 		<where>
+			<if test="relObjetType != null"> and att.rel_objet_type = #{relObjetType} </if>
+			<if test="userId != null"> and att.create_user_id = #{userId} </if>
+		</where>
+		ORDER BY comp.comp_id  DESC
+		limit #{limit} offset #{offset}
+	</select>
+	
+	<!--  赛事搜索 -->
+	
+	<select id="queryCountSearch" parameterType="HashMap" resultType="java.lang.Integer" >
+	
+		
+		SELECT 
+		
+			COUNT(*) 
+			
+		FROM arena_competition 
+ 		<where>
+			<if test="like != null"> title like '%${like}%' </if>
+		</where>
+		
+	 	
+	</select>
+	
+	<select id="queryByPagReidsSearch" parameterType="HashMap" resultType="java.lang.Integer" >
+	
+		SELECT 
+		
+			comp_id
+			
+		FROM arena_competition 
+ 		<where>
+			<if test="like != null"> title like '%${like}%' </if>
+		</where>
+		ORDER BY comp_id  DESC
+		limit #{limit} offset #{offset}
+	</select>
+	
+	
+	<!--  某人关注的赛事 -->
+	
+	<select id="queryCountByCenterAttention" parameterType="HashMap" resultType="java.lang.Integer" >
+	
+		
+		SELECT COUNT(*) FROM 
+
+		(
+		
+			SELECT rel_objet_id FROM center_attention
+			
+			<where>
+				<if test="type != null"> and rel_objet_type = #{type} </if>
+				<if test="userId != null"> and create_user_id = #{userId} </if>
+			</where>
+			
+			GROUP BY rel_objet_id
+		
+		) AS tmp
+		
+	 	
+	</select>
+	
+	<select id="queryByPagReidsCenterAttention" parameterType="HashMap" resultType="java.lang.Integer" >
+	
+		SELECT 
+			
+			com.comp_id 
+			
+		FROM center_attention AS att 
+		
+		INNER JOIN arena_competition AS com ON CAST(att.rel_objet_id as int) = com.comp_id
+			
+			<where>
+				<if test="type != null"> and att.rel_objet_type = #{type} </if>
+				<if test="userId != null"> and att.create_user_id = #{userId} </if>
+			</where>
+			
+		ORDER BY com.comp_id  DESC
+		
+		limit #{limit} offset #{offset}
+		
+	</select>
+	
+	
+	
+	<!-- 基础分页 -->
+	
+	<select id="queryCount" parameterType="HashMap" resultType="java.lang.Integer" >
+	
+		SELECT 
+		
+			count(*)
+			
+		FROM	arena_competition
+	 	<include refid="queryConditionArenaCompetition"/>
+		
+		
+	 	
+	</select>
+	
+	
+	
+	
+	<select id="queryByPage" parameterType="HashMap" resultMap="arenaCompetition">
+		SELECT 
+		
+			comp_id
+			,title
+			,img_id
+			,start_time
+			,end_time
+			,club_id
+			,introduce
+			,not_start_num
+			,in_process_num
+			,total_sign_num
+			,atten_comp_num
+			
+		FROM arena_competition
+		<where>
+			<if test="compId != null"> and comp_id = #{compId} </if>
+			<if test="title != null"> and title = #{title} </if>
+			<if test="imgId != null"> and img_id = #{imgId} </if>
+			<if test="startTime != null"> and start_time = #{startTime} </if>
+			<if test="endTime != null"> and end_time = #{endTime} </if>
+			<if test="clubId != null"> and club_id = #{clubId} </if>
+			<if test="introduce != null"> and introduce = #{introduce} </if>
+			<if test="notStartNum != null"> and not_start_num = #{notStartNum} </if>
+			<if test="inProcessNum != null"> and in_process_num = #{inProcessNum} </if>
+			<if test="totalSignNum != null"> and total_sign_num = #{totalSignNum} </if>
+			<if test="attenCompNum != null"> and atten_comp_num = #{attenCompNum} </if>
+			<if test="ids_key != null"> and comp_id in (${ids_key}) </if>
+		</where>
+		<if test="orderBy != null"> ORDER BY ${orderBy}  DESC </if>
+		<if test="orderBy == null"> ORDER BY comp_id  DESC </if>
+		<if test="ids_key == null"> limit #{limit} offset #{offset} </if>
+		
+		
+		
+	</select>
+	
+	<update id="updateAddNumber" parameterType="com.seentao.stpedu.common.entity.ArenaCompetition">
+	
+		UPDATE arena_competition 
+		
+		<set>
+		
+			<if test="notStartNum != null and notStartNum == 1"> not_start_num = not_start_num + 1, </if>
+			<if test="notStartNum != null and notStartNum == -1"> not_start_num = not_start_num - 1, </if>
+			<if test="inProcessNum != null and inProcessNum == 1"> in_process_num = in_process_num + 1, </if>
+			<if test="inProcessNum != null and inProcessNum == -1"> in_process_num = in_process_num - 1, </if>
+			<if test="totalSignNum != null and totalSignNum == 1"> total_sign_num = total_sign_num + 1, </if>
+			<if test="totalSignNum != null and totalSignNum == -1"> total_sign_num = total_sign_num - 1, </if>
+			<if test="imgId != null "> total_sign_num = total_sign_num + ${imgId}, </if>
+			
+		</set>
+		
+		WHERE comp_id = #{compId}
+		
+	</update>
+	<!-- 根据俱乐部Id查询 -->
+	<select id="queryArenaCompetitionByClubId" resultMap="arenaCompetition">
+	select * from arena_competition where club_id = #{clubId}
+	
+	</select>
+</mapper>
+	

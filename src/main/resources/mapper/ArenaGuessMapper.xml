@@ -1,0 +1,524 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.ArenaGuessMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.ArenaGuess" id="arenaGuess" >
+		<result property="guessId" column="guess_id"/>
+		<result property="guessTitle" column="guess_title"/>
+		<result property="endTime" column="end_time"/>
+		<result property="guessType" column="guess_type"/>
+		<result property="sureAmount" column="sure_amount"/>
+		<result property="negativeAmount" column="negative_amount"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="createTime" column="create_time"/>
+		<result property="joinUserNum" column="join_user_num"/>
+		<result property="maxUserId" column="max_user_id"/>
+		<result property="maxAmount" column="max_amount"/>
+		<result property="bankerPosition" column="banker_position"/>
+		<result property="bankerAmount" column="banker_amount"/>
+		<result property="odds" column="odds"/>
+		<result property="status" column="status"/>
+		<result property="result" column="result"/>
+		<result property="resultTime" column="result_time"/>
+		<result property="topicId" column="topic_id"/>
+	</resultMap>
+	
+	<sql id="queryConditionArenaGuess">
+		<where>
+			<if test="guessId != null"> and guess_id = #{guessId} </if>
+			<if test="guessTitle != null"> and guess_title = #{guessTitle} </if>
+			<if test="endTime != null"> and end_time = #{endTime} </if>
+			<if test="guessType != null"> and guess_type = #{guessType} </if>
+			<if test="sureAmount != null"> and sure_amount = #{sureAmount} </if>
+			<if test="negativeAmount != null"> and negative_amount = #{negativeAmount} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="joinUserNum != null"> and join_user_num = #{joinUserNum} </if>
+			<if test="maxUserId != null"> and max_user_id = #{maxUserId} </if>
+			<if test="maxAmount != null"> and max_amount = #{maxAmount} </if>
+			<if test="bankerPosition != null"> and banker_position = #{bankerPosition} </if>
+			<if test="bankerAmount != null"> and banker_amount = #{bankerAmount} </if>
+			<if test="odds != null"> and odds = #{odds} </if>
+			<if test="status != null"> and status = #{status} </if>
+			<if test="result != null"> and result = #{result} </if>
+			<if test="resultTime != null"> and result_time = #{resultTime} </if>
+			<if test="topicId != null"> and topic_id = #{topicId} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyArenaGuess">
+		where guess_id = #{guessId}
+	</sql>
+	
+	<insert id="insertArenaGuess" parameterType="com.seentao.stpedu.common.entity.ArenaGuess">
+	
+	   <selectKey resultType="java.lang.Integer" keyProperty="guessId" order="AFTER" >
+	      SELECT currval('arena_guess_guess_id_seq') as guessId
+		</selectKey> 
+		
+		insert into arena_guess(
+		guess_id
+		<if test="guessTitle != null"> ,guess_title</if>
+		<if test="endTime != null"> ,end_time</if>
+		<if test="guessType != null"> ,guess_type</if>
+		<if test="sureAmount != null"> ,sure_amount</if>
+		<if test="negativeAmount != null"> ,negative_amount</if>
+		<if test="createUserId != null"> ,create_user_id</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="joinUserNum != null"> ,join_user_num</if>
+		<if test="maxUserId != null"> ,max_user_id</if>
+		<if test="maxAmount != null"> ,max_amount</if>
+		<if test="bankerPosition != null"> ,banker_position</if>
+		<if test="bankerAmount != null"> ,banker_amount</if>
+		<if test="odds != null"> ,odds</if>
+		<if test="status != null"> ,status</if>
+		<if test="result != null"> ,result</if>
+		<if test="resultTime != null"> ,result_time</if>
+		<if test="topicId != null"> ,topic_id</if>
+		)
+		values(
+		nextval('arena_guess_guess_id_seq')
+		<if test="guessTitle != null"> ,#{guessTitle}</if>
+		<if test="endTime != null"> ,#{endTime}</if>
+		<if test="guessType != null"> ,#{guessType}</if>
+		<if test="sureAmount != null"> ,#{sureAmount}</if>
+		<if test="negativeAmount != null"> ,#{negativeAmount}</if>
+		<if test="createUserId != null"> ,#{createUserId}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="joinUserNum != null"> ,#{joinUserNum}</if>
+		<if test="maxUserId != null"> ,#{maxUserId}</if>
+		<if test="maxAmount != null"> ,#{maxAmount}</if>
+		<if test="bankerPosition != null"> ,#{bankerPosition}</if>
+		<if test="bankerAmount != null"> ,#{bankerAmount}</if>
+		<if test="odds != null"> ,#{odds}</if>
+		<if test="status != null"> ,#{status}</if>
+		<if test="result != null"> ,#{result}</if>
+		<if test="resultTime != null"> ,#{resultTime}</if>
+		<if test="topicId != null"> ,#{topicId}</if>
+		)
+	</insert>
+	
+	<delete id="deleteArenaGuess">
+		delete from arena_guess
+		<include refid="queryConditionArenaGuess"/>
+	</delete>
+	
+	<update id="updateArenaGuessByKey" parameterType="com.seentao.stpedu.common.entity.ArenaGuess">
+		update arena_guess 
+		<set>
+			<if test="guessId != null"> guess_id = #{guessId}, </if>
+			<if test="guessTitle != null"> guess_title = #{guessTitle}, </if>
+			<if test="endTime != null"> end_time = #{endTime}, </if>
+			<if test="guessType != null"> guess_type = #{guessType}, </if>
+			<if test="sureAmount != null"> sure_amount = #{sureAmount}, </if>
+			<if test="negativeAmount != null"> negative_amount = #{negativeAmount}, </if>
+			<if test="createUserId != null"> create_user_id = #{createUserId}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="joinUserNum != null"> join_user_num = #{joinUserNum}, </if>
+			<if test="maxUserId != null"> max_user_id = #{maxUserId}, </if>
+			<if test="maxAmount != null"> max_amount = #{maxAmount}, </if>
+			<if test="bankerPosition != null"> banker_position = #{bankerPosition}, </if>
+			<if test="bankerAmount != null"> banker_amount = #{bankerAmount}, </if>
+			<if test="odds != null"> odds = #{odds}, </if>
+			<if test="status != null"> status = #{status}, </if>
+			<if test="result != null"> result = #{result}, </if>
+			<if test="resultTime != null"> result_time = #{resultTime}, </if>
+			<if test="topicId != null"> topic_id = #{topicId}, </if>
+		</set>
+		<include refid="queryByKeyArenaGuess"/>
+	</update>
+	
+	<select id="selectSingleArenaGuess" resultMap="arenaGuess">
+		select 
+		guess_id
+		,guess_title
+		,end_time
+		,guess_type
+		,sure_amount
+		,negative_amount
+		,create_user_id
+		,create_time
+		,join_user_num
+		,max_user_id
+		,max_amount
+		,banker_position
+		,banker_amount
+		,odds
+		,status
+		,result
+		,result_time
+		,topic_id
+		from arena_guess 
+		<include refid="queryConditionArenaGuess"/>
+	</select>
+	
+	<select id="selectAllArenaGuess" resultMap="arenaGuess">
+		select 
+		guess_id
+		,guess_title
+		,end_time
+		,guess_type
+		,sure_amount
+		,negative_amount
+		,create_user_id
+		,create_time
+		,join_user_num
+		,max_user_id
+		,max_amount
+		,banker_position
+		,banker_amount
+		,odds
+		,status
+		,result
+		,result_time
+		,topic_id
+		from arena_guess
+	</select>
+	
+	
+	
+	
+	
+	
+	<update id="closeArenaGuess" parameterType="com.seentao.stpedu.common.entity.ArenaGuess">
+	
+		UPDATE  
+			arena_guess
+			
+			<set>
+				<if test="endTime != null"> end_time = #{endTime}, </if>
+				<if test="status != null"> status = #{status}, </if>
+			</set>
+		where 
+			guess_id = ${guessId}
+		
+	</update>
+	
+	
+	
+	
+	
+	<!-- pc -->
+	
+	<select id="queryCount" parameterType="HashMap" resultType="java.lang.Integer" >
+	
+		SELECT 
+		
+			count(*)
+			
+		FROM	arena_guess
+		
+		<include refid="queryConditionArenaGuess"/>
+	 	
+	</select>
+	
+	
+	<select id="queryByPageids" parameterType="HashMap" resultType="java.lang.Integer" >
+	
+		SELECT 
+		
+			guess_id
+			
+		FROM arena_guess
+		
+	 	<include refid="queryConditionArenaGuess"/>
+	 	ORDER BY guess_id  DESC
+		limit #{limit} offset #{offset}
+	</select>
+	
+	<!-- app -->
+	<select id="queryCountApp" parameterType="HashMap" resultType="java.lang.Integer" >
+	
+		SELECT 
+		
+			COUNT(*) 
+			
+		FROM arena_guess_topic AS topic JOIN arena_guess AS guess
+
+		ON topic.topic_id = guess.topic_id 
+		
+		<where>
+			<if test="guessId != null"> and guess.guess_id = #{guessId} </if>
+			<if test="guessTitle != null"> and guess.guess_title = #{guessTitle} </if>
+			<if test="endTime != null"> and guess.end_time = #{endTime} </if>
+			<if test="guessType != null"> and guess.guess_type = #{guessType} </if>
+			<if test="sureAmount != null"> and guess.sure_amount = #{sureAmount} </if>
+			<if test="negativeAmount != null"> and guess.negative_amount = #{negativeAmount} </if>
+			<if test="createUserId != null"> and guess.create_user_id = #{createUserId} </if>
+			<if test="createTime != null"> and guess.create_time = #{createTime} </if>
+			<if test="joinUserNum != null"> and guess.join_user_num = #{joinUserNum} </if>
+			<if test="maxUserId != null"> and guess.max_user_id = #{maxUserId} </if>
+			<if test="maxAmount != null"> and guess.max_amount = #{maxAmount} </if>
+			<if test="bankerPosition != null"> and guess.banker_position = #{bankerPosition} </if>
+			<if test="bankerAmount != null"> and guess.banker_amount = #{bankerAmount} </if>
+			<if test="odds != null"> and guess.odds = #{odds} </if>
+			<if test="status != null"> and guess.status = #{status} </if>
+			<if test="result != null"> and guess.result = #{result} </if>
+			<if test="resultTime != null"> and guess.result_time = #{resultTime} </if>
+			<if test="topicId != null"> and guess.topic_id = #{topicId} </if>
+			<if test="matchId != null"> and topic.match_id = #{matchId} </if>
+		</where>
+	 	
+	</select>
+	
+	
+	<select id="queryByPageidsApp" parameterType="HashMap" resultType="java.lang.Integer" >
+	
+		SELECT 
+		
+			guess.guess_id
+			
+		FROM arena_guess_topic AS topic JOIN arena_guess AS guess
+
+		ON topic.topic_id = guess.topic_id 
+		
+	 	<where>
+			<if test="guessId != null"> and guess.guess_id = #{guessId} </if>
+			<if test="guessTitle != null"> and guess.guess_title = #{guessTitle} </if>
+			<if test="endTime != null"> and guess.end_time = #{endTime} </if>
+			<if test="guessType != null"> and guess.guess_type = #{guessType} </if>
+			<if test="sureAmount != null"> and guess.sure_amount = #{sureAmount} </if>
+			<if test="negativeAmount != null"> and guess.negative_amount = #{negativeAmount} </if>
+			<if test="createUserId != null"> and guess.create_user_id = #{createUserId} </if>
+			<if test="createTime != null"> and guess.create_time = #{createTime} </if>
+			<if test="joinUserNum != null"> and guess.join_user_num = #{joinUserNum} </if>
+			<if test="maxUserId != null"> and guess.max_user_id = #{maxUserId} </if>
+			<if test="maxAmount != null"> and guess.max_amount = #{maxAmount} </if>
+			<if test="bankerPosition != null"> and guess.banker_position = #{bankerPosition} </if>
+			<if test="bankerAmount != null"> and guess.banker_amount = #{bankerAmount} </if>
+			<if test="odds != null"> and guess.odds = #{odds} </if>
+			<if test="status != null"> and guess.status = #{status} </if>
+			<if test="result != null"> and guess.result = #{result} </if>
+			<if test="resultTime != null"> and guess.result_time = #{resultTime} </if>
+			<if test="topicId != null"> and guess.topic_id = #{topicId} </if>
+			<if test="matchId != null"> and topic.match_id = #{matchId} </if>
+		</where>
+		
+	 	ORDER BY guess.guess_id  DESC
+	 	
+		limit #{limit} offset #{offset}
+		
+	</select>
+	
+	
+	<!-- 获取我参加的竞猜 -->
+	<select id="queryCountMy" parameterType="HashMap" resultType="java.lang.Integer" >
+	
+		SELECT 
+		
+			COUNT(*) 
+			
+		FROM(
+		
+			SELECT 
+			
+			guess.guess_id
+			
+			FROM arena_guess AS guess INNER JOIN arena_guess_bet AS bet 
+			
+			ON guess.guess_id = bet.guess_id
+			
+			<where>
+				<if test="guessId != null"> and guess.guess_id = #{guessId} </if>
+				<if test="guessTitle != null"> and guess.guess_title = #{guessTitle} </if>
+				<if test="endTime != null"> and guess.end_time = #{endTime} </if>
+				<if test="guessType != null"> and guess.guess_type = #{guessType} </if>
+				<if test="sureAmount != null"> and guess.sure_amount = #{sureAmount} </if>
+				<if test="negativeAmount != null"> and guess.negative_amount = #{negativeAmount} </if>
+				<if test="createUserId != null"> and guess.create_user_id = #{createUserId} </if>
+				<if test="createTime != null"> and guess.create_time = #{createTime} </if>
+				<if test="joinUserNum != null"> and guess.join_user_num = #{joinUserNum} </if>
+				<if test="maxUserId != null"> and guess.max_user_id = #{maxUserId} </if>
+				<if test="maxAmount != null"> and guess.max_amount = #{maxAmount} </if>
+				<if test="bankerPosition != null"> and guess.banker_position = #{bankerPosition} </if>
+				<if test="bankerAmount != null"> and guess.banker_amount = #{bankerAmount} </if>
+				<if test="odds != null"> and guess.odds = #{odds} </if>
+				<if test="status != null"> and guess.status = #{status} </if>
+				<if test="result != null"> and guess.result = #{result} </if>
+				<if test="resultTime != null"> and guess.result_time = #{resultTime} </if>
+				<if test="topicId != null"> and guess.topic_id = #{topicId} </if>
+				<if test="memberId != null"> and bet.user_id = #{memberId} </if>
+			</where>
+			GROUP BY guess.guess_id
+			
+		) AS tmp
+		
+	 	
+	</select>
+	
+	
+	<select id="queryByPageidsMy" parameterType="HashMap" resultType="java.lang.Integer" >
+	
+		SELECT 
+			
+			guess.guess_id
+			
+			FROM arena_guess AS guess INNER JOIN arena_guess_bet AS bet 
+			
+			ON guess.guess_id = bet.guess_id
+			
+			<where>
+				<if test="guessId != null"> and guess.guess_id = #{guessId} </if>
+				<if test="guessTitle != null"> and guess.guess_title = #{guessTitle} </if>
+				<if test="endTime != null"> and guess.end_time = #{endTime} </if>
+				<if test="guessType != null"> and guess.guess_type = #{guessType} </if>
+				<if test="sureAmount != null"> and guess.sure_amount = #{sureAmount} </if>
+				<if test="negativeAmount != null"> and guess.negative_amount = #{negativeAmount} </if>
+				<if test="createUserId != null"> and guess.create_user_id = #{createUserId} </if>
+				<if test="createTime != null"> and guess.create_time = #{createTime} </if>
+				<if test="joinUserNum != null"> and guess.join_user_num = #{joinUserNum} </if>
+				<if test="maxUserId != null"> and guess.max_user_id = #{maxUserId} </if>
+				<if test="maxAmount != null"> and guess.max_amount = #{maxAmount} </if>
+				<if test="bankerPosition != null"> and guess.banker_position = #{bankerPosition} </if>
+				<if test="bankerAmount != null"> and guess.banker_amount = #{bankerAmount} </if>
+				<if test="odds != null"> and guess.odds = #{odds} </if>
+				<if test="status != null"> and guess.status = #{status} </if>
+				<if test="result != null"> and guess.result = #{result} </if>
+				<if test="resultTime != null"> and guess.result_time = #{resultTime} </if>
+				<if test="topicId != null"> and guess.topic_id = #{topicId} </if>
+				<if test="memberId != null"> and bet.user_id = #{memberId} </if>
+			</where>
+			
+			GROUP BY guess.guess_id
+			
+	 		ORDER BY guess.guess_id	DESC
+	 		
+			limit #{limit} offset #{offset}
+		
+	</select>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<select id="queryByPage" parameterType="HashMap" resultMap="arenaGuess">
+		SELECT 
+		
+			guess_id
+			,guess_title
+			,end_time
+			,guess_type
+			,sure_amount
+			,negative_amount
+			,create_user_id
+			,create_time
+			,join_user_num
+			,max_user_id
+			,max_amount
+			,banker_position
+			,banker_amount
+			,odds
+			,status
+			,result
+			,result_time
+			,topic_id
+		FROM arena_guess
+		<where>
+		<if test="guessId != null"> and guess_id = #{guessId} </if>
+			<if test="guessTitle != null"> and guess_title = #{guessTitle} </if>
+			<if test="endTime != null"> and end_time = #{endTime} </if>
+			<if test="guessType != null"> and guess_type = #{guessType} </if>
+			<if test="sureAmount != null"> and sure_amount = #{sureAmount} </if>
+			<if test="negativeAmount != null"> and negative_amount = #{negativeAmount} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="joinUserNum != null"> and join_user_num = #{joinUserNum} </if>
+			<if test="maxUserId != null"> and max_user_id = #{maxUserId} </if>
+			<if test="maxAmount != null"> and max_amount = #{maxAmount} </if>
+			<if test="bankerPosition != null"> and banker_position = #{bankerPosition} </if>
+			<if test="bankerAmount != null"> and banker_amount = #{bankerAmount} </if>
+			<if test="odds != null"> and odds = #{odds} </if>
+			<if test="status != null"> and status = #{status} </if>
+			<if test="result != null"> and result = #{result} </if>
+			<if test="resultTime != null"> and result_time = #{resultTime} </if>
+			<if test="topicId != null"> and topic_id = #{topicId} </if>
+			<if test="ids_key != null"> and guess_id in (${ids_key}) </if>
+		</where>
+		ORDER BY guess_id  DESC
+		<if test="ids_key == null"> limit #{limit} offset #{offset} </if>
+		
+		
+		
+	</select>
+	
+	<select id="findMaxAmountGuess" parameterType="java.lang.String" resultMap="arenaGuess">
+	
+	
+		SELECT 
+		
+			guess_id
+			,guess_title
+			,end_time
+			,guess_type
+			,sure_amount
+			,negative_amount
+			,create_user_id
+			,create_time
+			,join_user_num
+			,max_user_id
+			,max_amount
+			,banker_position
+			,banker_amount
+			,odds
+			,status
+			,result
+			,result_time
+			,topic_id 
+			
+		FROM  (SELECT  
+		
+					guess_id
+					,guess_title
+					,end_time
+					,guess_type
+					,sure_amount
+					,negative_amount
+					,create_user_id
+					,create_time
+					,join_user_num
+					,max_user_id
+					,max_amount
+					,banker_position
+					,banker_amount
+					,odds
+					,status
+					,result
+					,result_time
+					,topic_id
+					,row_number() over(partition by topic_id ORDER BY max_amount DESC) as row
+		
+				FROM arena_guess 
+				
+				WHERE topic_id in (${value}) ) t 
+		
+		WHERE row = 1
+		
+		
+	</select>
+	<select id="getMostArenaGuess" resultMap="arenaGuess">
+		select guess_id, guess_title, topic_id from arena_guess where join_user_num = (select max(join_user_num) from arena_guess)
+	</select>
+	
+	<select id="findAllAcountByGuessTopicId" parameterType="java.lang.String" resultMap="arenaGuess">
+	
+		SELECT 
+		
+			topic_id
+			, SUM(sure_amount) + SUM(negative_amount) as sureAmount
+			
+		FROM arena_guess 
+		
+		WHERE topic_id IN (${value}) 
+		
+		GROUP by topic_id
+		
+	</select>
+	
+</mapper>
+	

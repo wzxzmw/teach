@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.TeachPlanSignMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.TeachPlanSign" id="teachPlanSign" >
+		<result property="signId" column="sign_id"/>
+		<result property="planId" column="plan_id"/>
+		<result property="studentId" column="student_id"/>
+		<result property="signTime" column="sign_time"/>
+		<result property="isDelete" column="is_delete"/>
+	</resultMap>
+	
+	<sql id="queryConditionTeachPlanSign">
+		<where>
+			<if test="signId != null"> and sign_id = #{signId} </if>
+			<if test="planId != null"> and plan_id = #{planId} </if>
+			<if test="studentId != null"> and student_id = #{studentId} </if>
+			<if test="signTime != null"> and sign_time = #{signTime} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyTeachPlanSign">
+		where sign_id = #{signId}
+	</sql>
+	
+	<insert id="insertTeachPlanSign" parameterType="com.seentao.stpedu.common.entity.TeachPlanSign">
+		insert into teach_plan_sign(
+		sign_id
+		<if test="planId != null"> ,plan_id</if>
+		<if test="studentId != null"> ,student_id</if>
+		<if test="signTime != null"> ,sign_time</if>
+		<if test="isDelete != null"> ,is_delete </if>
+		)
+		values(
+		nextval('teach_plan_sign_sign_id_seq')
+		<if test="planId != null"> ,#{planId}</if>
+		<if test="studentId != null"> ,#{studentId}</if>
+		<if test="signTime != null"> ,#{signTime}</if>
+		<if test="isDelete != null"> ,#{isDelete} </if>
+		)
+	</insert>
+	
+	<insert id="insertTeachPlanSignAlls" parameterType="ArrayList">
+		insert into teach_plan_sign(
+		sign_id
+		,plan_id
+		,student_id
+		,sign_time
+		,is_delete
+		)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+		(
+		nextval('teach_plan_sign_sign_id_seq')
+		 ,#{item.planId}
+		 ,#{item.studentId}
+		 ,#{item.signTime}
+		 ,#{item.isDelete}
+		)
+		</foreach>
+	</insert>
+	
+	<delete id="deleteTeachPlanSign">
+		delete from teach_plan_sign
+		<include refid="queryConditionTeachPlanSign"/>
+	</delete>
+	
+	<update id="updateTeachPlanSignByKey" parameterType="com.seentao.stpedu.common.entity.TeachPlanSign">
+		update teach_plan_sign 
+		<set>
+			<if test="signId != null"> sign_id = #{signId}, </if>
+			<if test="planId != null"> plan_id = #{planId}, </if>
+			<if test="studentId != null"> student_id = #{studentId}, </if>
+			<if test="signTime != null"> sign_time = #{signTime}, </if>
+			<if test="isDelete != null">  is_delete = #{isDelete}, </if>
+		</set>
+		<where>
+			<if test="signId != null"> and sign_id = #{signId} </if>
+			<if test="planId != null"> and plan_id = #{planId} </if>
+			<if test="studentId != null"> and student_id = #{studentId} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+		</where>
+	</update>
+	
+	<select id="selectSingleTeachPlanSign" resultMap="teachPlanSign">
+		select 
+		sign_id
+		,plan_id
+		,student_id
+		,sign_time
+		,is_delete
+		from teach_plan_sign 
+		<include refid="queryConditionTeachPlanSign"/>
+	</select>
+	
+	<select id="selectAllTeachPlanSign" resultMap="teachPlanSign">
+		select 
+		sign_id
+		,plan_id
+		,student_id
+		,sign_time
+		,is_delete
+		from teach_plan_sign
+	</select>
+	
+	<select id="getTeachPlanSignList" resultMap="teachPlanSign">
+		SELECT
+			dd.*
+		FROM
+			teach_plan_sign dd
+		JOIN teach_plan cc ON dd.plan_id = cc.plan_id
+		<where>
+			<if test="planId != null"> and dd.plan_id = #{planId} </if>
+			<if test="classId != null"> and cc.class_id = #{classId} </if>
+			and dd.is_delete = 0
+			and dd.sign_time is not null
+		</where>
+		order by
+			dd.sign_time desc
+		limit #{limit} offset #{start}
+	</select>
+	
+	<select id="getTeachPlanSignCount" resultType="java.lang.Integer">
+		select count(*) from (
+			SELECT
+				dd.*
+			FROM
+				teach_plan_sign dd
+			JOIN teach_plan cc ON dd.plan_id = cc.plan_id
+			<where>
+				<if test="planId != null"> and dd.plan_id = #{planId} </if>
+				<if test="classId != null"> and cc.class_id = #{classId} </if>
+				and dd.is_delete = 0
+				and dd.sign_time is not null
+			</where>
+		)a
+	</select>
+	
+</mapper>
+	

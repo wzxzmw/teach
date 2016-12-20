@@ -1,0 +1,16 @@
+{
+    "submitClubOperation": {
+    	"request": {
+            "0": "userId",
+            "1": "clubId",
+            "2": "actionType",
+            "3": "applicationContent",
+            "4": "clubMemberId"
+        },
+        "result": {
+            
+        }
+     }
+    
+}
+

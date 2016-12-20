@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.TeachQuestionAnswerMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.TeachQuestionAnswer" id="teachQuestionAnswer" >
+		<result property="answerId" column="answer_id"/>
+		<result property="questionId" column="question_id"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="createTime" column="create_time"/>
+		<result property="praiseNum" column="praise_num"/>
+		<result property="content" column="content"/>
+		<result property="isDelete" column="is_delete"/>
+	</resultMap>
+	
+	
+	<sql id="queryConditionTeachQuestionAnswer">
+		<where>
+			<if test="answerId != null"> and answer_id = #{answerId} </if>
+			<if test="questionId != null"> and question_id = #{questionId} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="praiseNum != null"> and praise_num = #{praiseNum} </if>
+			<if test="content != null"> and content = #{content} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+			<if test="questionIds != null"> and question_id in (${questionIds}) </if>
+			<if test="orderBy != null"> ORDER BY ${orderBy} DESC </if>
+			<if test="orderBy == null"> ORDER BY answer_id DESC </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyTeachQuestionAnswer">
+		where answer_id = #{answerId}
+	</sql>
+	
+	<insert id="insertTeachQuestionAnswer" parameterType="com.seentao.stpedu.common.entity.TeachQuestionAnswer">
+		insert into teach_question_answer(
+		answer_id
+		<if test="questionId != null"> ,question_id</if>
+		<if test="createUserId != null"> ,create_user_id</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="praiseNum != null"> ,praise_num</if>
+		<if test="content != null"> ,content</if>
+		<if test="isDelete != null"> ,is_delete</if>
+		)
+		values(
+		nextval('teach_question_answer_answer_id_seq')
+		<if test="questionId != null"> ,#{questionId}</if>
+		<if test="createUserId != null"> ,#{createUserId}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="praiseNum != null"> ,#{praiseNum}</if>
+		<if test="content != null"> ,#{content}</if>
+		<if test="isDelete != null"> ,#{isDelete}</if>
+		)
+	</insert>
+	
+	<delete id="deleteTeachQuestionAnswer">
+		delete from teach_question_answer
+		<include refid="queryConditionTeachQuestionAnswer"/>
+	</delete>
+	
+	<update id="updateTeachQuestionAnswerByKey" parameterType="com.seentao.stpedu.common.entity.TeachQuestionAnswer">
+		update teach_question_answer 
+		<set>
+			<if test="answerId != null"> answer_id = #{answerId}, </if>
+			<if test="questionId != null"> question_id = #{questionId}, </if>
+			<if test="createUserId != null"> create_user_id = #{createUserId}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="praiseNum != null"> praise_num = #{praiseNum}, </if>
+			<if test="content != null"> content = #{content}, </if>
+			<if test="isDelete != null"> is_delete = #{isDelete}, </if>
+		</set>
+		<include refid="queryByKeyTeachQuestionAnswer"/>
+	</update>
+	
+	<select id="selectSingleTeachQuestionAnswer" resultMap="teachQuestionAnswer">
+		select 
+		answer_id
+		,question_id
+		,create_user_id
+		,create_time
+		,praise_num
+		,content
+		,is_delete
+		from teach_question_answer 
+		<include refid="queryConditionTeachQuestionAnswer"/>
+		
+	</select>
+	
+	<select id="selectAllTeachQuestionAnswer" resultMap="teachQuestionAnswer">
+		select 
+		answer_id
+		,question_id
+		,create_user_id
+		,create_time
+		,praise_num
+		,content
+		,is_delete
+		from teach_question_answer
+	</select>
+	
+	<select id="findQuestionAnswers" parameterType="java.lang.Integer" resultType="java.lang.String">
+		SELECT 
+		
+			answer_id 
+			
+		FROM teach_question_answer 
+		WHERE question_id = #{id}
+	</select>
+	<update id="delTeachQuestionAnswerAll" parameterType="ArrayList">
+	
+		 update teach_question_answer 
+		 
+           <trim prefix="set" suffixOverrides=",">
+           
+            	<trim prefix="is_delete = CASE answer_id " suffix="end,">
+	                <foreach collection="list" item="i" index="index">
+	                        <if test="i.isDelete != null">
+	                         WHEN #{i.answerId}  THEN #{i.isDelete}
+	                        </if>
+	                </foreach>
+             	</trim>
+             	
+           </trim>
+           
+         WHERE answer_id in
+         
+         	<foreach collection="list" separator="," item="i" index="index" open="(" close=")" >
+             	#{i.answerId}
+         	</foreach>
+	</update>
+	
+	
+	<select id="queryCount" parameterType="HashMap" resultType="java.lang.Integer">
+		
+		SELECT 
+		
+			COUNT(*) 
+			
+		FROM teach_question_answer
+		
+		<where>
+			<if test="answerId != null"> and answer_id = #{answerId} </if>
+			<if test="questionId != null"> and question_id = #{questionId} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="praiseNum != null"> and praise_num = #{praiseNum} </if>
+			<if test="content != null"> and content = #{content} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+			<if test="questionIds != null"> and question_id in (${questionIds}) </if>
+		</where>
+		
+	</select>
+	
+	<select id="queryByPageids" parameterType="HashMap" resultType="java.lang.Integer">
+	
+		SELECT 
+		
+			answer_id
+			
+		FROM teach_question_answer
+		
+		<include refid="queryConditionTeachQuestionAnswer"/>
+		
+		
+		LIMIT #{limit} OFFSET #{offset}
+		
+	</select>
+	
+	<select id="queryByPage" parameterType="HashMap" resultMap="teachQuestionAnswer">
+	
+		SELECT 
+		
+			answer_id
+			,question_id
+			,create_user_id
+			,create_time
+			,praise_num
+			,content
+			,is_delete
+			
+		FROM teach_question_answer
+		
+		<where>
+			<if test="answerId != null"> and answer_id = #{answerId} </if>
+			<if test="questionId != null"> and question_id = #{questionId} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="praiseNum != null"> and praise_num = #{praiseNum} </if>
+			<if test="content != null"> and content = #{content} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+			<if test="ids_key != null"> and answer_id in (${ids_key}) </if>
+		</where>
+		
+		<if test="ids_key != null"> LIMIT #{limit} OFFSET #{offset} </if>
+		
+	</select>
+	
+	
+	
+</mapper>
+	

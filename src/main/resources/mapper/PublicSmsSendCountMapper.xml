@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.PublicSmsSendCountMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.PublicSmsSendCount" id="publicSmsSendCount" >
+		<result property="dataId" column="data_id"/>
+		<result property="phone" column="phone"/>
+		<result property="sendTime" column="send_time"/>
+		<result property="sendNum" column="send_num"/>
+		<result property="sendSumNum" column="send_sum_num"/>
+	</resultMap>
+	
+	<sql id="queryConditionPublicSmsSendCount">
+		<where>
+			<if test="dataId != null"> and data_id = #{dataId} </if>
+			<if test="phone != null"> and phone = #{phone} </if>
+			<if test="sendTime != null"> and send_time = #{sendTime} </if>
+			<if test="sendNum != null"> and send_num = #{sendNum} </if>
+			<if test="sendSumNum != null"> and send_sum_num = #{sendSumNum} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyPublicSmsSendCount">
+		where data_id = #{dataId}
+	</sql>
+	
+	<insert id="insertPublicSmsSendCount" parameterType="com.seentao.stpedu.common.entity.PublicSmsSendCount">
+		insert into public_sms_send_count( phone ,send_time,
+		send_num ,send_sum_num)
+		values(#{phone,jdbcType=VARCHAR} ,#{sendTime,jdbcType=VARCHAR}
+		,#{sendNum,jdbcType=INTEGER} ,#{sendSumNum,jdbcType=INTEGER})
+	</insert>
+	
+	<delete id="deletePublicSmsSendCount">
+		delete from public_sms_send_count
+		<include refid="queryConditionPublicSmsSendCount"/>
+	</delete>
+	
+	<update id="updatePublicSmsSendCountByKey" parameterType="com.seentao.stpedu.common.entity.PublicSmsSendCount">
+		update public_sms_send_count 
+		<set>
+			<if test="dataId != null"> data_id = #{dataId}, </if>
+			<if test="phone != null"> phone = #{phone}, </if>
+			<if test="sendTime != null"> send_time = #{sendTime}, </if>
+			<if test="sendNum != null"> send_num = #{sendNum}, </if>
+			<if test="sendSumNum != null"> send_sum_num = #{sendSumNum}, </if>
+		</set>
+		<include refid="queryByKeyPublicSmsSendCount"/>
+	</update>
+	
+	<select id="selectSinglePublicSmsSendCount" resultMap="publicSmsSendCount">
+		select 
+		data_id
+		,phone
+		,send_time
+		,send_num
+		,send_sum_num
+		from public_sms_send_count 
+		<include refid="queryConditionPublicSmsSendCount"/>
+	</select>
+	
+	<select id="selectAllPublicSmsSendCount" resultMap="publicSmsSendCount">
+		select 
+		data_id
+		,phone
+		,send_time
+		,send_num
+		,send_sum_num
+		from public_sms_send_count
+	</select>
+	
+	<select id="selectPublicSmsSendCountByPhone" resultMap="publicSmsSendCount" parameterType="com.seentao.stpedu.common.entity.PublicSmsSendCount">
+		select 
+		data_id
+		,phone
+		,send_time
+		,send_num
+		,send_sum_num
+		from public_sms_send_count
+		where phone=#{phone}
+	</select>
+	
+	 <update id="updatePublicSmsSendCountByPhone" parameterType="com.seentao.stpedu.common.entity.PublicSmsSendCount">
+		update public_sms_send_count 
+		<set>
+			<if test="sendTime != null"> send_time = #{sendTime}, </if>
+			<if test="sendNum != null"> send_num = #{sendNum}, </if>
+			<if test="sendSumNum != null"> send_sum_num = #{sendSumNum} </if>
+		</set>
+		where phone = #{phone}
+	</update>
+	
+</mapper>
+	

@@ -1,0 +1,25 @@
+{
+    "submitClub": {
+    	"request": {
+            "0": "userId",
+            "1": "clubId",
+            "2": "clubType",
+            "3": "clubName",
+            "4": "clubDesc",
+            "5": "clubLogoId",
+            "6": "provinceId",
+            "7": "cityId",
+            "8": "schoolId",
+            "9": "addMemberType",
+            "10": "fLevelAccount",
+            "11": "gameBannerId",
+            "12": "teachingBannerId",
+            "13": "styleBannerId",
+            "14": "backgroundColorId",
+            "15": "actionType"
+        },
+        "result": {
+             
+        }
+    }
+  }  

@@ -1,0 +1,116 @@
+{
+    "submitMood": {
+    	"request": {
+            "0": "userName",
+            "1": "userId",
+            "2": "userType",
+            "3": "userToken",
+            "4": "clubId",
+            "5": "moodContent"
+        },
+        "result": {
+        }
+    },
+    "getRemindRedDot": {
+    	"request": {
+            "0": "userName",
+            "1": "userId",
+            "2": "userType",
+            "3": "userToken",
+            "4": "actionType",
+            "5": "clubId"
+        },
+        "result": {
+        	 "isShowingRedDot": "isShowingRedDot",
+             "isShowingPrivateMessageRedDot": "isShowingPrivateMessageRedDot",
+             "isShowingAttantionRedDot": "isShowingAttantionRedDot",
+             "isShowingInviteRedDot": "isShowingInviteRedDot",
+             "isShowingGameRedDot": "isShowingGameRedDot",
+             "isShowingSysRedDot": "isShowingSysRedDot",
+             "isShowingRemindRedDot": "isShowingRemindRedDot",
+             "isShowingNoticeRedDot": "isShowingNoticeRedDot",
+             "isShowingRedPacketRedDot": "isShowingRedPacketRedDot"
+        }
+    },
+     "getRemindRedDotForMobile": {
+    	"request": {
+            "0": "userName",
+            "1": "userId",
+            "2": "userType",
+            "3": "userToken",
+            "4": "actionType",
+            "5": "clubId"
+        },
+        "result": {
+        	 "isShowingRedDot": "isShowingRedDot",
+             "isShowingPrivateMessageRedDot": "isShowingPrivateMessageRedDot",
+             "isShowingAttantionRedDot": "isShowingAttantionRedDot",
+             "isShowingInviteRedDot": "isShowingInviteRedDot",
+             "isShowingGameRedDot": "isShowingGameRedDot",
+             "isShowingSysRedDot": "isShowingSysRedDot",
+             "isShowingRemindRedDot": "isShowingRemindRedDot",
+             "isShowingNoticeRedDot": "isShowingNoticeRedDot",
+             "isShowingRedPacketRedDot": "isShowingRedPacketRedDot"
+        }
+    },
+    "submitAttachmentOSS": {
+    	"request": {
+            "0": "userName",
+            "1": "userId",
+            "2": "userType",
+            "3": "userToken",
+            "4": "attachmentName",
+            "5": "attachmentLink",
+            "6": "attachmentSeconds",
+            "7": "attachmentMajorType",
+            "8": "attachmentType"
+        },
+        "result": {
+        	 "attachmentId": "attachmentId"
+        }
+    },
+    "submitLoginUser": {
+    	"request": {
+            "0": "userName",
+            "1": "userId",
+            "2": "userType",
+            "3": "userToken",
+            "4": "actionType",
+            "5": "headLinkId",
+            "6": "nickname",
+            "7": "sex",
+            "8": "realName",
+            "9": "phoneNumber",
+            "10": "schoolId",
+            "11": "collegeId",
+            "12": "provinceId",
+            "13": "cityId",
+            "14": "idcard",
+            "15": "desc",
+            "16": "birthday",
+            "17": "profession",
+            "18": "studentID",
+            "19": "studentCard",
+            "20": "teacherCard",
+            "21": "positionalTitle",
+            "22": "speciality",
+            "23": "grade",
+            "24": "educationLevel",
+            "25": "address"
+        },
+        "result": {
+        	 "attachmentId": "attachmentId"
+        }
+    }
+
+
+
+
+
+
+
+
+
+    
+    
+}

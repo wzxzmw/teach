@@ -1,0 +1,28 @@
+{
+    "getAlbums": {
+    	"request": {
+            "0": "userId",
+            "1": "memberId",
+            "2": "start",
+            "3": "limit",
+            "4": "inquireType"
+        },
+        "result": {
+            "returnCount":"returnCount",
+        	"allPage":"allPage",
+        	"currentPage":"currentPage",
+        	"albums":"albums"
+        	
+        },
+        "albums": {
+            "albumId": "albumId",
+            "albumTitle": "albumName",
+            "albumDesc": "albumExplain",
+            "albumCoverLink": "filePath",
+            "albumPhotoCount": "photoNum",
+            "aCreateDate": "createTime",
+            "aUpdateDate": "lastUpdateTime"
+        }
+    }
+}
+

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.CenterMoneyLockMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.CenterMoneyLock" id="centerMoneyLock" >
+		<result property="lockId" column="lock_id"/>
+		<result property="userId" column="user_id"/>
+		<result property="createTime" column="create_time"/>
+		<result property="lockStatus" column="lock_status"/>
+		<result property="relObjetType" column="rel_objet_type"/>
+		<result property="relObjetId" column="rel_objet_id"/>
+		<result property="accountId" column="account_id"/>
+	</resultMap>
+	
+	<sql id="queryConditionCenterMoneyLock">
+		<where>
+			<if test="lockId != null"> and lock_id = #{lockId} </if>
+			<if test="userId != null"> and user_id = #{userId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="lockStatus != null"> and lock_status = #{lockStatus} </if>
+			<if test="relObjetType != null"> and rel_objet_type = #{relObjetType} </if>
+			<if test="relObjetId != null"> and rel_objet_id = #{relObjetId} </if>
+			<if test="accountId != null"> and account_id = #{accountId} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyCenterMoneyLock">
+		where lock_id = #{lockId}
+	</sql>
+	
+	<insert id="insertCenterMoneyLock" parameterType="com.seentao.stpedu.common.entity.CenterMoneyLock">
+	   <selectKey resultType="java.lang.Integer" keyProperty="lockId" order="AFTER" >
+	      SELECT currval('center_money_lock_lock_id_seq')as lockId
+		</selectKey> 
+		insert into center_money_lock(
+		lock_id
+		<if test="userId != null">, user_id</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="lockStatus != null"> ,lock_status</if>
+		<if test="relObjetType != null"> ,rel_objet_type</if>
+		<if test="relObjetId != null"> ,rel_objet_id</if>
+		<if test="accountId != null"> ,account_id</if>
+		)
+		values(
+		nextval('center_money_lock_lock_id_seq')
+		<if test="userId != null"> ,#{userId}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="lockStatus != null"> ,#{lockStatus}</if>
+		<if test="relObjetType != null"> ,#{relObjetType}</if>
+		<if test="relObjetId != null"> ,#{relObjetId}</if>
+		<if test="accountId != null"> ,#{accountId}</if>
+		)
+	</insert>
+	
+	<delete id="deleteCenterMoneyLock">
+		delete from center_money_lock
+		<include refid="queryConditionCenterMoneyLock"/>
+	</delete>
+	
+	<update id="updateCenterMoneyLockByKey" parameterType="com.seentao.stpedu.common.entity.CenterMoneyLock">
+		update center_money_lock 
+		<set>
+			<if test="lockId != null"> lock_id = #{lockId}, </if>
+			<if test="userId != null"> user_id = #{userId}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="lockStatus != null"> lock_status = #{lockStatus}, </if>
+			<if test="relObjetType != null"> rel_objet_type = #{relObjetType}, </if>
+			<if test="relObjetId != null"> rel_objet_id = #{relObjetId}, </if>
+			<if test="accountId != null"> account_id = #{accountId}, </if>
+		</set>
+		<include refid="queryByKeyCenterMoneyLock"/>
+	</update>
+	
+	
+	<update id="executeGuessResult" parameterType="com.seentao.stpedu.common.entity.CenterMoneyLock"  >
+			update center_money_lock set lock_status = #{lockStatus} where lock_id in (${lockIds})
+	</update>
+	
+	<select id="selectSingleCenterMoneyLock" resultMap="centerMoneyLock">
+		select 
+		lock_id
+		,user_id
+		,create_time
+		,lock_status
+		,rel_objet_type
+		,rel_objet_id
+		,account_id
+		from center_money_lock 
+		<include refid="queryConditionCenterMoneyLock"/>
+	</select>
+	
+	<select id="selectAllCenterMoneyLock" resultMap="centerMoneyLock">
+		select 
+		lock_id
+		,user_id
+		,create_time
+		,lock_status
+		,rel_objet_type
+		,rel_objet_id
+		,account_id
+		from center_money_lock
+	</select>
+	
+	
+	<select id="findGuessLock" parameterType="java.lang.String" resultMap="centerMoneyLock">
+		select 
+		lock_id
+		,user_id
+		,create_time
+		,lock_status
+		,rel_objet_type
+		,rel_objet_id
+		,account_id
+		from center_money_lock
+		where lock_id in (${value})
+	</select>
+	
+</mapper>
+	

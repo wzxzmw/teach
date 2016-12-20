@@ -1,0 +1,43 @@
+{
+    "getHomeworkSolution": {
+    
+    	"request": {
+            "0": "userId"
+            ,"1": "homeworkId"
+            ,"2": "start"
+            ,"3": "limit"
+        }
+        
+        ,"result": {
+        	"returnCount"	:"returnCount"
+        	,"allPage"		:"allPage"
+        	,"currentPage"	:"currentPage"
+        	,"solutions"	:"solutions"
+        }
+        
+        ,"solutions": {
+            "hSolutionId"				: "homeworkId"
+            ,"hSolutionBody"			: "homeworkExplain"
+            ,"hSolutionCreateDate"		: "submitTime"
+            ,"studentId"				: "studentId"
+            ,"studentName"				: "studentName"
+            ,"studentHeadLink"			: "studentHeadLink"
+            ,"hasScored"				: "hasScored"
+            ,"teacherId"				: "teacherId"
+            ,"teacherName"				: "teacherName"
+            ,"teacherHeadLink"			: "teacherHeadLink"
+            ,"schoolName"				: "schoolName"
+            ,"score"					: "assessScore"
+            ,"textEvaluation"			: "assessContent"
+            ,"evaluationDate"			: "assessTime"
+            ,"homeworkFiles"			: "homeworkFiles"
+        }
+        
+        ,"homeworkFiles": {
+        	"attachmentId"		: "attaId"
+        	,"attachmentName"	: "fileName"
+        	,"attachmentLink"	: "downloadUrl"
+        	,"attachmentType"	: "attaType"
+        }
+    }
+}

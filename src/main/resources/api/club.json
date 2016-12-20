@@ -1,0 +1,268 @@
+{
+    "getTopics": {
+        "request": {
+            "0": "userId",
+            "1": "memberId",
+            "2": "clubId",
+            "3": "topicId",
+            "4": "startDate",
+            "5": "endDate",
+            "6": "searchWord",
+            "7": "start",
+            "8": "limit",
+            "9": "inquireType"
+        },
+        "result": {
+        	"returnCount": "returnCount",
+        	"allPage": "allPage",
+        	"currentPage": "currentPage",
+        	"topics": "topics"
+        },
+        "topics": {
+            "topicId": "topicId",
+            "tCreaterId": "tCreaterId",
+            "tCreaterName": "tCreaterName",
+            "tCreaterNickname": "tCreaterNickname",
+            "topicTitle": "topicTitle",
+            "topicContent": "topicContent",
+            "tCreateDate": "tCreateDate",
+            "supportCount": "supportCount",
+            "commentCount": "commentCount",
+            "isTop": "isTop",
+            "topicContentFilterHtml": "topicContentFilterHtml"
+        }
+    },
+    "submitTopic": {
+        "request": {
+            "0": "userId",
+            "1": "clubId",
+            "2": "topicTitle",
+            "3": "topicContent",
+            "4": "isTop"
+        },
+        "result": {
+        }
+    },
+    "getReminds": {
+        "request": {
+            "0": "userId",
+            "1": "clubId",
+            "2": "remindShowType",
+            "3": "start",
+            "4": "limit"
+        },
+        "result": {
+        	"returnCount": "returnCount",
+        	"allPage": "allPage",
+        	"currentPage": "currentPage",
+        	"reminds": "reminds"
+        },
+        "reminds": {
+            "remindId": "remindId",
+            "rCreaterId": "rCreaterId",
+            "rCreaterName": "rCreaterName",
+            "rCreaterNickname": "rCreaterNickname",
+            "remindContent": "remindContent",
+            "rCreateDate": "rCreateDate",
+            "rReceiverId": "rReceiverId",
+            "rReceiverName": "rReceiverName",
+            "rReceiverNickname": "rReceiverNickname"
+        }
+    },
+    "submitRemind": {
+        "request": {
+            "0": "userId",
+            "1": "clubId",
+            "2": "remindContent",
+            "3": "remindObject",
+            "4": "remindUserIds"
+        },
+        "result": {
+        }
+    },
+    "getWebNotices": {
+        "request": {
+            "0": "userId",
+            "1": "clubId",
+            "2": "start",
+            "3": "limit",
+            "4": "inquireType"
+        },
+        "result": {
+        	"returnCount": "returnCount",
+        	"allPage": "allPage",
+        	"currentPage": "currentPage",
+        	"notices": "notices"
+        },
+        "notices": {
+            "noticeId": "noticeId",
+            "nCreaterId": "nCreaterId",
+            "nCreaterName": "nCreaterName",
+            "nCreaterNickname": "nCreaterNickname",
+            "noticeTitle": "noticeTitle",
+            "noticeContent": "noticeContent",
+            "nCreateDate": "nCreateDate",
+            "isTop": "isTop"
+        }
+    },
+    "submitNotice": {
+        "request": {
+            "0": "userId",
+            "1": "clubId",
+            "2": "noticeTitle",
+            "3": "noticeContent",
+            "4": "isTop"
+        },
+        "result": {
+        }
+    },
+    "getMoods": {
+        "request": {
+            "0": "userId",
+            "1": "memberId",
+            "2": "clubId",
+            "3": "timeRange",
+            "4": "start",
+            "5": "limit",
+            "6": "inquireType"
+        },
+        "result": {
+        	"returnCount": "returnCount",
+        	"allPage": "allPage",
+        	"currentPage": "currentPage",
+        	"moods": "moods"
+        },
+        "moods": {
+            "moodId": "moodId",
+            "mCreaterId": "mCreaterId",
+            "mCreaterName": "mCreaterName",
+            "mCreaterNickname": "mCreaterNickname",
+            "mCreaterHeadLink": "mCreaterHeadLink",
+            "clubRole": "clubRole",
+            "moodContent": "moodContent",
+            "mCreateDate": "mCreateDate",
+            "supportCount": "supportCount",
+            "againstCount": "againstCount"
+        }
+    },
+	 "getDynamics": {
+	    "request": {
+	        "0": "userId",
+	        "1": "memberId",
+	        "2": "classId",
+	        "3": "classType",
+	        "4": "clubId",
+	        "5": "start",
+	        "6": "limit",
+	        "7": "inquireType"
+	    },
+	    "result": {
+	    	"returnCount": "returnCount",
+	    	"allPage": "allPage",
+	    	"currentPage": "currentPage",
+	    	"dynamics": "dynamics"
+	    },
+	    "dynamics": {
+	        "dynamicId": "dynamicId",
+	        "dynamicType": "dynamicType",
+	        "dmCreaterId": "dmCreaterId",
+	        "dmCreaterName": "dmCreaterName",
+	        "dmCreaterNickname": "dmCreaterNickname",
+	        "dmCreaterHeadLink": "dmCreaterHeadLink",
+	        "dmReceiverId": "dmReceiverId",
+	        "dmReceiverName": "dmReceiverName",
+	        "dmReceiverNickname": "dmReceiverNickname",
+	        "dynamicMainTitle": "dynamicMainTitle",
+	        "dynamicMainContent": "dynamicMainContent",
+	        "dmCreateDate": "dmCreateDate",
+	        "dmSupportCount": "dmSupportCount",
+	        "dmCommentCount": "dmCommentCount",
+	        "dynamicMainId": "dynamicMainId",
+	        "isTop": "isTop",
+	        "companyLogoLink": "companyLogoLink",
+	        "postCount": "postCount",
+	        "postTypeCount": "postTypeCount",
+	        "hasBeenAttention": "hasBeenAttention",
+	        "supportCount": "supportCount",
+	        "companyDetailLink": "companyDetailLink",
+	         "clubId": "clubId",
+	        "classId": "classId",
+	        "classType": "classType",
+	        "hasJoinClass": "hasJoinClass",
+	        "hasJoinClub": "hasJoinClub",
+	        "gameType": "gameType",
+	        "clubName": "clubName",
+	        "className": "className"
+	    }
+	},
+	 "getDynamicEntryForMobile": {
+	    "request": {
+	        "0": "userId"
+	    },
+	    "result": {
+	    	"returnCount": "returnCount",
+	    	"allPage": "allPage",
+	    	"currentPage": "currentPage",
+	    	"dynamicEntries": "dynamicEntries"
+	    },
+	    "dynamicEntries": {
+	        "dynamicEntryType": "dynamicEntryType",
+	        "dynamicEntryTitle": "dynamicEntryTitle",
+	        "dynamicEntryMainId": "dynamicEntryMainId",
+	        "chapterId": "chapterId",
+	        "gameId": "gameId",
+	        "gameName": "gameName",
+	        "messageType": "messageType",
+	        "hasNewMsg": "hasNewMsg",
+	        "clubName": "clubName",
+	        "gameEventTitle": "gameEventTitle"
+	    }
+	},
+    "getDynamicsForMobile": {
+	    "request": {
+	        "0": "userId",
+	        "1": "clubId",
+	        "2": "start",
+	        "3": "limit",
+	        "4": "inquireType"
+	    },
+	    "result": {
+	    	"returnCount": "returnCount",
+	    	"allPage": "allPage",
+	    	"currentPage": "currentPage",
+	    	"dynamics": "dynamics"
+	    },
+	    "dynamics": {
+	        "dynamicId": "dynamicId",
+	        "dynamicType": "dynamicType",
+	        "dmCreaterId": "dmCreaterId",
+	        "dmCreaterName": "dmCreaterName",
+	        "dmCreaterNickname": "dmCreaterNickname",
+	        "dmCreaterHeadLink": "dmCreaterHeadLink",
+	        "dmReceiverId": "dmReceiverId",
+	        "dmReceiverName": "dmReceiverName",
+	        "dmReceiverNickname": "dmReceiverNickname",
+	        "dynamicMainTitle": "dynamicMainTitle",
+	        "dynamicMainContent": "dynamicMainContent",
+	        "dmCreateDate": "dmCreateDate",
+	        "dmSupportCount": "dmSupportCount",
+	        "dmCommentCount": "dmCommentCount",
+	        "dynamicMainId": "dynamicMainId",
+	        "isTop": "isTop",
+	        "companyLogoLink": "companyLogoLink",
+	        "postCount": "postCount",
+	        "postTypeCount": "postTypeCount",
+	        "hasBeenAttention": "hasBeenAttention",
+	        "supportCount": "supportCount",
+	        "companyDetailLink": "companyDetailLink",
+	         "clubId": "clubId",
+	        "classId": "classId",
+	        "classType": "classType",
+	        "hasJoinClass": "hasJoinClass",
+	        "hasJoinClub": "hasJoinClub",
+	        "gameType": "gameType",
+	        "clubName": "clubName",
+	        "className": "className"
+	    }
+	}
+}

@@ -1,0 +1,54 @@
+{
+    "getQuizs": {
+    
+    	"request": {
+            "0": "userId"
+            ,"1": "quizTopicId"
+            ,"2": "start"
+            ,"3": "limit"
+            ,"4": "_type"
+            ,"5": "memberId"
+            ,"6": "inquireType"
+        }
+        
+        ,"result": {
+        	"returnCount"	:"returnCount"
+        	,"allPage"		:"allPage"
+        	,"currentPage"	:"currentPage"
+        	,"quizs"		:"quizs"
+        }
+        
+        ,"quizs": {
+            "quizId"				: "guessId"
+            ,"quizTitle"			: "guessTitle"
+            ,"quizStartDate"		: "quizStartDate"
+            ,"quizEndDate"			: "endTime"
+            ,"quizType"				: "guessType"
+            ,"bettingCanCount"		: "sureAmount"
+            ,"bettingCannotCount"	: "negativeAmount"
+            ,"createrId"			: "createUserId"
+            ,"createrNickname"		: "createrNickname"
+            ,"createrHeadLink"		: "createrHeadLink"
+            ,"bettingNum"			: "joinUserNum"
+            ,"topBettingUserId"		: "maxUserId"
+            ,"topBettingNickname"	: "topBettingNickname"
+            ,"topBettingCount"		: "maxAmount"
+            ,"userId"				: "userId"
+            ,"isTheBanker"			: "isTheBanker"
+            ,"bankerBettingObject"	: "bankerPosition"
+            ,"bankerBettingCount"	: "bankerAmount"
+            ,"odds"					: "odds"
+            ,"otherCanBettingCount"	: "otherCanBettingCount"
+            ,"hasBetting"			: "hasBetting"
+            ,"bettingObject"		: "bettingObject"
+            ,"bettingCount"			: "bettingCount"
+            ,"quizStatus"			: "status"
+            ,"quizResult"			: "result"
+            
+            ,"quizTopicId"			: "quizTopicId"
+            ,"gameId"				: "gameId"
+            ,"gameTitle"			: "gameTitle"
+            ,"quizTopicTitle"		: "quizTopicTitle"
+        }
+    }
+}

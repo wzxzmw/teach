@@ -1,0 +1,204 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.ClubRelClassCourseMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.ClubRelClassCourse" id="clubRelClassCourse" >
+		<result property="relId" column="rel_id"/>
+		<result property="classId" column="class_id"/>
+		<result property="courseId" column="course_id"/>
+		<result property="createTime" column="create_time"/>
+		<result property="isShow" column="is_show"/>
+		<result property="totalStudyNum" column="total_study_num"/>
+	</resultMap>
+	
+	<sql id="queryConditionClubRelClassCourse">
+		<where>
+			<if test="relId != null"> and rel_id = #{relId} </if>
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="courseId != null"> and course_id = #{courseId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="isShow != null"> and is_show = #{isShow} </if>
+			<if test="totalStudyNum != null"> and total_study_num = #{totalStudyNum} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyClubRelClassCourse">
+		where rel_id = #{relId}
+	</sql>
+	
+	<insert id="insertClubRelClassCourse" parameterType="com.seentao.stpedu.common.entity.ClubRelClassCourse">
+		insert into club_rel_class_course(
+		rel_id
+		<if test="classId != null"> ,class_id</if>
+		<if test="courseId != null"> ,course_id</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="isShow != null"> ,is_show</if>
+		<if test="totalStudyNum != null"> ,total_study_num</if>
+		)
+		values(
+		nextval('club_rel_class_course_rel_id_seq')
+		<if test="classId != null"> ,#{classId}</if>
+		<if test="courseId != null"> ,#{courseId}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="isShow != null"> ,#{isShow}</if>
+		<if test="totalStudyNum != null"> ,#{totalStudyNum}</if>
+		)
+	</insert>
+	
+	<delete id="deleteClubRelClassCourse">
+		delete from club_rel_class_course
+		<include refid="queryConditionClubRelClassCourse"/>
+	</delete>
+	
+	<update id="updateClubRelClassCourseByKey" parameterType="com.seentao.stpedu.common.entity.ClubRelClassCourse">
+		update club_rel_class_course 
+		<set>
+			<if test="relId != null"> rel_id = #{relId}, </if>
+			<if test="classId != null"> class_id = #{classId}, </if>
+			<if test="courseId != null"> course_id = #{courseId}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="isShow != null"> is_show = #{isShow}, </if>
+			total_study_num = total_study_num+1
+		</set>
+		<where>
+			<if test="relId != null"> and rel_id = #{relId} </if>
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="courseId != null"> and course_id = #{courseId} </if>
+		</where>
+	</update>
+	
+	<select id="selectSingleClubRelClassCourse" resultMap="clubRelClassCourse">
+		select 
+		rel_id
+		,class_id
+		,course_id
+		,create_time
+		,is_show
+		,total_study_num
+		from club_rel_class_course 
+		<include refid="queryConditionClubRelClassCourse"/>
+		 order by course_id
+		 limit #{limit} offset #{start}
+	</select>
+	
+	<select id="selectAllClubRelClassCourse" resultMap="clubRelClassCourse">
+		select 
+		rel_id
+		,class_id
+		,course_id
+		,create_time
+		,is_show
+		,total_study_num
+		from club_rel_class_course
+	</select>
+	
+	
+	<!-- 批量插入 -->
+	<insert id="insertClubRelClassCourses" parameterType="java.util.List">
+		<selectKey resultType="long" keyProperty="relId" order="AFTER">  
+			 SELECT currval('club_rel_class_course_rel_id_seq') AS rel_id
+		  </selectKey> 
+		insert into club_rel_class_course(
+			class_id,course_id ,create_time ,is_show
+		)
+		values
+		<foreach collection="list" item="item" index="index" separator=",">
+		(
+		 #{item.classId} ,#{item.courseId} ,#{item.createTime},#{item.isShow}
+		)
+		</foreach>
+	</insert>
+	
+	<select id="getClubCourseByClassIdCount" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+		select 
+		count(*)
+		from club_rel_class_course
+		<where>
+			<if test="classId != null"> class_id = #{classId} </if>
+		</where>
+	</select>
+	
+	<select id="queryCount" resultType="java.lang.Integer" parameterType="HashMap">
+		
+		SELECT 
+		
+			COUNT(*) 
+			
+		FROM club_rel_class_course
+		
+		<where>
+			<if test="relId != null"> and rel_id = #{relId} </if>
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="courseId != null"> and course_id = #{courseId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="isShow != null"> and is_show = #{isShow} </if>
+			<if test="totalStudyNum != null"> and total_study_num = #{totalStudyNum} </if>
+			<if test="isShowApp != null"> and is_show != #{isShowApp} </if>
+		</where>
+		
+	</select>
+	
+	
+	<select id="queryByPage" resultMap="clubRelClassCourse" parameterType="HashMap">
+	
+		SELECT 
+		
+			rel_id
+			,class_id
+			,course_id
+			,create_time
+			,is_show
+			,total_study_num
+			
+		FROM club_rel_class_course
+		
+		<where>
+			<if test="relId != null"> and rel_id = #{relId} </if>
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="courseId != null"> and course_id = #{courseId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="isShow != null"> and is_show = #{isShow} </if>
+			<if test="totalStudyNum != null"> and total_study_num = #{totalStudyNum} </if>
+			<if test="isShowApp != null"> and is_show != #{isShowApp} </if>
+		</where>
+	
+		 limit #{limit} offset #{offset}
+		
+	</select>
+	
+	<!--  适应性分页 返回对象 -->
+	<select id="queryByPageTeachCourse" resultMap="com.seentao.stpedu.common.sqlmap.TeachCourseMapper.teachCourse" parameterType="HashMap">
+	
+		SELECT 
+		
+			rel_id
+			,class_id
+			,course_id
+			,create_time
+			,is_show
+			,total_study_num
+			
+		FROM club_rel_class_course
+		
+		<where>
+			<if test="relId != null"> and rel_id = #{relId} </if>
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="courseId != null"> and course_id = #{courseId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="isShow != null"> and is_show = #{isShow} </if>
+			<if test="totalStudyNum != null"> and total_study_num = #{totalStudyNum} </if>
+			<if test="ids_key != null"> and rel_id in (${ids_key}) </if>
+		</where>
+	
+		<if test="ids_key == null"> limit #{limit} offset #{offset} </if>
+		
+	</select>
+	
+	
+	
+
+	
+	
+</mapper>
+	

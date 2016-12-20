@@ -1,0 +1,35 @@
+{
+    "getQuizTopic": {
+    
+    	"request": {
+            "0": "userId",
+            "1": "gameEventId",
+            "2": "quizTopicId",
+            "3": "start",
+            "4": "limit",
+            "5": "inquireType"
+        }
+        
+        ,"result": {
+        	"returnCount"	:"returnCount",
+        	"allPage"		:"allPage",
+        	"currentPage"	:"currentPage",
+        	"quizTopics"	:"quizTopics"
+        }
+        
+        ,"quizTopics": {
+            "quizTopicId"			: "topicId",
+            "gameId"				: "matchId",
+            "gameTitle"				: "gameTitle",
+            "quizTopicTitle"		: "title",
+            "quizTopicDesc"			: "content",
+            "quizTopicStartDate"	: "createTime",
+            "joinNum"				: "joinNum",
+            "quizCount"				: "guessNum",
+            "topBettingUserId"		: "topBettingUserId",
+            "topBettingNickname"	: "topBettingNickname",
+            "bettingCount"			: "bettingCount",
+            "quizTopicStatus"		: "status",
+        }
+    }
+}

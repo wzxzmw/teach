@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.BsVoteMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.BsVote" id="BaseBsVote" >
+		<result property="voteId" column="vote_id"/>
+		<result property="voteTitle" column="vote_title"/>
+		<result property="voteDesc" column="vote_desc"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="createTime" column="create_time"/>
+		<result property="imgId" column="img_id"/>
+		<result property="beginTime" column="begin_time"/>
+		<result property="endTime" column="end_time"/>
+		<result property="voteLimitType" column="vote_limit_type"/>
+		<result property="voteLimitNum" column="vote_limit_num"/>
+		<result property="voteNum" column="vote_num"/>
+		<result property="choosePattern" column="choose_pattern"/>
+		<result property="isDisable" column="is_disable"/>
+		<result property="isRecommend" column="is_recommend"/>
+		<result property="isDelete" column="is_delete"/>
+	</resultMap>
+	
+	<sql id="base_bs_vote_sql">
+	vote_id,vote_title,vote_desc,create_user_id,create_time,img_id,begin_time,end_time,
+	vote_limit_type,vote_limit_num,vote_num,choose_pattern,is_disable,is_recommend,is_delete
+	</sql>
+	<!-- 添加评选对象 -->
+	<insert id="insertBsVote" parameterType="com.seentao.stpedu.common.entity.BsVote">
+		<!-- 序列自增赋值给主键，并且返回 -->
+		<selectKey resultType="java.lang.Integer" keyProperty="voteId" order="AFTER" >
+	      SELECT currval('bs_vote_vote_id_seq')as voteId
+		</selectKey>
+		insert into bs_vote(
+		vote_id
+		<!-- 评选主题 -->
+		<if test="voteTitle !=null and itemName !=''">,vote_title</if>
+		<!-- 评选说明 -->
+		<if test="voteDesc != null and voteDesc !='' ">,vote_desc</if>
+		<!--创建者id-->
+		<if test="createUserId !=null"> ,create_user_id</if>
+		<!--创建时间  -->
+		<if test="createTime !=null"> ,create_time</if>
+		<!-- 评选主图id -->
+		<if test="imgId !=null"> ,img_id</if>
+		<!-- 开始时间 -->
+		<if test="beginTime !=null"> ,begin_time</if>
+		<!-- 结束时间 -->
+		<if test="endTime !=null"> ,end_time</if>
+		<!--评选限制类型 1.次 2.次/天  -->
+		<if test="voteLimitType !=null"> ,vote_limit_type</if>
+		<!--评选限制次数 -->
+		<if test="voteLimitNum !=null"> ,vote_limit_num</if>
+		<!--评论数量 -->
+		<if test="voteNum !=null"> ,vote_num</if>
+		<!--  选择模式 0 ，单选，大于1 表示多选-->
+		<if test="choosePattern !=null"> ,choose_pattern</if>
+		<!-- 是否上线 0、不上线，1、上线 -->
+		<if test="isDisable !=null">,is_disable</if>
+		<!-- 是否推荐 0、不推荐 1、推荐-->
+		<if test="isRecommend !=null">,is_recommend</if>
+		<!-- 是否删除-->
+		<if test="isDelete !=null">,is_delete</if>
+		)values(
+		nextval('bs_vote_vote_id_seq')
+		<!-- 评选主题 -->
+		<if test="voteTitle !=null and voteTitle !=''">,#{voteTitle}</if>
+		<!-- 评选说明 -->
+		<if test="voteDesc != null and voteDesc !='' ">,#{voteDesc}</if>
+		<!--创建者id-->
+		<if test="createUserId !=null"> ,#{createUserId}</if>
+		<!--创建时间  -->
+		<if test="createTime !=null"> ,#{createTime}</if>
+		<!-- 评选主图id -->
+		<if test="imgId !=null"> ,#{imgId}</if>
+		<!-- 开始时间 -->
+		<if test="beginTime !=null"> ,#{beginTime}</if>
+		<!-- 结束时间 -->
+		<if test="endTime !=null"> ,#{endTime}</if>
+		<!--评选限制类型 1.次 2.次/天  -->
+		<if test="voteLimitType !=null"> ,#{voteLimitType}</if>
+		<!--评选限制次数 -->
+		<if test="voteLimitNum !=null"> ,#{voteLimitNum}</if>
+		<!--评论数量 -->
+		<if test="voteNum !=null"> ,#{voteNum}</if>
+		<!--  选择模式 0 ，单选，大于1 表示多选-->
+		<if test="choosePattern !=null"> ,#{choosePattern}</if>
+		<!-- 是否上线 0、不上线，1、上线 -->
+		<if test="isDisable !=null">,#{isDisable}</if>
+		<!-- 是否推荐 0、不推荐 1、推荐-->
+		<if test="isRecommend !=null">,#{isRecommend}</if>
+		<!-- 是否删除-->
+		<if test="isDelete !=null">,#{isDelete}</if>
+		)
+	</insert>
+	<!-- 分页查询推荐评选 -->
+	<select id ="queryByPageBsVote" parameterType="java.util.Map" resultMap="BaseBsVote">
+		select 
+		<include refid="base_bs_vote_sql" />
+		from bs_vote 
+		<where>
+		is_disable=1  and is_delete=0 
+		<if test="inquireType == 1">
+		and  is_recommend  =1 
+		</if>
+		<!-- 最热排序 -->
+		<if test="inquireType == 2">
+		order by  vote_num DESC,
+		 begin_time DESC,
+		end_time DESC,
+		create_time DESC
+		</if>
+		<!-- 最新的评选；动态模块，最新的评选； -->
+		<if test="inquireType ==3">
+		order by 
+		begin_time DESC ,
+		end_time DESC,
+		create_time DESC
+		</if>
+		</where>
+		limit #{limit} offset #{offset} 
+	</select>
+	<!-- 查询推荐评选总数 -->
+		<select id ="queryCountByBsVote" parameterType="java.util.Map" resultType="int">
+		select 
+		count(1) 
+		from bs_vote 
+		<where>
+		  is_disable=1 and is_delete=0 
+		<if test="inquireType == 1">
+		and is_recommend=1
+		</if>
+		<if test="voteIds != null and voteIds != ''">
+		and vote_id in(${voteIds})
+		</if>
+		</where>
+	</select>
+	<!-- 根据投票id获取唯一一条投票信息 -->
+	<select id ="queryBsVoteByVoteId" resultMap="BaseBsVote">
+		select <include refid="base_bs_vote_sql" />  
+		    from bs_vote 
+		      where vote_id = #{voteId} and  is_disable=1 and is_delete=0
+	</select>
+	<!-- 修改评选数量 -->
+	<update id="updateBsVoteByVoteIdVoteNum" >
+		update bs_vote set vote_num= #{voteNum} where vote_id = #{voteId}
+	</update>
+	<!-- 批量更新数量 -->
+	<update id="batchUpdateVoteCount"  parameterType="java.util.List">
+	   <foreach collection="list" item="item" index="index" separator=";">
+				update bs_vote 
+				<set>
+				  vote_num=${item.voteNum}
+				</set>
+				where vote_id = ${item.voteId}
+	   </foreach>
+    </update>
+	
+</mapper>
+	

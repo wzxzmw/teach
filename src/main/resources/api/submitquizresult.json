@@ -1,0 +1,12 @@
+{
+    "submitQuizResult": {
+    	"request": {
+            "0": "userId",
+            "1": "quizId",
+            "2": "quizWinner"
+        },
+        "result": {
+             
+        }
+    }
+  }  

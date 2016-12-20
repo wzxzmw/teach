@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.CenterSmsVerificationMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.CenterSmsVerification" id="centerSmsVerification" >
+		<result property="verificationId" column="verification_id"/>
+		<result property="verificationCode" column="verification_code"/>
+		<result property="phone" column="phone"/>
+		<result property="type" column="type"/>
+		<result property="sendTime" column="send_time"/>
+	</resultMap>
+	
+	<sql id="queryConditionCenterSmsVerification">
+		<where>
+			<if test="verificationId != null"> and verification_id = #{verificationId} </if>
+			<if test="verificationCode != null"> and verification_code = #{verificationCode} </if>
+			<if test="phone != null"> and phone = #{phone} </if>
+			<if test="type != null"> and type = #{type} </if>
+			<if test="sendTime != null"> and send_time = #{sendTime} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyCenterSmsVerification">
+		where verification_id = #{verificationId}
+	</sql>
+	
+	<insert id="insertCenterSmsVerification" parameterType="com.seentao.stpedu.common.entity.CenterSmsVerification">
+		insert into center_sms_verification(
+		verification_id
+		<if test="verificationCode != null"> ,verification_code</if>
+		<if test="phone != null"> ,phone</if>
+		<if test="type != null"> ,type</if>
+		<if test="sendTime != null"> ,send_time</if>
+		)
+		values(
+		nextval('center_sms_verification_verification_id_seq')
+		<if test="verificationCode != null"> ,#{verificationCode}</if>
+		<if test="phone != null"> ,#{phone}</if>
+		<if test="type != null"> ,#{type}</if>
+		<if test="sendTime != null"> ,#{sendTime}</if>
+		)
+	</insert>
+	
+	<delete id="deleteCenterSmsVerification">
+		delete from center_sms_verification
+		<include refid="queryConditionCenterSmsVerification"/>
+	</delete>
+	
+	<update id="updateCenterSmsVerificationByKey" parameterType="com.seentao.stpedu.common.entity.CenterSmsVerification">
+		update center_sms_verification 
+		<set>
+			<if test="verificationId != null"> verification_id = #{verificationId}, </if>
+			<if test="verificationCode != null"> verification_code = #{verificationCode}, </if>
+			<if test="phone != null"> phone = #{phone}, </if>
+			<if test="type != null"> type = #{type}, </if>
+			<if test="sendTime != null"> send_time = #{sendTime}, </if>
+		</set>
+		<include refid="queryByKeyCenterSmsVerification"/>
+	</update>
+	
+	<select id="selectSingleCenterSmsVerification" resultMap="centerSmsVerification">
+		select 
+		verification_id
+		,verification_code
+		,phone
+		,type
+		,send_time
+		from center_sms_verification 
+		<include refid="queryConditionCenterSmsVerification"/>
+	</select>
+	
+	<select id="selectAllCenterSmsVerification" resultMap="centerSmsVerification">
+		select 
+		verification_id
+		,verification_code
+		,phone
+		,type
+		,send_time
+		from center_sms_verification
+	</select>
+	
+	<select id="selectCenterSmsVerificationByConditon" resultType="int">
+		select 
+		count(verification_id)
+		from center_sms_verification where type=#{type} and phone=#{phone} and verification_code=#{iCode} and send_time  between #{startTime} and #{endTime}
+	</select>
+	
+	
+</mapper>
+	

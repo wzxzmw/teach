@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.TeachInstituteMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.TeachInstitute" id="teachInstitute" >
+		<result property="instId" column="inst_id"/>
+		<result property="instName" column="inst_name"/>
+		<result property="schoolId" column="school_id"/>
+	</resultMap>
+	
+	<sql id="queryConditionTeachInstitute">
+		<where>
+			<if test="instId != null"> and inst_id = #{instId} </if>
+			<if test="instName != null"> and inst_name = #{instName} </if>
+			<if test="schoolId != null"> and school_id = #{schoolId} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyTeachInstitute">
+		where inst_id = #{instId}
+	</sql>
+	
+	<insert id="insertTeachInstitute" parameterType="com.seentao.stpedu.common.entity.TeachInstitute">
+		insert into teach_institute(
+		inst_id
+		<if test="instName != null"> ,inst_name</if>
+		<if test="schoolId != null"> ,school_id</if>
+		)
+		values(
+		null
+		<if test="instName != null"> ,#{instName}</if>
+		<if test="schoolId != null"> ,#{schoolId}</if>
+		)
+	</insert>
+	
+	<delete id="deleteTeachInstitute">
+		delete from teach_institute
+		<include refid="queryConditionTeachInstitute"/>
+	</delete>
+	
+	<update id="updateTeachInstituteByKey" parameterType="com.seentao.stpedu.common.entity.TeachInstitute">
+		update teach_institute 
+		<set>
+			<if test="instId != null"> inst_id = #{instId}, </if>
+			<if test="instName != null"> inst_name = #{instName}, </if>
+			<if test="schoolId != null"> school_id = #{schoolId}, </if>
+		</set>
+		<include refid="queryByKeyTeachInstitute"/>
+	</update>
+	
+	<select id="selectSingleTeachInstitute" resultMap="teachInstitute">
+		select 
+		inst_id
+		,inst_name
+		,school_id
+		from teach_institute 
+		<include refid="queryConditionTeachInstitute"/>
+	</select>
+	
+	<select id="selectAllTeachInstitute" resultMap="teachInstitute">
+		select 
+		inst_id
+		,inst_name
+		,school_id
+		from teach_institute
+	</select>
+	
+</mapper>
+	

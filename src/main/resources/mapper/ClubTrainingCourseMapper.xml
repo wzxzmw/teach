@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.ClubTrainingCourseMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.ClubTrainingCourse" id="clubTrainingCourse" >
+		<result property="courseId" column="course_id"/>
+		<result property="courseType" column="course_type"/>
+		<result property="courseTitle" column="course_title"/>
+		<result property="courseExplain" column="course_explain"/>
+		<result property="courseContent" column="course_content"/>
+		<result property="imageId" column="image_id"/>
+		<result property="videoAttaId" column="video_atta_id"/>
+		<result property="audioAttaId" column="audio_atta_id"/>
+		<result property="createTime" column="create_time"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="isDelete" column="is_delete"/>
+		<result property="totalStudyNum" column="total_study_num"/>
+	</resultMap>
+	
+	<sql id="queryConditionClubTrainingCourse">
+		<where>
+			<if test="courseId != null"> and course_id = #{courseId} </if>
+			<if test="courseType != null"> and course_type = #{courseType} </if>
+			<if test="courseTitle != null"> and course_title = #{courseTitle} </if>
+			<if test="courseExplain != null"> and course_explain = #{courseExplain} </if>
+			<if test="courseContent != null"> and course_content = #{courseContent} </if>
+			<if test="imageId != null"> and image_id = #{imageId} </if>
+			<if test="videoAttaId != null"> and video_atta_id = #{videoAttaId} </if>
+			<if test="audioAttaId != null"> and audio_atta_id = #{audioAttaId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+			<if test="totalStudyNum != null"> and total_study_num = #{totalStudyNum} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyClubTrainingCourse">
+		where course_id = #{courseId}
+	</sql>
+	
+	<insert id="insertClubTrainingCourse" parameterType="com.seentao.stpedu.common.entity.ClubTrainingCourse">
+		<selectKey resultType="java.lang.Integer"  order="AFTER" keyProperty="courseId" >
+	        SELECT currval('club_training_course_course_id_seq') AS course_id   
+	    </selectKey>
+		insert into club_training_course(
+		course_id
+		<if test="courseType != null"> ,course_type</if>
+		<if test="courseTitle != null"> ,course_title</if>
+		<if test="courseExplain != null"> ,course_explain</if>
+		<if test="courseContent != null"> ,course_content</if>
+		<if test="imageId != null"> ,image_id</if>
+		<if test="videoAttaId != null"> ,video_atta_id</if>
+		<if test="audioAttaId != null"> ,audio_atta_id</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="createUserId != null"> ,create_user_id</if>
+		<if test="isDelete != null"> ,is_delete</if>
+		<if test="totalStudyNum != null"> ,total_study_num</if>
+		)
+		values(
+		nextval('club_training_course_course_id_seq')
+		<if test="courseType != null"> ,#{courseType}</if>
+		<if test="courseTitle != null"> ,#{courseTitle}</if>
+		<if test="courseExplain != null"> ,#{courseExplain}</if>
+		<if test="courseContent != null"> ,#{courseContent}</if>
+		<if test="imageId != null"> ,#{imageId}</if>
+		<if test="videoAttaId != null"> ,#{videoAttaId}</if>
+		<if test="audioAttaId != null"> ,#{audioAttaId}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="createUserId != null"> ,#{createUserId}</if>
+		<if test="isDelete != null"> ,#{isDelete}</if>
+		<if test="totalStudyNum != null"> ,#{totalStudyNum}</if>
+		)
+	</insert>
+	
+	<delete id="deleteClubTrainingCourse">
+		delete from club_training_course
+		<include refid="queryConditionClubTrainingCourse"/>
+	</delete>
+	
+	<update id="updateClubTrainingCourseByKey" parameterType="com.seentao.stpedu.common.entity.ClubTrainingCourse">
+		update club_training_course 
+		<set>
+			<if test="courseId != null"> course_id = #{courseId}, </if>
+			<if test="courseType != null"> course_type = #{courseType}, </if>
+			<if test="courseTitle != null"> course_title = #{courseTitle}, </if>
+			<if test="courseExplain != null"> course_explain = #{courseExplain}, </if>
+			<if test="courseContent != null"> course_content = #{courseContent}, </if>
+			<if test="imageId != null"> image_id = #{imageId}, </if>
+			<if test="videoAttaId != null"> video_atta_id = #{videoAttaId}, </if>
+			<if test="audioAttaId != null"> audio_atta_id = #{audioAttaId}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="createUserId != null"> create_user_id = #{createUserId}, </if>
+			<if test="isDelete != null"> is_delete = #{isDelete}, </if>
+			<if test="totalStudyNum != null"> total_study_num = #{totalStudyNum}, </if>
+		</set>
+		<include refid="queryByKeyClubTrainingCourse"/>
+	</update>
+	
+	<select id="selectSingleClubTrainingCourse" resultMap="clubTrainingCourse">
+		select 
+		course_id
+		,course_type
+		,course_title
+		,course_explain
+		,course_content
+		,image_id
+		,video_atta_id
+		,audio_atta_id
+		,create_time
+		,create_user_id
+		,is_delete
+		,total_study_num
+		from club_training_course 
+		<include refid="queryConditionClubTrainingCourse"/>
+	</select>
+	
+	<select id="selectAllClubTrainingCourse" resultMap="clubTrainingCourse">
+		select 
+		course_id
+		,course_type
+		,course_title
+		,course_explain
+		,course_content
+		,image_id
+		,video_atta_id
+		,audio_atta_id
+		,create_time
+		,create_user_id
+		,is_delete
+		,total_study_num
+		from club_training_course
+	</select>
+	
+	<select id="getClubTrainingCourseCount" resultType="java.lang.Integer" parameterType="map">
+		select 
+		count(*)
+		from club_training_course
+		<where>
+			<if test="courseType != null"> course_type = #{courseType}</if>
+		</where>
+	</select>
+	
+	<update id="delClubTrainingCourseAll" parameterType="ArrayList">
+		 update club_training_course 
+           <trim prefix="set" suffixOverrides=",">
+           
+            	<trim prefix="is_delete = CASE course_id " suffix="end,">
+	                <foreach collection="list" item="i" index="index">
+	                        <if test="i.isDelete != null">
+	                         WHEN #{i.courseId}  THEN #{i.isDelete}
+	                        </if>
+	                </foreach>
+             	</trim>
+           </trim>
+           
+         WHERE course_id in
+         	<foreach collection="list" separator="," item="i" index="index" open="(" close=")" >
+             	#{i.courseId}
+         	</foreach>
+	</update>
+	
+	
+	<select id="getClassByCourseType"  parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select 
+		course_id
+		from club_training_course where course_type=#{classType}
+	</select>
+</mapper>
+	

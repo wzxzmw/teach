@@ -1,0 +1,37 @@
+{
+    "getHomeworks": {
+    
+    	"request": {
+            "0": "userId",
+            "1": "start",
+            "2": "limit",
+            "3": "courseCardId",
+            "4": "homeworkId",
+            "5": "inquireType",
+            "6": "requestSide"
+        }
+        
+        ,"result": {
+        	"returnCount"	:"returnCount",
+        	"allPage"		:"allPage",
+        	"currentPage"	:"currentPage",
+        	"homeworks"		:"homeworks"
+        }
+        
+        ,"homeworks": {
+            "homeworkId"		: "courseId",
+            "homeworkTitle"		: "homeworkTitle",
+            "homeworkBody"		: "homeworkBody",
+            "homeworkShowType"	: "showType",
+            "teacherId"			: "teacherId",
+            "teacherName"		: "teacherName",
+            "schoolName"		: "schoolName",
+            "handinHomeworkNum"	: "actualNum",
+            "needHandinNum"		: "planNum",
+            "hasHandin"			: "hasHandin",
+            "homeworkStartDate"	: "homeworkStartDate",
+            "homeworkEndDate"	: "homeworkEndDate",
+            "teacherHeadLink"	: "teacherHeadLink"
+        }
+    }
+}

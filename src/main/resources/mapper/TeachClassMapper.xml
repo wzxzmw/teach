@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.TeachClassMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.TeachClass" id="teachClass" >
+		<result property="classId" column="class_id"/>
+		<result property="className" column="class_name"/>
+		<result property="classLogoId" column="class_logo_id"/>
+		<result property="schoolId" column="school_id"/>
+		<result property="instituteId" column="institute_id"/>
+		<result property="studentsNum" column="students_num"/>
+		<result property="totalTrainNum" column="total_train_num"/>
+		<result property="originalCourseNum" column="original_course_num"/>
+		<result property="createTime" column="create_time"/>
+		<result property="isDelete" column="is_delete"/>
+		<result property="totalCompleteHours" column="total_complete_hours"/>
+	</resultMap>
+	<sql id="queryConditionTeachClass">
+		<where>
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="className != null"> and class_name = #{className} </if>
+			<if test="classLogoId != null"> and class_logo_id = #{classLogoId} </if>
+			<if test="schoolId != null"> and school_id = #{schoolId} </if>
+			<if test="instituteId != null"> and institute_id = #{instituteId} </if>
+			<if test="studentsNum != null"> and students_num = #{studentsNum} </if>
+			<if test="totalTrainNum != null"> and total_train_num = #{totalTrainNum} </if>
+			<if test="originalCourseNum != null"> and original_course_num = #{originalCourseNum} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyTeachClass">
+		where class_id = #{classId}
+	</sql>
+	
+	<insert id="insertTeachClass" parameterType="com.seentao.stpedu.common.entity.TeachClass">
+		<selectKey resultType="java.lang.Integer"  order="AFTER" keyProperty="classId" >
+	        SELECT currval('teach_class_class_id_seq') AS class_id   
+	    </selectKey>
+		insert into teach_class(
+		class_id
+		<if test="className != null"> ,class_name</if>
+		<if test="classLogoId != null"> ,class_logo_id</if>
+		<if test="schoolId != null"> ,school_id</if>
+		<if test="instituteId != null"> ,institute_id</if>
+		<if test="studentsNum != null"> ,students_num</if>
+		<if test="totalTrainNum != null"> ,total_train_num</if>
+		<if test="originalCourseNum != null"> ,original_course_num</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="isDelete != null"> , is_delete  </if>
+		)
+		values(
+		nextval('teach_class_class_id_seq')
+		<if test="className != null"> ,#{className}</if>
+		<if test="classLogoId != null"> ,#{classLogoId}</if>
+		<if test="schoolId != null"> ,#{schoolId}</if>
+		<if test="instituteId != null"> ,#{instituteId}</if>
+		<if test="studentsNum != null"> ,#{studentsNum}</if>
+		<if test="totalTrainNum != null"> ,#{totalTrainNum}</if>
+		<if test="originalCourseNum != null"> ,#{originalCourseNum}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="isDelete != null">,  #{isDelete} </if>
+		)
+	</insert>
+	
+	<delete id="deleteTeachClass">
+		delete from teach_class
+		<include refid="queryConditionTeachClass"/>
+	</delete>
+	
+	<update id="updateTeachClassByKey" parameterType="com.seentao.stpedu.common.entity.TeachClass">
+		update teach_class 
+		<set>
+			<if test="classId != null"> class_id = #{classId}, </if>
+			<if test="className != null"> class_name = #{className}, </if>
+			<if test="classLogoId != null"> class_logo_id = #{classLogoId}, </if>
+			<if test="schoolId != null"> school_id = #{schoolId}, </if>
+			<if test="instituteId != null"> institute_id = #{instituteId}, </if>
+			<if test="studentsNum != null"> students_num = #{studentsNum}, </if>
+			<if test="totalTrainNum != null"> total_train_num = #{totalTrainNum}, </if>
+			<if test="originalCourseNum != null"> original_course_num = #{originalCourseNum}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="isDelete != null"> is_delete = #{isDelete} </if>
+		</set>
+		<include refid="queryByKeyTeachClass"/>
+	</update>
+	
+	<select id="selectSingleTeachClass" resultMap="teachClass">
+		select 
+		class_id
+		,class_name
+		,class_logo_id
+		,school_id
+		,institute_id
+		,students_num
+		,total_train_num
+		,original_course_num
+		,create_time
+		,is_delete
+		from teach_class 
+		<include refid="queryConditionTeachClass"/>
+	</select>
+	
+	<select id="selectAllTeachClass" resultMap="teachClass">
+		select 
+		class_id
+		,class_name
+		,class_logo_id
+		,school_id
+		,institute_id
+		,students_num
+		,total_train_num
+		,original_course_num
+		,create_time
+		,is_delete
+		from teach_class
+	</select>
+	<select id="queryCount" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+		select count(*)
+ 		from teach_class  where school_id = #{schoolId} and is_delete = #{isDelete} and class_name like '%${searchWord}%' 
+	</select>
+	<select id="queryByPage" resultMap="teachClass" parameterType="java.util.HashMap">
+		select *
+		from teach_class  where school_id = #{schoolId} and is_delete = #{isDelete}  and  class_name like '%${searchWord}%'
+		ORDER BY class_id  DESC
+		limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="queryCountSchool" resultType="java.lang.Integer" parameterType="java.util.HashMap">
+ 		select count(*)
+ 		from   teach_class where school_id = #{schoolId}
+	</select>
+	<select id="queryByPageSchool" resultMap="teachClass" parameterType="java.util.HashMap">
+		SELECT
+			tc.*,tcc.total_complete_hours as total_complete_hours
+		FROM
+			teach_class tc LEFT JOIN
+			teach_course_card_count tcc on tc.class_id = tcc.class_id
+		WHERE
+			tc.school_id = #{schoolId}
+		 ORDER BY 
+		 CASE 
+		 WHEN #{sortType} = 1 THEN tc.students_num
+		 WHEN #{sortType} = 2 THEN tcc.total_complete_hours
+		 WHEN #{sortType} = 3 THEN tc.total_train_num
+		 WHEN #{sortType} = 4 THEN tc.original_course_num
+		 END
+         DESC , tc.class_name ASC
+		 limit #{limit} offset #{offset}
+	</select>
+	<select id="selectSingleTeachClassGroup" resultMap="teachClass" >
+		select * 
+		from teach_class where school_id = #{schoolId} 
+	</select>
+	
+	<select id="selectAllClassId" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+		select class_id from teach_class where is_delete = #{isDelete};
+	</select>
+	
+	<update id="updateOriginalCourseNum" parameterType="com.seentao.stpedu.common.entity.TeachClass">
+		update teach_class 
+		<set>
+			original_course_num = original_course_num + 1
+		</set>
+		<include refid="queryByKeyTeachClass"/>
+	</update>
+	
+</mapper>
+	

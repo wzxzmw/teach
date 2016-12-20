@@ -1,0 +1,12 @@
+{
+    "submitAlbumPhoto": {
+    	"request": {
+            "0": "userId",
+            "1": "albumId",
+            "2": "albumPhotoes"
+        },
+        "result": {
+             
+        }
+    }
+  }  

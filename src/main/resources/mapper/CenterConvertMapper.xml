@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.CenterConvertMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.CenterConvert" id="centerConvert" >
+		<result property="convertId" column="convert_id"/>
+		<result property="serialNumber" column="serial_number"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="createTime" column="create_time"/>
+		<result property="virtualAmount" column="virtual_amount"/>
+		<result property="remarks" column="remarks"/>
+		<result property="convertType" column="convert_type"/>
+	</resultMap>
+	
+	<sql id="queryConditionCenterConvert">
+		<where>
+			<if test="convertId != null"> and convert_id = #{convertId} </if>
+			<if test="serialNumber != null"> and serial_number = #{serialNumber} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="virtualAmount != null"> and virtual_amount = #{virtualAmount} </if>
+			<if test="remarks != null"> and remarks = #{remarks} </if>
+			<if test="convertType != null"> and convert_type = #{convertType} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyCenterConvert">
+		where convert_id = #{convertId}
+	</sql>
+	
+	<insert id="insertCenterConvert" parameterType="com.seentao.stpedu.common.entity.CenterConvert">
+		<selectKey resultType="java.lang.Integer"  order="AFTER" keyProperty="convertId" >
+	        SELECT currval('center_convert_convert_id_seq') AS convert_id   
+	    </selectKey>
+		insert into center_convert(
+		convert_id
+		<if test="serialNumber != null"> ,serial_number</if>
+		<if test="createUserId != null"> ,create_user_id</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="virtualAmount != null"> ,virtual_amount</if>
+		<if test="remarks != null"> ,remarks</if>
+		<if test="convertType != null"> ,convert_type</if>
+		)
+		values(
+		nextval('center_convert_convert_id_seq')
+		<if test="serialNumber != null"> ,#{serialNumber}</if>
+		<if test="createUserId != null"> ,#{createUserId}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="virtualAmount != null"> ,#{virtualAmount}</if>
+		<if test="remarks != null"> ,#{remarks}</if>
+		<if test="convertType != null"> ,#{convertType}</if>
+		)
+	</insert>
+	
+	<delete id="deleteCenterConvert">
+		delete from center_convert
+		<include refid="queryConditionCenterConvert"/>
+	</delete>
+	
+	<update id="updateCenterConvertByKey" parameterType="com.seentao.stpedu.common.entity.CenterConvert">
+		update center_convert 
+		<set>
+			<if test="convertId != null"> convert_id = #{convertId}, </if>
+			<if test="serialNumber != null"> serial_number = #{serialNumber}, </if>
+			<if test="createUserId != null"> create_user_id = #{createUserId}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="virtualAmount != null"> virtual_amount = #{virtualAmount}, </if>
+			<if test="remarks != null"> remarks = #{remarks}, </if>
+			<if test="convertType != null"> convert_type = #{convertType}, </if>
+		</set>
+		<include refid="queryByKeyCenterConvert"/>
+	</update>
+	
+	<select id="selectSingleCenterConvert" resultMap="centerConvert">
+		select 
+		convert_id
+		,serial_number
+		,create_user_id
+		,create_time
+		,virtual_amount
+		,remarks
+		,convert_type
+		from center_convert 
+		<include refid="queryConditionCenterConvert"/>
+	</select>
+	
+	<select id="selectAllCenterConvert" resultMap="centerConvert">
+		select 
+		convert_id
+		,serial_number
+		,create_user_id
+		,create_time
+		,virtual_amount
+		,remarks
+		,convert_type
+		from center_convert
+	</select>
+	
+		<select id="selectCenterConvertListByCondition" parameterType="java.util.Map" resultMap="centerConvert">
+		select 
+		convert_id
+		,serial_number
+		,create_user_id
+		,create_time
+		,virtual_amount
+		,remarks
+		,convert_type
+		from center_convert
+		where create_user_id=#{createUserId}
+		<if test="endTime != null ">
+			<![CDATA[and  create_time  <= ${endTime}]]>
+		</if>
+		<if test="startTime != null ">
+			<![CDATA[and  create_time  >=${startTime}]]>
+		</if>
+		order by create_time desc  limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="countCenterConvertListByCondition" parameterType="java.util.Map"  resultType="int">
+		select 
+		count(convert_id)
+		from center_convert
+		where create_user_id=#{createUserId}
+		<if test="endTime != null ">
+			<![CDATA[and  create_time  <= ${endTime}]]>
+		</if>
+		<if test="startTime != null ">
+			<![CDATA[and  create_time  >=${startTime}]]>
+		</if>
+	</select>
+	
+	
+</mapper>
+	

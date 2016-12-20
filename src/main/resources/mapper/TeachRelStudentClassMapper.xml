@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.TeachRelStudentClassMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.TeachRelStudentClass" id="teachRelStudentClass" >
+		<result property="relId" column="rel_id"/>
+		<result property="classId" column="class_id"/>
+		<result property="studentId" column="student_id"/>
+		<result property="assessScore" column="assess_score"/>
+		<result property="isIdentify" column="is_identify"/>
+		<result property="certificateStatus" column="certificate_status"/>
+		<result property="isDelete" column="is_delete"/>
+	</resultMap>
+	
+	<sql id="queryConditionTeachRelStudentClass">
+		<where>
+			<if test="relId != null"> and rel_id = #{relId} </if>
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="studentId != null"> and student_id = #{studentId} </if>
+			<if test="assessScore != null"> and assess_score = #{assessScore} </if>
+			<if test="isIdentify != null"> and is_identify = #{isIdentify} </if>
+			<if test="certificateStatus != null"> and certificate_status = #{certificateStatus} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyTeachRelStudentClass">
+		where rel_id = #{relId}
+	</sql>
+	
+	<insert id="insertTeachRelStudentClass" parameterType="com.seentao.stpedu.common.entity.TeachRelStudentClass">
+		insert into teach_rel_student_class(
+		rel_id
+		<if test="classId != null"> ,class_id</if>
+		<if test="studentId != null"> ,student_id</if>
+		<if test="assessScore != null"> ,assess_score</if>
+		<if test="isIdentify != null"> ,is_identify</if>
+		<if test="certificateStatus != null"> ,certificate_status</if>
+		<if test="isDelete != null"> ,is_delete</if>
+		)
+		values(
+		nextval('teach_rel_student_class_rel_id_seq')
+		<if test="classId != null"> ,#{classId}</if>
+		<if test="studentId != null"> ,#{studentId}</if>
+		<if test="assessScore != null"> ,#{assessScore}</if>
+		<if test="isIdentify != null"> ,#{isIdentify}</if>
+		<if test="certificateStatus != null"> ,#{certificateStatus}</if>
+		<if test="isDelete != null"> ,#{isDelete}</if>
+		)
+	</insert>
+	
+	<delete id="deleteTeachRelStudentClass">
+		delete from teach_rel_student_class
+		<include refid="queryConditionTeachRelStudentClass"/>
+	</delete>
+	
+	<update id="updateTeachRelStudentClassByKey" parameterType="com.seentao.stpedu.common.entity.TeachRelStudentClass">
+		update teach_rel_student_class 
+		<set>
+			<if test="relId != null"> rel_id = #{relId}, </if>
+			<if test="classId != null"> class_id = #{classId}, </if>
+			<if test="studentId != null"> student_id = #{studentId}, </if>
+			<if test="assessScore != null"> assess_score = #{assessScore}, </if>
+			<if test="isIdentify != null"> is_identify = #{isIdentify}, </if>
+			<if test="certificateStatus != null"> certificate_status = #{certificateStatus}, </if>
+			<if test="isDelete != null"> is_delete = #{isDelete}, </if>
+		</set>
+		<include refid="queryByKeyTeachRelStudentClass"/>
+	</update>
+	
+	<update id="updateTeachRelStudentClassByKeyNoRel" parameterType="com.seentao.stpedu.common.entity.TeachRelStudentClass">
+		update teach_rel_student_class 
+		<set>
+			<if test="relId != null"> rel_id = #{relId}, </if>
+			<if test="classId != null"> class_id = #{classId}, </if>
+			<if test="studentId != null"> student_id = #{studentId}, </if>
+			<if test="assessScore != null"> assess_score = #{assessScore}, </if>
+			<if test="isIdentify != null"> is_identify = #{isIdentify}, </if>
+			<if test="certificateStatus != null"> certificate_status = #{certificateStatus}, </if>
+			<if test="isDelete != null"> is_delete = #{isDelete}, </if>
+		</set>
+		<where>
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="studentId != null"> and student_id = #{studentId} </if>
+		</where>
+	</update>
+	
+	<select id="selectSingleTeachRelStudentClass" resultMap="teachRelStudentClass">
+		select 
+		rel_id
+		,class_id
+		,student_id
+		,assess_score
+		,is_identify
+		,certificate_status
+		,is_delete
+		from teach_rel_student_class 
+		<include refid="queryConditionTeachRelStudentClass"/>
+	</select>
+	
+	<select id="selectAllTeachRelStudentClass" resultMap="teachRelStudentClass">
+		select 
+		rel_id
+		,class_id
+		,student_id
+		,assess_score
+		,is_identify
+		,certificate_status
+		,is_delete
+		from teach_rel_student_class
+	</select>
+	<select id="getGradesByClassId" resultMap="teachRelStudentClass">
+		select 
+		 rel_id
+		,class_id
+		,student_id
+		,assess_score
+		,is_identify
+		,certificate_status
+		,is_delete
+		from teach_rel_student_class
+		<include refid="queryConditionTeachRelStudentClass"/>
+		order by assess_score desc
+		limit #{limit} offset #{start}
+	</select>
+	
+	<select id="queryCountByClassId" parameterType="java.util.HashMap" resultType="java.lang.Integer" >
+		select count(*) from teach_rel_student_class 
+		<include refid="queryConditionTeachRelStudentClass"/>
+		and is_delete = 0
+	</select>
+	
+</mapper>
+	

@@ -1,0 +1,49 @@
+{
+    "submitClass": {
+    	"request": {
+            "0": "classId",
+            "1": "className",
+            "2": "classLogoId",
+            "3": "classType",
+            "4": "userId",
+            "5": "classDesc",
+            "6": "needToPay",
+            "7": "fLevelAccount"
+        },
+        "result": {
+        
+        }
+    },
+    "submitDefaultClass":{
+    	"request": {
+            "0": "classId",
+            "1": "userId"
+        },
+        "result": {
+        
+        }
+    },
+    "joinClass":{
+    	"request": {
+            "0": "classId",
+            "1": "userId",
+            "2": "classType"
+        },
+        "result": {
+        
+        }
+    },
+     "submitTeacherOperation": {
+    	"request": {
+            "0": "userId",
+            "1": "classId",
+            "2": "studentId",
+            "3": "actionType",
+            "4": "classType"
+        },
+        "result": {
+        
+        }
+    }
+}
+

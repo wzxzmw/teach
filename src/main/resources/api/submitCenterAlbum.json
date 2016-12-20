@@ -1,0 +1,13 @@
+{
+    "submitalbum": {
+    	"request": {
+            "0": "userId",
+            "1": "albumTitle",
+            "2": "albumDesc",
+            "3": "albumId"
+        },
+        "result": {
+             
+        }
+    }
+  }  

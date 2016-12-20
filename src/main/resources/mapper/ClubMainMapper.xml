@@ -1,0 +1,308 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.ClubMainMapper">
+	<resultMap type="com.seentao.stpedu.common.entity.CenterUser"
+		id="centerUser">
+		<result property="nickName" column="nick_name" />
+		<result property="realName" column="real_name" />
+	</resultMap>
+	<resultMap type="com.seentao.stpedu.common.entity.ClubMain"
+		id="clubMain" extends="centerUser">
+		<result property="clubId" column="club_id" />
+		<result property="clubName" column="club_name" />
+		<result property="logoId" column="logo_id" />
+		<result property="clubExplain" column="club_explain" />
+		<result property="memberNum" column="member_num" />
+		<result property="status" column="status" />
+		<result property="createTime" column="create_time" />
+		<result property="createUserId" column="create_user_id" />
+		<result property="gameBannerId" column="game_banner_id" />
+		<result property="teachBannerId" column="teach_banner_id" />
+		<result property="styleBannerId" column="style_banner_id" />
+		<result property="bgColorId" column="bg_color_id" />
+		<result property="addMemberType" column="add_member_type" />
+		<result property="addAmount" column="add_amount" />
+		<result property="isNotAudited" column="is_not_audited" />
+		<result property="isBuyClubVip" column="is_buy_club_vip" />
+		<result property="isBuyCompetition" column="is_buy_competition" />
+		<result property="clubType" column="club_type" />
+		<result property="schoolId" column="school_id" />
+		<result property="regionId" column="region_id" />
+	</resultMap>
+
+
+	<sql id="queryConditionClubMain">
+		<where>
+			<if test="clubId != null"> and club_id = #{clubId} </if>
+			<if test="clubName != null"> and club_name = #{clubName} </if>
+			<if test="logoId != null"> and logo_id = #{logoId} </if>
+			<if test="clubExplain != null"> and club_explain = #{clubExplain} </if>
+			<if test="memberNum != null"> and member_num = #{memberNum} </if>
+			<if test="status != null"> and status = #{status} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="gameBannerId != null"> and game_banner_id = #{gameBannerId} </if>
+			<if test="teachBannerId != null"> and teach_banner_id = #{teachBannerId} </if>
+			<if test="styleBannerId != null"> and style_banner_id = #{styleBannerId} </if>
+			<if test="bgColorId != null"> and bg_color_id = #{bgColorId} </if>
+			<if test="addMemberType != null"> and add_member_type = #{addMemberType} </if>
+			<if test="addAmount != null"> and add_amount = #{addAmount} </if>
+			<if test="isNotAudited != null"> and is_not_audited = #{isNotAudited} </if>
+			<if test="isBuyClubVip != null"> and is_buy_club_vip = #{isBuyClubVip} </if>
+			<if test="isBuyCompetition != null"> and is_buy_competition = #{isBuyCompetition} </if>
+		    <if test="clubType != null"> and club_type = #{clubType} </if>
+			<if test="schoolId != null"> and school_id = #{schoolId} </if>
+			<if test="regionId != null"> and region_id = #{regionId} </if>
+		</where>
+	</sql>
+
+	<sql id="queryByKeyClubMain">
+		where club_id = #{clubId}
+	</sql>
+
+	<insert id="insertClubMain" parameterType="com.seentao.stpedu.common.entity.ClubMain">
+		<selectKey resultType="java.lang.Integer" keyProperty="clubId" order="AFTER" >
+	      SELECT currval('club_main_club_id_seq')as clubId
+		</selectKey> 
+		insert into club_main(
+		club_id
+		<if test="clubName != null"> ,club_name</if>
+		<if test="logoId != null"> ,logo_id</if>
+		<if test="clubExplain != null"> ,club_explain</if>
+		<if test="memberNum != null"> ,member_num</if>
+		<if test="status != null"> ,status</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="createUserId != null"> ,create_user_id</if>
+		<if test="gameBannerId != null"> ,game_banner_id</if>
+		<if test="teachBannerId != null"> ,teach_banner_id</if>
+		<if test="styleBannerId != null"> ,style_banner_id</if>
+		<if test="bgColorId != null"> ,bg_color_id</if>
+		<if test="addMemberType != null"> ,add_member_type</if>
+		<if test="addAmount != null"> ,add_amount</if>
+		<if test="isNotAudited != null"> ,is_not_audited</if>
+		<if test="isBuyClubVip != null"> ,is_buy_club_vip</if>
+		<if test="isBuyCompetition != null"> ,is_buy_competition</if>
+		<if test="clubType != null"> ,club_type</if>
+		<if test="schoolId != null"> ,school_id</if>
+		<if test="regionId != null"> ,region_id</if>
+		)
+		values(
+		nextval('club_main_club_id_seq')
+		<if test="clubName != null"> ,#{clubName}</if>
+		<if test="logoId != null"> ,#{logoId}</if>
+		<if test="clubExplain != null"> ,#{clubExplain}</if>
+		<if test="memberNum != null"> ,#{memberNum}</if>
+		<if test="status != null"> ,#{status}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="createUserId != null"> ,#{createUserId}</if>
+		<if test="gameBannerId != null"> ,#{gameBannerId}</if>
+		<if test="teachBannerId != null"> ,#{teachBannerId}</if>
+		<if test="styleBannerId != null"> ,#{styleBannerId}</if>
+		<if test="bgColorId != null"> ,#{bgColorId}</if>
+		<if test="addMemberType != null"> ,#{addMemberType}</if>
+		<if test="addAmount != null"> ,#{addAmount}</if>
+		<if test="isNotAudited != null"> ,#{isNotAudited}</if>
+		<if test="isBuyClubVip != null"> ,#{isBuyClubVip}</if>
+		<if test="isBuyCompetition != null"> ,#{isBuyCompetition}</if>
+		<if test="clubType != null"> ,#{clubType}</if>
+		<if test="schoolId != null"> ,#{schoolId}</if>
+		<if test="regionId != null"> ,#{regionId}</if>
+		)
+	</insert>
+
+	<delete id="deleteClubMain">
+		delete from club_main
+		<include refid="queryConditionClubMain" />
+	</delete>
+
+	<update id="updateClubMainByKey" parameterType="com.seentao.stpedu.common.entity.ClubMain">
+		update club_main
+		<set>
+			<if test="clubId != null"> club_id = #{clubId}, </if>
+			<if test="clubName != null"> club_name = #{clubName}, </if>
+			<if test="logoId !=null">logo_id = #{logoId},</if>
+			<if test="clubExplain != null"> club_explain = #{clubExplain}, </if>
+			<if test="memberNum != null"> member_num = #{memberNum}, </if>
+			<if test="status != null"> status = #{status}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="createUserId != null"> create_user_id = #{createUserId}, </if>
+			<if test="gameBannerId != null"> game_banner_id = #{gameBannerId}, </if>
+			<if test="teachBannerId != null"> teach_banner_id = #{teachBannerId}, </if>
+			<if test="styleBannerId != null"> style_banner_id = #{styleBannerId}, </if>
+			<if test="bgColorId != null"> bg_color_id = #{bgColorId}, </if>
+			<if test="addMemberType != null"> add_member_type = #{addMemberType}, </if>
+			<if test="addAmount != null"> add_amount = #{addAmount}, </if>
+			<if test="isNotAudited != null"> is_not_audited = #{isNotAudited}, </if>
+			<if test="isBuyClubVip != null"> is_buy_club_vip = #{isBuyClubVip}, </if>
+			<if test="isBuyCompetition != null"> is_buy_competition = #{isBuyCompetition}, </if>
+		    <if test="clubType != null"> club_type = #{clubType}, </if>
+		    <if test ="schoolId != null">
+		    school_id = #{schoolId},
+		    </if>
+			<if test="regionId != null"> region_id = #{regionId}, </if>
+		</set>
+		<include refid="queryByKeyClubMain" />
+	</update>
+
+
+
+
+
+	<select id="selectSingleClubMain" parameterType="com.seentao.stpedu.common.entity.ClubMain" resultMap="clubMain">
+		select
+		club_id
+		,club_name
+		,logo_id
+		,club_explain
+		,member_num
+		,status
+		,create_time
+		,create_user_id
+		,game_banner_id
+		,teach_banner_id
+		,style_banner_id
+		,bg_color_id
+		,add_member_type
+		,add_amount
+		,is_not_audited
+		,is_buy_club_vip
+		,is_buy_competition
+		,club_type
+		,school_id
+		,region_id
+		from club_main
+		<include refid="queryConditionClubMain" />
+	</select>
+
+	<select id="selectAllClubMain" resultMap="clubMain">
+		select
+		club_id
+		,club_name
+		,logo_id
+		,club_explain
+		,member_num
+		,status
+		,create_time
+		,create_user_id
+		,game_banner_id
+		,teach_banner_id
+		,style_banner_id
+		,bg_color_id
+		,add_member_type
+		,add_amount
+		,is_not_audited
+		,is_buy_club_vip
+		,is_buy_competition
+		,club_type
+		,school_id
+		,region_id
+		from club_main where status=2
+	</select>
+
+	<select id="selectAllClubMainCount" parameterType="java.util.Map">
+		SELECT
+		cm.club_id,cm.club_name,cm.logo_id,cm.member_num,cm.club_explain from
+		club_main cm where cm.status=2 LIMIT #{limit} OFFSET #{offset}
+	</select>
+
+	<select id="selectClubMainInfo" resultMap="clubMain">
+		SELECT
+		cm.club_id,cm.club_name,cm.logo_id,cm.club_explain,cm.member_num from
+		club_main cm where cm.club_id = #{clubId} and cm.status=2
+	</select>
+
+	<select id="queryCountclubmain" resultType="Integer">
+		select count(*) from
+		club_main where 1=1
+		<if test="clubName != null"> and club_name like '%${clubName}%'</if>
+		and status=2
+	</select>
+
+	<select id="queryByAgeclubmain" resultMap="clubMain"
+		parameterType="HashMap">
+		SELECT
+		club_id,club_name,logo_id,member_num,club_explain,status,club_type from club_main
+		where 1=1 
+		<if test="clubName != null"> and club_name like '%${clubName}%'</if>
+		and status=2
+		ORDER BY club_id ASC
+		limit #{limit} offset #{offset}
+	</select>
+
+	<select id="queryClubCount" resultType="Integer">
+		select count(*) from 
+		club_main where status=2
+	</select>
+
+	<select id="queryClubCountInfo" resultMap="clubMain"
+		parameterType="HashMap">
+		SELECT
+		club_id,club_name,logo_id,member_num,club_explain,status,club_type from
+		club_main where status=2
+		ORDER BY member_num DESC
+		limit #{limit} offset #{offset}
+	</select>
+
+	<select id="queryClubNewCount" resultType="Integer">
+		select count(*) from
+		club_main where status=2
+	</select>
+
+	<select id="queryClubCountNewInfo" resultMap="clubMain"
+		parameterType="HashMap">
+		SELECT
+		club_id,club_name,logo_id,member_num,club_explain,status,club_type from
+		club_main where status=2
+		ORDER BY create_time DESC
+		limit #{limit} offset #{offset}
+	</select>
+
+	<select id="queryCountclubmatch" resultType="Integer">
+		select count(*) from
+		club_main
+		where club_id in ( ${clubId} ) and status=2
+	</select>
+
+	<select id="queryByclubmainmatch" resultMap="clubMain"
+		parameterType="HashMap">
+		SELECT
+		club_id,club_name,logo_id,member_num,club_explain,status from
+		club_main where club_id in ( ${clubId} ) and status=2
+		ORDER BY club_id ASC
+		limit #{limit} offset #{offset}
+	</select>
+
+	<select id="queryCountclubfollow" resultType="Integer">
+		select count(*)
+		from club_main
+		where club_id in ( ${clubId} ) and status=2
+	</select>
+
+	<select id="queryByclubmainfollow" resultMap="clubMain"
+		parameterType="HashMap">
+		SELECT club_id,
+		club_explain,
+		club_name,
+		member_num,
+		status,
+		logo_id,
+		club_type
+		from club_main
+		where club_id in ( ${clubId} ) and status=2
+		ORDER BY member_num desc, club_id
+		ASC
+		limit #{limit} offset #{offset}
+	</select>
+
+	<select id="selectClubInfo" resultMap="clubMain">
+		SELECT
+		cm.club_id,cm.club_name,cm.club_explain,cm.create_user_id,cm.status,cm.member_num,
+		cm.logo_id,cm.game_banner_id,cm.teach_banner_id,cm.bg_color_id,cm.style_banner_id,
+		cm.add_member_type,cm.add_amount
+		from
+		club_main cm 
+		where cm.club_id = #{clubId} and cm.status=2
+	</select>
+</mapper>
+	

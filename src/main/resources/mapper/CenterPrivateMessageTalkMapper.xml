@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.CenterPrivateMessageTalkMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.CenterPrivateMessageTalk" id="centerPrivateMessageTalk" >
+		<result property="talkId" column="talk_id"/>
+		<result property="sendUserId" column="send_user_id"/>
+		<result property="receiveUserId" column="receive_user_id"/>
+		<result property="createTime" column="create_time"/>
+		<result property="privateMessageNum" column="private_message_num"/>
+		<result property="lastPrivateMessageId" column="last_private_message_id"/>
+	</resultMap>
+	
+	<sql id="queryConditionCenterPrivateMessageTalk">
+		<where>
+			<if test="talkId != null"> and talk_id = #{talkId} </if>
+			<if test="sendUserId != null"> and send_user_id = #{sendUserId} </if>
+			<if test="receiveUserId != null"> and receive_user_id = #{receiveUserId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="privateMessageNum != null"> and private_message_num = #{privateMessageNum} </if>
+			<if test="lastPrivateMessageId != null"> and last_private_message_id = #{lastPrivateMessageId} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyCenterPrivateMessageTalk">
+		where talk_id = #{talkId}
+	</sql>
+	
+	<insert id="insertCenterPrivateMessageTalk" parameterType="com.seentao.stpedu.common.entity.CenterPrivateMessageTalk">
+		<selectKey resultType="java.lang.Integer" keyProperty="talkId" order="AFTER" >
+	      SELECT currval('center_private_message_talk_talk_id_seq')as talkId
+		</selectKey>
+		insert into center_private_message_talk(
+		talk_id
+		<if test="sendUserId != null"> ,send_user_id</if>
+		<if test="receiveUserId != null"> ,receive_user_id</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="privateMessageNum != null"> ,private_message_num</if>
+		<if test="lastPrivateMessageId != null"> ,last_private_message_id</if>
+		)
+		values(
+		nextval('center_private_message_talk_talk_id_seq')
+		<if test="sendUserId != null"> ,#{sendUserId}</if>
+		<if test="receiveUserId != null"> ,#{receiveUserId}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="privateMessageNum != null"> ,#{privateMessageNum}</if>
+		<if test="lastPrivateMessageId != null"> ,#{lastPrivateMessageId}</if>
+		)
+	</insert>
+	
+	<delete id="deleteCenterPrivateMessageTalk">
+		delete from center_private_message_talk
+		<include refid="queryConditionCenterPrivateMessageTalk"/>
+	</delete>
+	
+	<update id="updateCenterPrivateMessageTalkByKey" parameterType="com.seentao.stpedu.common.entity.CenterPrivateMessageTalk">
+		update center_private_message_talk 
+		<set>
+			<if test="talkId != null"> talk_id = #{talkId}, </if>
+			<if test="sendUserId != null"> send_user_id = #{sendUserId}, </if>
+			<if test="receiveUserId != null"> receive_user_id = #{receiveUserId}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="privateMessageNum != null"> private_message_num = #{privateMessageNum}, </if>
+			<if test="lastPrivateMessageId != null"> last_private_message_id = #{lastPrivateMessageId}, </if>
+		</set>
+		<include refid="queryByKeyCenterPrivateMessageTalk"/>
+	</update>
+	
+	<select id="selectSingleCenterPrivateMessageTalk" resultMap="centerPrivateMessageTalk">
+		select 
+		talk_id
+		,send_user_id
+		,receive_user_id
+		,create_time
+		,private_message_num
+		,last_private_message_id
+		from center_private_message_talk 
+		<include refid="queryConditionCenterPrivateMessageTalk"/>
+	</select>
+	
+	<select id="selectAllCenterPrivateMessageTalk" resultMap="centerPrivateMessageTalk">
+		select 
+		talk_id
+		,send_user_id
+		,receive_user_id
+		,create_time
+		,private_message_num
+		,last_private_message_id
+		from center_private_message_talk
+	</select>
+	
+	<select id="selectCenterPrivateMessageTalkByCondition" parameterType="java.util.Map" resultMap="centerPrivateMessageTalk">
+		select 
+		talk_id
+		,send_user_id
+		,receive_user_id
+		,create_time
+		,private_message_num
+		,last_private_message_id
+		from center_private_message_talk
+		where (receive_user_id=#{userId} or send_user_id=#{userId})  order by create_time desc limit #{limit} offset #{offset}
+	</select>
+	<!--  查询当前用户最新的一条消息 -->
+	<select id="queryCenterPrivateMessageTalkNew" resultMap="centerPrivateMessageTalk">
+	
+		SELECT
+		talk_id,
+		send_user_id,
+		receive_user_id,
+		create_time,
+		private_message_num,
+		last_private_message_id
+	FROM
+		center_private_message_talk
+	WHERE
+		create_time = (
+			SELECT
+				MAX (create_time)
+			FROM
+				center_private_message_talk where receive_user_id = #{userId}
+		OR send_user_id = #{userId}
+		)
+	ORDER BY
+		create_time DESC 
+	
+	</select>
+	<select id="countCenterPrivateMessageTalkByCondition" parameterType="java.util.Map"  resultType="java.lang.Integer">
+		select 
+		count(talk_id)
+		from center_private_message_talk
+		where (receive_user_id=#{userId} or send_user_id=#{userId})
+	</select>
+	
+	<select id="selectCenterPrivateMessageTalkExistence" resultMap="centerPrivateMessageTalk">
+		select
+			talk_id,
+			send_user_id,
+			receive_user_id,
+			create_time,
+			private_message_num,
+			last_private_message_id
+		from
+			center_private_message_talk
+		where
+		receive_user_id = #{sendUserId}
+		and send_user_id = #{receiveUserId}
+		union
+		select
+			talk_id,
+			send_user_id,
+			receive_user_id,
+			create_time,
+			private_message_num,
+			last_private_message_id
+		from
+		center_private_message_talk
+		where
+		receive_user_id = #{receiveUserId}
+		and send_user_id = #{sendUserId}
+	</select>
+</mapper>
+	

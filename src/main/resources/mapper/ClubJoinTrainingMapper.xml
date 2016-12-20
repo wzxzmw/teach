@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.ClubJoinTrainingMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.ClubJoinTraining" id="clubJoinTraining" >
+		<result property="joinId" column="join_id"/>
+		<result property="classId" column="class_id"/>
+		<result property="userId" column="user_id"/>
+		<result property="joinTime" column="join_time"/>
+		<result property="totalCost" column="total_cost"/>
+		<result property="isDelete" column="is_delete"/>
+		<result property="clubId" column="club_id"/>
+	</resultMap>
+	
+	<sql id="queryConditionClubJoinTraining">
+		<where>
+			<if test="joinId != null"> and join_id = #{joinId} </if>
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="userId != null"> and user_id = #{userId} </if>
+			<if test="joinTime != null"> and join_time = #{joinTime} </if>
+			<if test="totalCost != null"> and total_cost = #{totalCost} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyClubJoinTraining">
+		where join_id = #{joinId}
+	</sql>
+	
+	<insert id="insertClubJoinTraining" parameterType="com.seentao.stpedu.common.entity.ClubJoinTraining">
+		insert into club_join_training(
+		join_id
+		<if test="classId != null"> ,class_id</if>
+		<if test="userId != null"> ,user_id</if>
+		<if test="joinTime != null"> ,join_time</if>
+		<if test="totalCost != null"> ,total_cost</if>
+		<if test="isDelete != null"> ,is_delete</if>
+		)
+		values(
+		nextval('club_join_training_join_id_seq')
+		<if test="classId != null"> ,#{classId}</if>
+		<if test="userId != null"> ,#{userId}</if>
+		<if test="joinTime != null"> ,#{joinTime}</if>
+		<if test="totalCost != null"> ,#{totalCost}</if>
+		<if test="isDelete != null"> ,#{isDelete}</if>
+		)
+	</insert>
+	
+	<delete id="deleteClubJoinTraining">
+		delete from club_join_training
+		<include refid="queryConditionClubJoinTraining"/>
+	</delete>
+	
+	<update id="updateClubJoinTrainingByKey" parameterType="com.seentao.stpedu.common.entity.ClubJoinTraining">
+		update club_join_training 
+		<set>
+			<if test="joinId != null"> join_id = #{joinId}, </if>
+			<if test="classId != null"> class_id = #{classId}, </if>
+			<if test="userId != null"> user_id = #{userId}, </if>
+			<if test="joinTime != null"> join_time = #{joinTime}, </if>
+			<if test="totalCost != null"> total_cost = #{totalCost}, </if>
+			<if test="isDelete != null"> is_delete = #{isDelete}, </if>
+		</set>
+	</update>
+	
+	<update id="updateClubJoinTrainingUdToCost" parameterType="com.seentao.stpedu.common.entity.ClubJoinTraining">
+		update club_join_training 
+		<set>
+			<if test="totalCost != null"> total_cost =total_cost +  #{totalCost} </if>
+		</set>
+		<where>
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="userId != null"> and user_id = #{userId} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+		</where>
+	</update>
+	
+	<select id="selectSingleClubJoinTraining" resultMap="clubJoinTraining">
+		select 
+		join_id
+		,class_id
+		,user_id
+		,join_time
+		,total_cost
+		,is_delete
+		from club_join_training 
+		<include refid="queryConditionClubJoinTraining"/>
+	</select>
+	
+	<select id="selectAllClubJoinTraining" resultMap="clubJoinTraining">
+		select 
+		join_id
+		,class_id
+		,user_id
+		,join_time
+		,total_cost
+		,is_delete
+		from club_join_training
+	</select>
+	
+	<select id="selectClubJoinTrainingByClasdId" resultMap="clubJoinTraining">
+		select
+			ctc.club_id as club_id,
+			cjt.join_time as join_time,
+			cjt.total_cost as total_cost,
+			cjt.user_id
+		from
+			club_training_class ctc
+		join club_join_training cjt on ctc.class_id = cjt.class_id
+		join center_user cu on cu.user_id = cjt.user_id
+		<where>
+			<if test="classId != null"> and ctc.class_id = #{classId}</if>
+			<if test="nickName != null"> and cu.nick_name like CONCAT('%','${nickName}','%' )</if>
+			and cjt.is_delete = 0
+			and ctc.is_delete = 0
+		</where>
+			order by cjt.join_time
+		limit #{limit} offset #{start}
+	</select>
+	
+	<select id="selectClubJoinTrainingCount" resultType="java.lang.Integer">
+		select
+			count(*)
+		from
+			(
+				select
+					ctc.club_id
+				from
+					club_training_class ctc
+				join club_join_training cjt on ctc.class_id = cjt.class_id
+				join center_user cu on cu.user_id = cjt.user_id
+				<where>
+					<if test="classId != null"> and ctc.class_id = #{classId}</if>
+					<if test="nickName != null"> and cu.nick_name like CONCAT('%','${nickName}','%' )</if>
+					and cjt.is_delete = 0
+					and ctc.is_delete = 0
+				</where>
+			) a
+	</select>
+	
+	
+	<update id="updateClubJoinTrainingByKeyAll" parameterType="ArrayList">
+		 update club_join_training 
+           <trim prefix="set" suffixOverrides=",">
+           
+            	<trim prefix="is_delete = CASE user_id " suffix="end,">
+	                <foreach collection="list" item="i" index="index">
+	                        <if test="i.userId != null">
+	                         WHEN #{i.userId}  THEN #{i.isDelete}
+	                        </if>
+	                </foreach>
+             	</trim>
+           </trim>
+           
+         WHERE user_id in
+         	<foreach collection="list" separator="," item="i" index="index" open="(" close=")" >
+             	#{i.userId}
+         	</foreach>
+	</update>
+	
+	<select id="getHasClubJoinTrainingCount" resultType="java.lang.Integer">
+		SELECT
+			COUNT (*)
+		FROM
+			CLUB_JOIN_TRAINING CJT
+		<where>
+			<if test="userId != null"> and CJT.user_id = #{userId}</if>
+			AND CJT.IS_DELETE = 0
+		</where>
+		
+	</select>
+	
+	<select id="queryClubJoinCountAll" resultType="java.lang.Integer">
+		select count(*) from club_join_training where user_id = #{userId} and  is_delete = #{isDelete}
+	</select>
+	<select id="queryClubJoinByPageAll" resultMap="clubJoinTraining" parameterType="HashMap">
+		select 
+		*
+		from club_join_training where user_id = #{userId} and  is_delete = #{isDelete}
+		 ORDER BY join_id  DESC
+		 limit #{limit} offset #{offset}
+	</select>
+	<select id = "queryClubJoinTrainingByClassId" resultMap = "clubJoinTraining">
+	select join_id
+		,class_id
+		,user_id
+		,join_time
+		,total_cost
+		,is_delete
+		from club_join_training where  class_id = #{classId} and user_id=#{userId} and is_delete=0
+	</select>
+</mapper>
+	

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.ClubRedPacketTypeMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.ClubRedPacketType" id="clubRedPacketType" >
+		<result property="typeId" column="type_id"/>
+		<result property="typeName" column="type_name"/>
+		<result property="imageUrl" column="image_url"/>
+	</resultMap>
+	
+	<sql id="queryConditionClubRedPacketType">
+		<where>
+			<if test="typeId != null"> and type_id = #{typeId} </if>
+			<if test="typeName != null"> and type_name = #{typeName} </if>
+			<if test="imageUrl != null"> and image_url = #{imageUrl} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyClubRedPacketType">
+		where type_id = #{typeId}
+	</sql>
+	
+	<insert id="insertClubRedPacketType" parameterType="com.seentao.stpedu.common.entity.ClubRedPacketType">
+		insert into club_red_packet_type(
+		type_id
+		<if test="typeName != null"> ,type_name</if>
+		<if test="imageUrl != null"> ,image_url</if>
+		)
+		values(
+		null
+		<if test="typeName != null"> ,#{typeName}</if>
+		<if test="imageUrl != null"> ,#{imageUrl}</if>
+		)
+	</insert>
+	
+	<delete id="deleteClubRedPacketType">
+		delete from club_red_packet_type
+		<include refid="queryConditionClubRedPacketType"/>
+	</delete>
+	
+	<update id="updateClubRedPacketTypeByKey" parameterType="com.seentao.stpedu.common.entity.ClubRedPacketType">
+		update club_red_packet_type 
+		<set>
+			<if test="typeId != null"> type_id = #{typeId}, </if>
+			<if test="typeName != null"> type_name = #{typeName}, </if>
+			<if test="imageUrl != null"> image_url = #{imageUrl}, </if>
+		</set>
+		<include refid="queryByKeyClubRedPacketType"/>
+	</update>
+	
+	<select id="selectSingleClubRedPacketType" resultMap="clubRedPacketType">
+		select 
+		type_id
+		,type_name
+		,image_url
+		from club_red_packet_type 
+		<include refid="queryConditionClubRedPacketType"/>
+	</select>
+	
+	<select id="selectAllClubRedPacketType" resultMap="clubRedPacketType">
+		select 
+		type_id
+		,type_name
+		,image_url
+		from club_red_packet_type
+	</select>
+	
+</mapper>
+	

@@ -1,0 +1,386 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.TeachQuestionMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.TeachQuestion" id="teachQuestion" >
+		<result property="questionId" column="question_id"/>
+		<result property="classId" column="class_id"/>
+		<result property="chapterId" column="chapter_id"/>
+		<result property="title" column="title"/>
+		<result property="content" column="content"/>
+		<result property="createUserId" column="create_user_id"/>
+		<result property="createTime" column="create_time"/>
+		<result property="isEssence" column="is_essence"/>
+		<result property="answerNum" column="answer_num"/>
+		<result property="isDelete" column="is_delete"/>
+		<result property="praiseNum" column="praise_num"/>
+	</resultMap>
+	
+	<sql id="queryConditionTeachQuestion">
+		<where>
+			<if test="questionId != null"> and question_id = #{questionId} </if>
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="chapterId != null"> and chapter_id = #{chapterId} </if>
+			<if test="title != null"> and title = #{title} </if>
+			<if test="content != null"> and content = #{content} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="isEssence != null"> and is_essence = #{isEssence} </if>
+			<if test="answerNum != null"> and answer_num = #{answerNum} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+			<if test="praiseNum != null"> and praise_num = #{praiseNum} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyTeachQuestion">
+		where question_id = #{questionId}
+	</sql>
+	
+	<insert id="insertTeachQuestion" parameterType="com.seentao.stpedu.common.entity.TeachQuestion">
+		 <selectKey resultType="java.lang.Integer" keyProperty="questionId" order="AFTER" >
+	      SELECT currval('teach_question_question_id_seq') as questionId
+		</selectKey> 
+		
+		insert into teach_question(
+		question_id
+		<if test="classId != null"> ,class_id</if>
+		<if test="chapterId != null"> ,chapter_id</if>
+		<if test="title != null"> ,title</if>
+		<if test="content != null"> ,content</if>
+		<if test="createUserId != null"> ,create_user_id</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="isEssence != null"> ,is_essence</if>
+		<if test="answerNum != null"> ,answer_num</if>
+		<if test="isDelete != null"> ,is_delete</if>
+		<if test="praiseNum != null"> ,praise_num</if>
+		)
+		values(
+		nextval('teach_question_question_id_seq')
+		<if test="classId != null"> ,#{classId}</if>
+		<if test="chapterId != null"> ,#{chapterId}</if>
+		<if test="title != null"> ,#{title}</if>
+		<if test="content != null"> ,#{content}</if>
+		<if test="createUserId != null"> ,#{createUserId}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="isEssence != null"> ,#{isEssence}</if>
+		<if test="answerNum != null"> ,#{answerNum}</if>
+		<if test="isDelete != null"> ,#{isDelete}</if>
+		<if test="praiseNum != null"> ,#{praiseNum}</if>
+		)
+	</insert>
+	
+	<delete id="deleteTeachQuestion">
+		delete from teach_question
+		<include refid="queryConditionTeachQuestion"/>
+	</delete>
+	
+	<update id="updateTeachQuestionByKey" parameterType="com.seentao.stpedu.common.entity.TeachQuestion">
+		update teach_question 
+		<set>
+			<if test="questionId != null"> question_id = #{questionId}, </if>
+			<if test="classId != null"> class_id = #{classId}, </if>
+			<if test="chapterId != null"> chapter_id = #{chapterId}, </if>
+			<if test="title != null"> title = #{title}, </if>
+			<if test="content != null"> content = #{content}, </if>
+			<if test="createUserId != null"> create_user_id = #{createUserId}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="isEssence != null"> is_essence = #{isEssence}, </if>
+			<if test="answerNum != null"> answer_num = #{answerNum}, </if>
+			<if test="isDelete != null"> is_delete = #{isDelete}, </if>
+			<if test="praiseNum != null"> praise_num = #{praiseNum}, </if>
+		</set>
+		<include refid="queryByKeyTeachQuestion"/>
+	</update>
+	
+	<select id="selectSingleTeachQuestion" resultMap="teachQuestion">
+		select 
+		question_id
+		,class_id
+		,chapter_id
+		,title
+		,content
+		,create_user_id
+		,create_time
+		,is_essence
+		,answer_num
+		,is_delete
+		,praise_num
+		from teach_question 
+		<include refid="queryConditionTeachQuestion"/>
+	</select>
+	
+	<select id="selectAllTeachQuestion" resultMap="teachQuestion">
+		select 
+		question_id
+		,class_id
+		,chapter_id
+		,title
+		,content
+		,create_user_id
+		,create_time
+		,is_essence
+		,answer_num
+		,is_delete
+		,praise_num
+		from teach_question
+	</select>
+	
+		
+	<sql id="getTeachQuestionAppEntity">
+		<where>
+			<if test="questionId != null"> and question.question_id = #{questionId} </if>
+			<if test="classId != null"> and question.class_id = #{classId} </if>
+			<if test="chapterId != null"> and question.chapter_id = #{chapterId} </if>
+			<if test="title != null"> and question.title = #{title} </if>
+			<if test="content != null"> and question.content = #{content} </if>
+			<if test="createUserId != null"> and question.create_user_id = #{createUserId} </if>
+			<if test="createTime != null"> and question.create_time = #{createTime} </if>
+			<if test="isEssence != null"> and question.is_essence = #{isEssence} </if>
+			<if test="answerNum != null"> and question.answer_num = #{answerNum} </if>
+			<if test="isDelete != null"> and question.is_delete = #{isDelete} </if>
+			<if test="praiseNum != null"> and question.praise_num = #{praiseNum} </if>
+			<if test="chapterId != null"> and chapter_id is null </if>
+		</where>
+	</sql>
+	
+	<select id="queryCount" parameterType="HashMap" resultType="java.lang.Integer" >
+	
+		SELECT 
+		
+			count(*)
+			
+		FROM	teach_question
+		
+		<include refid="queryConditionTeachQuestion"/>
+	 	
+	</select>
+	
+	<select id="queryByPageids" parameterType="HashMap" resultType="java.lang.Integer" >
+	
+		SELECT 
+		
+			question_id
+			
+		FROM teach_question
+		
+	 	<include refid="queryConditionTeachQuestion"/>
+	 	ORDER BY question_id  DESC
+		limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="queryByPage" parameterType="HashMap" resultMap="teachQuestion">
+		SELECT 
+		
+			question_id
+			,class_id
+			,chapter_id
+			,title
+			,content
+			,create_user_id
+			,create_time
+			,is_essence
+			,answer_num
+			,is_delete
+			,praise_num
+			
+		FROM teach_question
+		<where>
+			<if test="questionId != null"> and question_id = #{questionId} </if>
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="chapterId != null"> and chapter_id = #{chapterId} </if>
+			<if test="title != null"> and title = #{title} </if>
+			<if test="content != null"> and content = #{content} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="isEssence != null"> and is_essence = #{isEssence} </if>
+			<if test="answerNum != null"> and answer_num = #{answerNum} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+			<if test="praiseNum != null"> and praise_num = #{praiseNum} </if>
+			<if test="ids_key != null"> and question_id in (${ids_key}) </if>
+		</where>
+		
+		ORDER BY question_id  DESC
+		
+		<if test="ids_key == null"> limit #{limit} offset #{offset} </if>
+		
+		
+		
+	</select>
+	
+	<select id="queryteachQuestionByCount" parameterType="HashMap" resultType="java.lang.Integer" >
+	SELECT sum(ids) from (
+		SELECT 
+		
+			count(*) as ids
+			
+		FROM teach_question
+		<where>
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="chapterId != null"> and chapter_id = #{chapterId} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+		</where>
+		UNION ALL
+		SELECT 
+			count(*) as ids
+		FROM teach_question
+		where chapter_id is null 
+		<if test="classId != null"> and class_id = #{classId} </if>
+		<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+		)a
+	</select>
+	<select id="queryteachQuestionByPage" parameterType="HashMap" resultMap="teachQuestion">
+		SELECT 
+		
+			question_id
+			,class_id
+			,chapter_id
+			,title
+			,content
+			,create_user_id
+			,create_time
+			,is_essence
+			,answer_num
+			,is_delete
+			,praise_num
+			
+		FROM teach_question
+		<where>
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="chapterId != null"> and chapter_id = #{chapterId} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+		</where>
+		UNION
+     	SELECT 
+		
+			question_id
+			,class_id
+			,chapter_id
+			,title
+			,content
+			,create_user_id
+			,create_time
+			,is_essence
+			,answer_num
+			,is_delete
+			,praise_num
+			
+		FROM teach_question
+		where chapter_id is null 
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+			ORDER BY create_time  DESC
+			limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="querynoEssenceByCount" parameterType="HashMap" resultType="java.lang.Integer" >
+		SELECT sum(ids) from (
+		SELECT 
+		
+			count(*) as ids
+			
+		FROM teach_question
+		<where>
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="chapterId != null"> and chapter_id = #{chapterId} </if>
+			<if test="isEssence != null"> and is_essence = #{isEssence} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+		</where>
+		UNION ALL
+		SELECT 
+			count(*) as ids
+		FROM teach_question
+		where chapter_id is null 
+		<if test="classId != null"> and class_id = #{classId} </if>
+		<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+		<if test="isEssence != null"> and is_essence = #{isEssence} </if>
+		)a
+	</select>
+	<select id="querynoEssenceByPage" parameterType="HashMap" resultMap="teachQuestion">
+		SELECT 
+		
+			question_id
+			,class_id
+			,chapter_id
+			,title
+			,content
+			,create_user_id
+			,create_time
+			,is_essence
+			,answer_num
+			,is_delete
+			,praise_num
+			
+		FROM teach_question
+		<where>
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="chapterId != null"> and chapter_id = #{chapterId} </if>
+			<if test="isEssence != null"> and is_essence = #{isEssence} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+		</where>
+		UNION
+     	SELECT 
+		
+			question_id
+			,class_id
+			,chapter_id
+			,title
+			,content
+			,create_user_id
+			,create_time
+			,is_essence
+			,answer_num
+			,is_delete
+			,praise_num
+			
+		FROM teach_question
+		where chapter_id is null 
+			<if test="classId != null"> and class_id = #{classId} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+			<if test="isEssence != null"> and is_essence = #{isEssence} </if>
+			ORDER BY create_time  DESC
+			limit #{limit} offset #{offset}
+	</select>
+	
+	<update id="addAnswerNum" parameterType="java.lang.Integer">
+		update teach_question set answer_num = answer_num +1 where question_id = #{questionId}
+	</update>
+	
+	<update id="delTeachQuestionAll" parameterType="ArrayList">
+	
+		 update teach_question 
+		 
+           <trim prefix="set" suffixOverrides=",">
+           
+            	<trim prefix="is_delete = CASE question_id " suffix="end,">
+	                <foreach collection="list" item="i" index="index">
+	                        <if test="i.isDelete != null">
+	                         WHEN #{i.questionId}  THEN #{i.isDelete}
+	                        </if>
+	                </foreach>
+             	</trim>
+             	
+           </trim>
+           
+         WHERE question_id in
+         
+         	<foreach collection="list" separator="," item="i" index="index" open="(" close=")" >
+             	#{i.questionId}
+         	</foreach>
+	</update>
+	
+	<select id="getNewTeachQuestion" resultMap="teachQuestion">
+		select 
+		max(question_id) question_id
+		from teach_question 
+		where class_id = #{classId} and is_delete = #{isDelete}
+	</select>
+	<!-- getNewTeachQuestionMax -->
+		<select id="getNewTeachQuestionMax" resultMap="teachQuestion">
+		select 
+		max(question_id) question_id
+		from teach_question 
+		where class_id = #{classId} and is_delete = 0
+	</select>
+</mapper>
+	

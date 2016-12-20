@@ -1,0 +1,15 @@
+{
+    "submitHomework": {
+    	"request": {
+            "0": "userId"
+            ,"1": "homeworkId"
+            ,"2": "homeworkTitle"
+            ,"3": "homeworkBody"
+            ,"4": "courseCardId"
+            ,"5": "homeworkShowType"
+        },
+        "result": {
+             
+        }
+    }
+  }  

@@ -1,0 +1,12 @@
+{
+	"submitVoteOption":{
+		  "request": {
+            "0": "userId",
+            "1": "voteId",
+            "2": "voteOptionIds"
+        },
+        "result": {
+        	"canVoteForVoteOptions": "canVoteForVoteOptions"
+        }
+	}
+}

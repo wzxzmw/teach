@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.CenterCompanyMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.CenterCompany" id="centerCompany" >
+		<result property="dataId" column="data_id"/>
+		<result property="companyId" column="company_id"/>
+		<result property="praiseNum" column="praise_num"/>
+	</resultMap>
+	
+	<sql id="queryConditionCenterCompany">
+		<where>
+			<if test="dataId != null"> and data_id = #{dataId} </if>
+			<if test="companyId != null"> and company_id = #{companyId} </if>
+			<if test="praiseNum != null"> and praise_num = #{praiseNum} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyCenterCompany">
+		where data_id = #{dataId}
+	</sql>
+	
+	<insert id="insertCenterCompany" parameterType="com.seentao.stpedu.common.entity.CenterCompany">
+		<selectKey resultType="java.lang.Integer"  order="AFTER" keyProperty="dataId" >
+	        SELECT currval('center_company_data_id_seq') AS data_id   
+	    </selectKey>
+		insert into center_company(
+		data_id
+		<if test="companyId != null"> ,company_id</if>
+		<if test="praiseNum != null"> ,praise_num</if>
+		)
+		values(
+		nextval('center_company_data_id_seq')
+		<if test="companyId != null"> ,#{companyId}</if>
+		<if test="praiseNum != null"> ,#{praiseNum}</if>
+		)
+	</insert>
+	
+	<delete id="deleteCenterCompany">
+		delete from center_company
+		<include refid="queryConditionCenterCompany"/>
+	</delete>
+	
+	<update id="updateCenterCompanyByKey" parameterType="com.seentao.stpedu.common.entity.CenterCompany">
+		update center_company 
+		<set>
+			<if test="dataId != null"> data_id = #{dataId}, </if>
+			<if test="companyId != null"> company_id = #{companyId}, </if>
+			<if test="praiseNum != null"> praise_num = praise_num + #{praiseNum}, </if>
+		</set>
+		<include refid="queryByKeyCenterCompany"/>
+	</update>
+	
+	<select id="selectSingleCenterCompany" resultMap="centerCompany">
+		select 
+		data_id
+		,company_id
+		,praise_num
+		from center_company 
+		<include refid="queryConditionCenterCompany"/>
+	</select>
+	
+	<select id="selectAllCenterCompany" resultMap="centerCompany">
+		select 
+		data_id
+		,company_id
+		,praise_num
+		from center_company
+	</select>
+	
+</mapper>
+	

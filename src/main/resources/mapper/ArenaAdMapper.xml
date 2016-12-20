@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.ArenaAdMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.ArenaAd" id="arenaAd" >
+		<result property="adId" column="ad_id"/>
+		<result property="title" column="title"/>
+		<result property="linkUrl" column="link_url"/>
+		<result property="imgId" column="img_id"/>
+		<result property="adType" column="ad_type"/>
+		<result property="isDelete" column="is_delete"/>
+		<result property="adMainType" column="ad_main_type"/>
+		<result property="adMainId" column="ad_main_id"/>
+	</resultMap>
+	
+	<sql id="queryConditionArenaAd">
+		<where>
+			<if test="adId != null"> and ad_id = #{adId} </if>
+			<if test="title != null"> and title = #{title} </if>
+			<if test="linkUrl != null"> and link_url = #{linkUrl} </if>
+			<if test="imgId != null"> and img_id = #{imgId} </if>
+			<if test="adType != null"> and ad_type = #{adType} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+			<if test="adMainId != null"> and ad_main_id = #{adMainId} </if>
+			<if test="adMainType != null"> and ad_main_type = #{adMainType} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyArenaAd">
+		where ad_id = #{adId}
+	</sql>
+	
+	<insert id="insertArenaAd" parameterType="com.seentao.stpedu.common.entity.ArenaAd">
+		insert into arena_ad(
+		ad_id
+		<if test="title != null"> ,title</if>
+		<if test="linkUrl != null"> ,link_url</if>
+		<if test="imgId != null"> ,img_id</if>
+		<if test="adType != null"> ,ad_type</if>
+		<if test="isDelete != null"> ,is_delete</if>
+		<if test="adMainType != null"> ,ad_main_type</if>
+		<if test="adMainId != null"> ,ad_main_id</if>
+		)
+		values(
+		null
+		<if test="title != null"> ,#{title}</if>
+		<if test="linkUrl != null"> ,#{linkUrl}</if>
+		<if test="imgId != null"> ,#{imgId}</if>
+		<if test="adType != null"> ,#{adType}</if>
+		<if test="isDelete != null"> ,#{isDelete}</if>
+		<if test="adMainType != null"> ,#{adMainType}</if>
+		<if test="adMainId != null"> ,#{adMainId}</if>
+		)
+	</insert>
+
+	<delete id="deleteArenaAd">
+		delete from arena_ad
+		<include refid="queryConditionArenaAd"/>
+	</delete>
+	
+	<update id="updateArenaAdByKey" parameterType="com.seentao.stpedu.common.entity.ArenaAd">
+		update arena_ad 
+		<set>
+			<if test="adId != null"> ad_id = #{adId}, </if>
+			<if test="title != null"> title = #{title}, </if>
+			<if test="linkUrl != null"> link_url = #{linkUrl}, </if>
+			<if test="imgId != null"> img_id = #{imgId}, </if>
+			<if test="adType != null"> ad_type = #{adType}, </if>
+			<if test="isDelete != null"> is_delete = #{isDelete}, </if>
+			<if test="adMainType != null"> ad_main_type = #{adMainType}, </if>
+			<if test="adMainId != null"> ad_main_id = #{adMainId}, </if>
+		</set>
+		<include refid="queryByKeyArenaAd"/>
+	</update>
+	
+	
+	<select id="selectSingleArenaAd" resultMap="arenaAd">
+		select 
+		ad_id
+		,title
+		,link_url
+		,img_id
+		,ad_type
+		,is_delete
+		,ad_main_type
+		,ad_main_id
+		from arena_ad 
+		<include refid="queryConditionArenaAd"/>
+	</select>
+	
+	<select id="selectAllArenaAd" resultMap="arenaAd">
+		select 
+		ad_id
+		,title
+		,link_url
+		,img_id
+		,ad_type
+		,is_delete
+		,ad_main_type
+		,ad_main_id
+		from arena_ad
+	</select>
+	
+	
+	
+	<select id="queryCount" parameterType="HashMap" resultType="java.lang.Integer">
+	
+		SELECT 
+
+			count(*)
+		
+		FROM arena_ad 		
+		<include refid="queryConditionArenaAd"/>
+	</select>
+	
+	<select id="queryByPageids" parameterType="HashMap" resultType="java.lang.Integer" >
+	
+		SELECT 
+		
+			ad_id
+			
+		FROM arena_ad
+		
+	 	<include refid="queryConditionArenaAd"/>
+	 	ORDER BY ad_id  DESC
+		limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="queryByPage" parameterType="HashMap" resultMap="arenaAdPage">
+	
+	
+	
+		SELECT 
+		
+			ad.ad_id
+			,ad.title
+			,ad.link_url
+			,ad.img_id
+			,ad.ad_type
+			,ad.is_delete
+			,ad.ad_main_type
+			,ad.ad_main_id
+			,pic.file_path as adsimglink
+		FROM arena_ad AS ad INNER JOIN public_picture AS  pic ON ad.img_id = pic.pic_id
+		
+		<where>
+			<if test="adId != null"> and ad.ad_id = #{adId} </if>
+			<if test="title != null"> and ad.title = #{title} </if>
+			<if test="linkUrl != null"> and ad.link_url = #{linkUrl} </if>
+			<if test="imgId != null"> and ad.img_id = #{imgId} </if>
+			<if test="adType != null"> and ad.ad_type = #{adType} </if>
+			<if test="isDelete != null"> and ad.is_delete = #{isDelete} </if>
+			<if test="adMainId != null"> and ad.ad_main_id = #{adMainId} </if>
+			<if test="adMainType != null"> and ad.ad_main_type = #{adMainType} </if>
+			<if test="ids_key != null"> and ad.ad_id in (${ids_key}) </if>
+		</where>
+		
+		ORDER BY ad.ad_id DESC
+		
+		<if test="ids_key == null"> limit #{limit} offset #{offset} </if>
+		
+	</select>
+	
+	<resultMap type="com.seentao.stpedu.common.entity.ArenaAd" id="arenaAdPage" >
+		<result property="adId" column="ad_id"/>
+		<result property="title" column="title"/>
+		<result property="linkUrl" column="link_url"/>
+		<result property="imgId" column="img_id"/>
+		<result property="adType" column="ad_type"/>
+		<result property="isDelete" column="is_delete"/>
+		<result property="adMainType" column="ad_main_type"/>
+		<result property="adMainId" column="ad_main_id"/>
+		<result property="adsImgLink" column="adsimglink"/>
+	</resultMap>
+	
+	
+	
+</mapper>
+	

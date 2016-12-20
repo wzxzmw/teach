@@ -1,0 +1,86 @@
+{
+    "getCourseForMobile": {
+        "request": {
+            "0": "userId",
+            "1": "start",
+            "2": "limit",
+            "3": "classId",
+            "4": "classType",
+            "5": "chapterId",
+            "6": "ccType",
+            "7": "courseId",
+            "8": "requestSide",
+            "9": "inquireType"
+        }
+        , "result": {
+           "returnCount"	:"returnCount"
+        	,"allPage"		:"allPage"
+        	,"currentPage"	:"currentPage"
+        	,"teachingRole"	:"teachingRole"
+        	,"courses"		:"courses"
+        }
+        , "courses": {
+            "courseId"			: "courseId"
+            ,"courseTitle"		: "homeworkTitle"
+            ,"courseDesc"		: "courseDesc"
+            ,"courseLink"		: "courseLink"
+            ,"classType"			: "classType"
+            ,"courseSource"		: "courseSource"
+            ,"courseShowType"	: "showType"
+            ,"videoFiles"		: "videoFiles"
+            ,"audioFiles"		: "audioFiles"
+            ,"otherFiles"		: "otherFiles"
+           	,"teacherName"		: "teacherName"
+           	,"teacherHeadLink"	: "teacherHeadLink"
+            ,"schoolName"		: "schoolName"
+           	,"learningNum"		: "totalStudyNum"
+            ,"learningStatus"	: "learningStatus"
+            ,"courseBodyForM"	: "homeworkBody"
+            ,"links"				: "links"
+            ,"imgs"				: "imgs"
+            ,"chapterId"			: "chapterId"
+            ,"chapterTitle"		: "chapterTitle"
+            ,"courseCardId"		: "cardId"
+            ,"ccTitle"			: "ccTitle"
+            ,"ccType"			: "ccType"
+        }
+        ,"links" : {
+        	"linkId": "linkId"
+        	,"ref" 	: "ref"
+        	,"title" : "title"
+        	,"type" 	: "type"
+        	,"href" 	: "href"
+        }
+        ,"imgs" : {
+        	"ref" 			: "ref"
+        	,"pixel" 		: "pixel"
+        	,"alt" 			: "alt"
+        	,"src" 			: "src"
+        	,"photosetId" 	: "photosetId"
+        }
+        ,"videoFiles" : {
+        	"attachmentId" 			: "attaId"
+        	,"attachmentName" 		: "fileName"
+        	,"attachmentLink" 		: "filePath"
+        	,"attachmentSeconds" 	: "timeLength"
+        	,"attachmentMajorType" 	: "attaType"
+        	,"attachmentType" 		: "suffixName"
+        }
+        ,"audioFiles" : {
+        	"attachmentId" 			: "attaId"
+        	,"attachmentName" 		: "fileName"
+        	,"attachmentLink" 		: "filePath"
+        	,"attachmentSeconds" 	: "timeLength"
+        	,"attachmentMajorType" 	: "attaType"
+        	,"attachmentType" 		: "suffixName"
+        }
+        ,"otherFiles" : {
+        	"attachmentId" 			: "attaId"
+        	,"attachmentName" 		: "fileName"
+        	,"attachmentLink" 		: "filePath"
+        	,"attachmentSeconds" 	: "timeLength"
+        	,"attachmentMajorType" 	: "attaType"
+        	,"attachmentType" 		: "suffixName"
+        }
+    }
+}

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.PublicPictureMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.PublicPicture" id="publicPicture" >
+		<result property="picId" column="pic_id"/>
+		<result property="filePath" column="file_path"/>
+		<result property="downloadUrl" column="download_url"/>
+		<result property="suffixName" column="suffix_name"/>
+		<result property="size" column="size"/>
+		<result property="createTime" column="create_time"/>
+		<result property="createUserId" column="create_user_id"/>
+	</resultMap>
+	
+	<sql id="queryConditionPublicPicture">
+		<where>
+			<if test="picId != null"> and pic_id = #{picId} </if>
+			<if test="filePath != null"> and file_path = #{filePath} </if>
+			<if test="downloadUrl != null"> and download_url = #{downloadUrl} </if>
+			<if test="suffixName != null"> and suffix_name = #{suffixName} </if>
+			<if test="size != null"> and size = #{size} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="createUserId != null"> and create_user_id = #{createUserId} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyPublicPicture">
+		where pic_id = #{picId}
+	</sql>
+	
+	<insert id="insertPublicPicture" parameterType="com.seentao.stpedu.common.entity.PublicPicture">
+		<selectKey resultType="java.lang.Integer"  order="AFTER" keyProperty="picId" >
+		        SELECT currval('public_picture_pic_id_seq') AS picId   
+		 </selectKey>
+		insert into public_picture(
+		pic_id
+		<if test="filePath != null"> ,file_path</if>
+		<if test="downloadUrl != null"> ,download_url</if>
+		<if test="suffixName != null"> ,suffix_name</if>
+		<if test="size != null"> ,size</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="createUserId != null"> ,create_user_id</if>
+		)
+		values(
+		nextval('public_picture_pic_id_seq')
+		<if test="filePath != null"> ,#{filePath}</if>
+		<if test="downloadUrl != null"> ,#{downloadUrl}</if>
+		<if test="suffixName != null"> ,#{suffixName}</if>
+		<if test="size != null"> ,#{size}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="createUserId != null"> ,#{createUserId}</if>
+		)
+	</insert>
+	
+	<delete id="deletePublicPicture">
+		delete from public_picture
+		<include refid="queryConditionPublicPicture"/>
+	</delete>
+	
+	<update id="updatePublicPictureByKey" parameterType="com.seentao.stpedu.common.entity.PublicPicture">
+		update public_picture 
+		<set>
+			<if test="picId != null"> pic_id = #{picId}, </if>
+			<if test="filePath != null"> file_path = #{filePath}, </if>
+			<if test="downloadUrl != null"> download_url = #{downloadUrl}, </if>
+			<if test="suffixName != null"> suffix_name = #{suffixName}, </if>
+			<if test="size != null"> size = #{size}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="createUserId != null"> create_user_id = #{createUserId}, </if>
+		</set>
+		<include refid="queryByKeyPublicPicture"/>
+	</update>
+	
+	<select id="selectSinglePublicPicture" resultMap="publicPicture">
+		select 
+		pic_id
+		,file_path
+		,download_url
+		,suffix_name
+		,size
+		,create_time
+		,create_user_id
+		from public_picture 
+		<include refid="queryConditionPublicPicture"/>
+	</select>
+	
+	<select id="selectAllPublicPicture" resultMap="publicPicture">
+		select 
+		pic_id
+		,file_path
+		,download_url
+		,suffix_name
+		,size
+		,create_time
+		,create_user_id
+		from public_picture
+	</select>
+	
+</mapper>
+	

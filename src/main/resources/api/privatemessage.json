@@ -1,0 +1,31 @@
+{
+    "getPrivateMessages": {
+    	"request": {
+            "0": "userId",
+            "1": "start",
+            "2": "limit",
+            "3": "privateMessageId",
+            "4": "inquireType"
+        },
+        "result": {
+             "privateMessages":"privateMessages",
+             "returnCount" : "returnCount",
+             "allPage" : "allPage",
+             "currentPage" : "currentPage",
+             "pmReceiverId": "pmReceiverId",
+             "pmReceiverNickname": "pmReceiverNickname",
+             "privateMessages":"privateMessages"
+        },
+        "privateMessages": {
+            "privateMessageId": "privateMessageId",
+            "pmCreaterId": "sendUserId",
+            "pmCreaterName": "realName",
+            "pmCreaterNickname": "nickName",
+            "pmCreaterHeadLink": "filePath",
+            "pmIsLoginUser": "pmIsLoginUser",
+            "pmContent": "content",
+            "pmCreateDate": "createTime",
+            "receiveUserId" : "receiveUserId"
+        }
+    }
+  }  

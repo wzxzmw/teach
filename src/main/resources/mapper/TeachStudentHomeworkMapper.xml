@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.TeachStudentHomeworkMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.TeachStudentHomework" id="teachStudentHomework" >
+		<result property="homeworkId" column="homework_id"/>
+		<result property="homeworkExplain" column="homework_explain"/>
+		<result property="studentId" column="student_id"/>
+		<result property="submitTime" column="submit_time"/>
+		<result property="courseId" column="course_id"/>
+		<result property="assessContent" column="assess_content"/>
+		<result property="assessScore" column="assess_score"/>
+		<result property="assessTime" column="assess_time"/>
+		<result property="teacherId" column="teacher_id"/>
+		<result property="isDelete" column="is_delete"/>
+	</resultMap>
+	
+	
+	<resultMap type="com.seentao.stpedu.common.entity.TeachStudentHomework" id="homeWorkTeacherInfo" >
+		<result property="teacherName" column="real_name"/>
+		<result property="teacherHeadLink" column="file_path"/>
+		<result property="schoolName" column="school_name"/>
+		
+	</resultMap>
+	
+	
+	
+	<sql id="queryConditionTeachStudentHomework">
+		<where>
+			<if test="homeworkId != null"> and homework_id = #{homeworkId} </if>
+			<if test="homeworkExplain != null"> and homework_explain = #{homeworkExplain} </if>
+			<if test="studentId != null"> and student_id = #{studentId} </if>
+			<if test="submitTime != null"> and submit_time = #{submitTime} </if>
+			<if test="courseId != null"> and course_id = #{courseId} </if>
+			<if test="assessContent != null"> and assess_content = #{assessContent} </if>
+			<if test="assessScore != null"> and assess_score = #{assessScore} </if>
+			<if test="assessTime != null"> and assess_time = #{assessTime} </if>
+			<if test="teacherId != null"> and teacher_id = #{teacherId} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+			<if test="courseIds != null"> and course_id in (${courseIds}) </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyTeachStudentHomework">
+		where homework_id = #{homeworkId}
+	</sql>
+	
+	<insert id="insertTeachStudentHomework" parameterType="com.seentao.stpedu.common.entity.TeachStudentHomework">
+		<selectKey resultType="java.lang.Integer"  order="AFTER" keyProperty="homeworkId" >
+	        SELECT currval('teach_student_homework_homework_id_seq') AS homeworkId   
+	    </selectKey>
+		insert into teach_student_homework(
+		homework_id
+		<if test="homeworkExplain != null"> ,homework_explain</if>
+		<if test="studentId != null"> ,student_id</if>
+		<if test="submitTime != null"> ,submit_time</if>
+		<if test="courseId != null"> ,course_id</if>
+		<if test="assessContent != null"> ,assess_content</if>
+		<if test="assessScore != null"> ,assess_score</if>
+		<if test="assessTime != null"> ,assess_time</if>
+		<if test="teacherId != null"> ,teacher_id</if>
+		<if test="isDelete != null"> ,is_delete</if>
+		)
+		values(
+		nextval('teach_student_homework_homework_id_seq')
+		<if test="homeworkExplain != null"> ,#{homeworkExplain}</if>
+		<if test="studentId != null"> ,#{studentId}</if>
+		<if test="submitTime != null"> ,#{submitTime}</if>
+		<if test="courseId != null"> ,#{courseId}</if>
+		<if test="assessContent != null"> ,#{assessContent}</if>
+		<if test="assessScore != null"> ,#{assessScore}</if>
+		<if test="assessTime != null"> ,#{assessTime}</if>
+		<if test="teacherId != null"> ,#{teacherId}</if>
+		<if test="isDelete != null"> ,#{isDelete}</if>
+		)
+	</insert>
+	
+	<delete id="deleteTeachStudentHomework">
+		delete from teach_student_homework
+		<include refid="queryConditionTeachStudentHomework"/>
+	</delete>
+	
+	<update id="updateTeachStudentHomeworkByKey" parameterType="com.seentao.stpedu.common.entity.TeachStudentHomework">
+		update teach_student_homework 
+		<set>
+			<if test="homeworkId != null"> homework_id = #{homeworkId}, </if>
+			<if test="homeworkExplain != null"> homework_explain = #{homeworkExplain}, </if>
+			<if test="studentId != null"> student_id = #{studentId}, </if>
+			<if test="submitTime != null"> submit_time = #{submitTime}, </if>
+			<if test="courseId != null"> course_id = #{courseId}, </if>
+			<if test="assessContent != null"> assess_content = #{assessContent}, </if>
+			<if test="assessScore != null"> assess_score = #{assessScore}, </if>
+			<if test="assessTime != null"> assess_time = #{assessTime}, </if>
+			<if test="isDelete != null"> is_delete = #{isDelete}, </if>
+			<if test="teacherId != null"> teacher_id = #{teacherId}, </if>
+		</set>
+		<include refid="queryByKeyTeachStudentHomework"/>
+	</update>
+	
+	<select id="selectSingleTeachStudentHomework" resultMap="teachStudentHomework">
+		select 
+		homework_id
+		,homework_explain
+		,student_id
+		,submit_time
+		,course_id
+		,assess_content
+		,assess_score
+		,assess_time
+		,teacher_id
+		,is_delete
+		from teach_student_homework 
+		<include refid="queryConditionTeachStudentHomework"/>
+	</select>
+	
+	<select id="selectAllTeachStudentHomework" resultMap="teachStudentHomework">
+		select 
+		homework_id
+		,homework_explain
+		,student_id
+		,submit_time
+		,course_id
+		,assess_content
+		,assess_score
+		,assess_time
+		,teacher_id
+		,is_delete
+		from teach_student_homework
+	</select>
+	
+	
+	
+	<sql id="findAllStudentsHomeWorkStudentWhere">
+		<where>
+			<if test="homeworkId != null"> and homework.homework_id = #{homeworkId} </if>
+			<if test="homeworkExplain != null"> and homework.homework_explain = #{homeworkExplain} </if>
+			<if test="studentId != null"> and homework.student_id = #{studentId} </if>
+			<if test="submitTime != null"> and homework.submit_time = #{submitTime} </if>
+			<if test="courseId != null"> and homework.course_id = #{courseId} </if>
+			<if test="assessContent != null"> and homework.assess_content = #{assessContent} </if>
+			<if test="assessScore != null"> and homework.assess_score = #{assessScore} </if>
+			<if test="assessTime != null"> and homework.assess_time = #{assessTime} </if>
+			<if test="teacherId != null"> and homework.teacher_id = #{teacherId} </if>
+			<if test="isDelete != null"> and homework.is_delete = #{isDelete} </if>
+			
+		</where>
+	</sql>
+	
+	
+	<select id="findTeacherInfo" parameterType="java.lang.Integer" resultMap="homeWorkTeacherInfo">
+		
+		SELECT 
+			users.real_name,
+			picture.file_path,
+			school.school_name
+		
+			FROM center_user AS users 
+			 JOIN public_picture AS picture ON users.head_img_id = picture.pic_id
+			 JOIN teach_school AS school ON	users.school_id = school.school_id
+			
+		WHERE users.user_id = #{id}
+	</select>
+	
+	
+	
+	<select id="queryCount" parameterType="HashMap" resultType="java.lang.Integer" >
+	
+		SELECT 
+		
+			count(*)
+			
+		FROM	teach_student_homework
+		
+		<include refid="queryConditionTeachStudentHomework"/>
+	 	
+	</select>
+	
+	
+	<select id="queryByPageids" parameterType="HashMap" resultType="java.lang.Integer" >
+	
+		SELECT 
+		
+			homework_id
+			
+		FROM teach_student_homework
+		
+	 	<include refid="queryConditionTeachStudentHomework"/>
+	 	ORDER BY homework_id  DESC
+		limit #{limit} offset #{offset}
+	</select>
+	
+	
+	<select id="queryByPage" parameterType="HashMap" resultMap="teachStudentHomework">
+		SELECT 
+		
+			homework_id
+			,homework_explain
+			,student_id
+			,submit_time
+			,course_id
+			,assess_content
+			,assess_score
+			,assess_time
+			,teacher_id
+			,is_delete
+		FROM teach_student_homework
+		<where>
+			<if test="homeworkId != null"> and homework_id = #{homeworkId} </if>
+			<if test="homeworkExplain != null"> and homework_explain = #{homeworkExplain} </if>
+			<if test="studentId != null"> and student_id = #{studentId} </if>
+			<if test="submitTime != null"> and submit_time = #{submitTime} </if>
+			<if test="courseId != null"> and course_id = #{courseId} </if>
+			<if test="assessContent != null"> and assess_content = #{assessContent} </if>
+			<if test="assessScore != null"> and assess_score = #{assessScore} </if>
+			<if test="assessTime != null"> and assess_time = #{assessTime} </if>
+			<if test="teacherId != null"> and teacher_id = #{teacherId} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+			<if test="ids_key != null"> and homework_id in (${ids_key}) </if>
+		</where>
+		ORDER BY homework_id  DESC
+		<if test="ids_key == null"> limit #{limit} offset #{offset} </if>
+		
+		
+		
+	</select>
+	
+</mapper>
+	

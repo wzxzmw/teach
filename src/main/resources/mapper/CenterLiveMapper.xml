@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.CenterLiveMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.CenterLive" id="centerLive" >
+		<result property="liveId" column="live_id"/>
+		<result property="liveType" column="live_type"/>
+		<result property="liveMainType" column="live_main_type"/>
+		<result property="liveMainId" column="live_main_id"/>
+		<result property="isTop" column="is_top"/>
+		<result property="createTime" column="create_time"/>
+		<result property="isDelete" column="is_delete"/>
+		<result property="mainObjetType" column="main_objet_type"/>
+		<result property="mainObjetId" column="main_objet_id"/>
+	</resultMap>
+	
+	<sql id="queryConditionCenterLive">
+		<where>
+			<if test="liveId != null"> and live_id = #{liveId} </if>
+			<if test="liveType != null"> and live_type = #{liveType} </if>
+			<if test="liveMainType != null"> and live_main_type = #{liveMainType} </if>
+			<if test="liveMainId != null"> and live_main_id = #{liveMainId} </if>
+			<if test="isTop != null"> and is_top = #{isTop} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+			<if test="mainObjetType != null"> and main_objet_type = #{mainObjetType} </if>
+			<if test="mainObjetId != null"> and main_objet_id = #{mainObjetId} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyCenterLive">
+		where live_id = #{liveId}
+	</sql>
+	
+	<insert id="insertCenterLive" parameterType="com.seentao.stpedu.common.entity.CenterLive">
+		insert into center_live(
+		<if test="liveType != null"> live_type</if>
+		<if test="liveMainType != null"> ,live_main_type</if>
+		<if test="liveMainId != null"> ,live_main_id</if>
+		<if test="isTop != null"> ,is_top</if>
+		<if test="createTime != null"> ,create_time</if>
+		<if test="isDelete != null"> ,is_delete</if>
+		<if test="mainObjetType != null"> ,main_objet_type</if>
+		<if test="mainObjetId != null"> ,main_objet_id</if>
+		)
+		values(
+		<if test="liveType != null"> #{liveType}</if>
+		<if test="liveMainType != null"> ,#{liveMainType}</if>
+		<if test="liveMainId != null"> ,#{liveMainId}</if>
+		<if test="isTop != null"> ,#{isTop}</if>
+		<if test="createTime != null"> ,#{createTime}</if>
+		<if test="isDelete != null"> ,#{isDelete}</if>
+		<if test="mainObjetType != null"> ,#{mainObjetType}</if>
+		<if test="mainObjetId != null"> ,#{mainObjetId}</if>
+		)
+	</insert>
+	
+	<delete id="deleteCenterLive">
+		delete from center_live
+		<include refid="queryConditionCenterLive"/>
+	</delete>
+	
+	<update id="updateCenterLiveByKey" parameterType="com.seentao.stpedu.common.entity.CenterLive">
+		update center_live 
+		<set>
+			<if test="liveId != null"> live_id = #{liveId}, </if>
+			<if test="liveType != null"> live_type = #{liveType}, </if>
+			<if test="liveMainType != null"> live_main_type = #{liveMainType}, </if>
+			<if test="liveMainId != null"> live_main_id = #{liveMainId}, </if>
+			<if test="isTop != null"> is_top = #{isTop}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="isDelete != null"> is_delete = #{isDelete}, </if>
+			<if test="mainObjetType != null"> main_objet_type = #{mainObjetType}, </if>
+			<if test="mainObjetId != null"> main_objet_id = #{mainObjetId}, </if>
+		</set>
+		<include refid="queryByKeyCenterLive"/>
+	</update>
+	
+	<update id="updateCenterLiveByKeyAll" parameterType="com.seentao.stpedu.common.entity.CenterLive">
+		update center_live 
+		<set>
+			<if test="liveId != null"> live_id = #{liveId}, </if>
+			<if test="liveType != null"> live_type = #{liveType}, </if>
+			<if test="liveMainType != null"> live_main_type = #{liveMainType}, </if>
+			<if test="liveMainId != null"> live_main_id = #{liveMainId}, </if>
+			<if test="isTop != null"> is_top = #{isTop}, </if>
+			<if test="createTime != null"> create_time = #{createTime}, </if>
+			<if test="isDelete != null"> is_delete = #{isDelete}, </if>
+			<if test="mainObjetType != null"> main_objet_type = #{mainObjetType}, </if>
+			<if test="mainObjetId != null"> main_objet_id = #{mainObjetId}, </if>
+		</set>
+		<where>
+			<if test="liveId != null"> and live_id = #{liveId} </if>
+			<if test="liveType != null"> and live_type = #{liveType} </if>
+			<if test="liveMainType != null"> and live_main_type = #{liveMainType} </if>
+			<if test="liveMainId != null"> and live_main_id = #{liveMainId} </if>
+			<if test="mainObjetType != null"> and main_objet_type = #{mainObjetType} </if>
+			<if test="mainObjetId != null"> and main_objet_id = #{mainObjetId} </if>
+		</where>
+	</update>
+	
+	<update id="updateCenterLiveByKeyIsTop" parameterType="com.seentao.stpedu.common.entity.CenterLive">
+		update center_live 
+		<set>
+			<if test="isTop != null"> is_top = #{isTop}</if>
+		</set>
+		<where>
+			<if test="liveId != null"> and live_id = #{liveId} </if>
+			<if test="liveType != null"> and live_type = #{liveType} </if>
+			<if test="liveMainType != null"> and live_main_type = #{liveMainType} </if>
+			<if test="liveMainId != null"> and live_main_id = #{liveMainId} </if>
+			<if test="createTime != null"> and create_time = #{createTime} </if>
+			<if test="isDelete != null"> and is_delete = #{isDelete} </if>
+			<if test="mainObjetType != null"> and main_objet_type = #{mainObjetType} </if>
+			<if test="mainObjetId != null"> and main_objet_id = #{mainObjetId} </if>
+		</where>
+	</update>
+	
+	<select id="selectSingleCenterLive" resultMap="centerLive">
+		select 
+		live_id
+		,live_type
+		,live_main_type
+		,live_main_id
+		,is_top
+		,create_time
+		,is_delete
+		,main_objet_type
+		,main_objet_id
+		from center_live 
+		<include refid="queryConditionCenterLive"/>
+	</select>
+	
+	<select id="selectAllCenterLive" resultMap="centerLive">
+		select 
+		live_id
+		,live_type
+		,live_main_type
+		,live_main_id
+		,is_top
+		,create_time
+		,is_delete
+		,main_objet_type
+		,main_objet_id
+		from center_live
+	</select>
+	
+	<select id="queryClubCenterLiveCount" parameterType="HashMap" resultType="java.lang.Integer" >
+		select count(*) from center_live 
+		where main_objet_type = #{mainObjetType} and main_objet_id = #{mainObjetId} and live_type in (1,2,3,4,5,6,7) and is_delete = #{isDelete}
+	</select>
+	<select id="selectClubCenterLive" parameterType="HashMap" resultMap="centerLive">
+		select 
+		live_id
+		from center_live 
+		where main_objet_type = #{mainObjetType} and main_objet_id = #{mainObjetId} and live_type in (1,2,3,4,5,6,7) and is_delete = #{isDelete}
+		order by is_Top desc,create_time desc limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="queryMemberCenterLiveCount" parameterType="HashMap" resultType="java.lang.Integer" >
+		select count(*) from center_live 
+		where ((main_objet_id = #{classId} and main_objet_type = 3) or (main_objet_id = #{clubId} and main_objet_type = 2) or (main_objet_id = #{userId} and main_objet_type = 1)) and live_type in (1,2,3,8,9,10) and is_delete = #{isDelete}
+	</select>
+	<select id="selectMemberCenterLive" parameterType="HashMap" resultMap="centerLive">
+		select 
+		live_id
+		from center_live 
+		where ((main_objet_id = #{classId} and main_objet_type = 3) or (main_objet_id = #{clubId} and main_objet_type = 2) or (main_objet_id = #{userId} and main_objet_type = 1)) and live_type in (1,2,3,8,9,10) and is_delete = #{isDelete}
+		order by is_Top desc,create_time desc limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="queryClassCenterLiveCount" parameterType="HashMap" resultType="java.lang.Integer" >
+		select count(DISTINCT live_type) from center_live 
+		where main_objet_type = #{mainObjetType} and main_objet_id = #{mainObjetId} and live_type in (8,9,10) and is_delete = #{isDelete}
+	</select>
+	<select id="selectClassCenterLive" parameterType="HashMap" resultMap="centerLive">
+		select 
+		max(live_id) as live_id
+		from center_live 
+		where main_objet_type = #{mainObjetType} and main_objet_id = #{mainObjetId} and live_type in (8,9,10) and is_delete = #{isDelete}
+		group by live_type limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="queryLiveClubCenterLiveCount" parameterType="HashMap" resultType="java.lang.Integer" >
+		select count(*) from center_live 
+		where main_objet_type = #{mainObjetType} and main_objet_id = #{mainObjetId}  and live_type in (1,2,3) and is_delete = #{isDelete}
+	</select>
+	<select id="selectLiveClubCenterLive" parameterType="HashMap" resultMap="centerLive">
+		select 
+		live_id
+		from center_live 
+		where main_objet_type = #{mainObjetType} and main_objet_id = #{mainObjetId} and live_type in (1,2,3) and is_delete = #{isDelete}
+		order by is_Top desc,create_time desc limit #{limit} offset #{offset}
+	</select>
+	
+	<select id="queryAttentionUserCenterLiveCount" parameterType="HashMap" resultType="java.lang.Integer" >
+		select count(*) from center_live 
+		where main_objet_type = #{mainObjetType} and main_objet_id in (${mainObjetIds}) and live_type in (11,12,13,14,15) and is_delete = #{isDelete}
+	</select>
+	<select id="selectAttentionUserCenterLive" parameterType="HashMap" resultMap="centerLive">
+		select 
+		live_id
+		from center_live 
+		where main_objet_type = #{mainObjetType} and main_objet_id in (${mainObjetIds}) and live_type in (11,12,13,14,15) and is_delete = #{isDelete}
+		order by is_Top desc,create_time desc limit #{limit} offset #{offset}
+	</select>
+	<select id="getLastCenterLiveByClubId" resultMap="centerLive">
+		select 
+		max(live_id) live_id
+		from center_live 
+		where main_objet_id = #{mainObjetId} and is_delete = #{isDelete} and live_type in (1,2,3)
+	</select>
+	
+	<select id="getLastCenterLiveByIds" parameterType="HashMap" resultMap="centerLive">
+		select 
+		max(live_id) live_id
+		from center_live 
+		where main_objet_id in (${ids}) and is_delete = #{isDelete}
+	</select>
+</mapper>
+	

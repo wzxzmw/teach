@@ -1,0 +1,74 @@
+{
+    "submitRedPacket": {
+    	"request": {
+            "0": "userType",
+            "1": "userName",
+            "2": "userId",
+            "3": "userToken",
+            "4": "redPacketObject",
+            "5": "redPacketType",
+            "6": "perRedPacketCount",
+            "7": "clubId",
+            "8": "redPacketContent",
+            "9": "redPacketUserIds"
+        },
+        "result": {
+            
+        }
+    },
+    "getRedPacketType": {
+    	"request": {
+            "0": "userType",
+            "1": "userName",
+            "2": "userId",
+            "3": "userToken",
+            "4": "inquireType"
+        },
+        "result": {
+            "redPacketTypes": "redPacketTypes"
+        },
+        "redPacketTypes": {
+            "redPacketType": "typeId",
+            "redPacketTypeName": "typeName",
+            "redPacketTypeLogoUrl": "imageUrl",
+            "redPacketCount": "redPacketCount"
+        }
+    },
+    
+    "getRedPackets": {
+    	"request": {
+            "0": "userType",
+            "1": "userName",
+            "2": "userId",
+            "3": "userToken",
+            "4": "clubId",
+            "5": "redPacketShowType",
+            "6": "start",
+            "7": "limit"
+        },
+        "result": {
+             "returnCount": "returnCount",
+             "allPage": "allPage",
+             "currentPage": "currentPage",
+             "redPackets": "redPackets"
+        },
+        "redPackets": {
+         	"redPacketId":"redPacketId",
+			"rpCreaterId":"rpCreaterId",
+			"rpCreaterName":"rpCreaterName",
+			"rpCreaterNickname":"rpCreaterNickname",
+			"rpCreaterHeadLink":"rpCreaterHeadLink",
+			"rpClubRole":"rpClubRole",
+			"redPacketContent":"redPacketContent",
+			"rpCreateDate":"rpCreateDate",
+			"rpReceiverId":"rpReceiverId",
+			"rpReceiverName":"rpReceiverName",
+			"rpReceiverNickname":"rpReceiverNickname",
+			"rpReceiverHeadLink":"rpReceiverHeadLink",
+			"rpReceiverClubRole":"rpReceiverClubRole",
+			"redPacketType":"redPacketType",
+			"redPacketCount":"redPacketCount"
+        }
+    }
+}
+

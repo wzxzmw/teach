@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.CenterSerialMaxMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.CenterSerialMax" id="centerSerialMax" >
+		<result property="serialMaxId" column="serial_max_id"/>
+		<result property="serialMax" column="serial_max"/>
+		<result property="serialTime" column="serial_time"/>
+	</resultMap>
+	
+	<sql id="queryConditionCenterSerialMax">
+		<where>
+			<if test="serialMaxId != null"> and serial_max_id = #{serialMaxId} </if>
+			<if test="serialMax != null"> and serial_max = #{serialMax} </if>
+			<if test="serialTime != null"> and serial_time = #{serialTime} </if>
+		</where>
+	</sql>
+	
+	<sql id="queryByKeyCenterSerialMax">
+		where serial_max_id = #{serialMaxId}
+	</sql>
+	
+	<insert id="insertCenterSerialMax" parameterType="com.seentao.stpedu.common.entity.CenterSerialMax">
+		insert into center_serial_max(
+		serial_max_id
+		<if test="serialMax != null"> ,serial_max</if>
+		<if test="serialTime != null"> ,serial_time</if>
+		)
+		values(
+		nextval('center_serial_max_serial_max_id_seq')
+		<if test="serialMax != null"> ,#{serialMax}</if>
+		<if test="serialTime != null"> ,#{serialTime}</if>
+		)
+	</insert>
+	
+	<delete id="deleteCenterSerialMax">
+		delete from center_serial_max
+		<include refid="queryConditionCenterSerialMax"/>
+	</delete>
+	
+	<update id="updateCenterSerialMaxByKey" parameterType="com.seentao.stpedu.common.entity.CenterSerialMax">
+		update center_serial_max 
+		<set>
+			<if test="serialMaxId != null"> serial_max_id = #{serialMaxId}, </if>
+			<if test="serialMax != null"> serial_max = serial_max+1, </if>
+			<if test="serialTime != null"> serial_time = #{serialTime}, </if>
+		</set>
+		<include refid="queryByKeyCenterSerialMax"/>
+	</update>
+	
+	<select id="selectSingleCenterSerialMax" resultMap="centerSerialMax">
+		select 
+		serial_max_id
+		,serial_max
+		,serial_time
+		from center_serial_max 
+		<include refid="queryConditionCenterSerialMax"/>
+	</select>
+	
+	<select id="selectAllCenterSerialMax" resultMap="centerSerialMax">
+		select 
+		serial_max_id
+		,serial_max
+		,serial_time
+		from center_serial_max
+	</select>
+	
+</mapper>
+	

@@ -1,0 +1,11 @@
+{
+    "getFLevelAccount": {
+    	"request": {
+            "0": "userId",
+            "1": "inquireType"
+        },
+        "result": {
+             "fLevelAccount":"fLevelAccount"
+        }
+    }
+  }  

@@ -1,0 +1,17 @@
+{
+    "submitGameEvent": {
+    	"request": {
+            "0": "userId"
+            ,"1": "gameEventId"
+            ,"2": "gameEventTitle"
+            ,"3": "gameEventLinkId"
+            ,"4": "gameEventStartDate"
+            ,"5": "gameEventEndDate"
+            ,"6": "gameEventDesc"
+            ,"7": "actionType"
+        },
+        "result": {
+             "gameEventId" : "gameEventId"
+        }
+    }
+  }  

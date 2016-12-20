@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.seentao.stpedu.common.sqlmap.BsVoteItemMapper">
+
+	<resultMap type="com.seentao.stpedu.common.entity.BsVoteItem" id="BasesVoteItem" >
+		<result property="itemId" column="item_id"/>
+		<result property="voteId" column="vote_id"/>
+		<result property="itemName" column="item_name"/>
+		<result property="itemDesc" column="item_desc"/>
+		<result property="imgId" column="img_id"/>
+	</resultMap>
+	<sql id="base_bs_vote_item_sql">
+	item_id,item_name,item_desc,img_id,vote_id
+	</sql>
+	<!-- 添加评选项对象 -->
+	<insert id="insertBsVoteItem" parameterType="com.seentao.stpedu.common.entity.BsVoteItem">
+		<!-- 序列自增赋值给主键，并且返回 -->
+		<selectKey resultType="java.lang.Integer" keyProperty="itemId" order="AFTER" >
+	      SELECT currval('bs_vote_item_item_id_seq')as itemId
+		</selectKey>
+		insert into bs_vote_item(
+		item_id
+		<if test="voteId != null">,vote_id</if>
+		<!-- 评选项主题 -->
+		<if test="itemName !=null and itemName !=''">,item_name</if>
+		<!-- 评选项描述 -->
+		<if test="itemDesc != null and itemDesc !='' ">,item_desc</if>
+		<!--评选项主图id-->
+		<if test="imgId !=null"> ,img_id</if>
+		)values(
+		nextval('bs_vote_item_item_id_seq')
+		<if test="voteId ! =null">,#{voteId}</if>
+		<!-- 评选项主题 -->
+		<if test="itemName !=null and itemName !=''">,#{itemName}</if>
+		<!-- 评选项描述 -->
+		<if test="itemDesc != null and itemDesc !='' ">,#{itemDesc}</if>
+		<!--评选项主图id-->
+		<if test="imgId !=null"> ,#{imgId}</if>
+		)
+	</insert>
+	<!-- 根据评选项itemIds查询评选项 -->
+	<select id="queryBsVoteItemsByItemIds" parameterType="java.util.Map" resultMap="BasesVoteItem">
+		select <include refid="base_bs_vote_item_sql" />
+		  from bs_vote_item 
+		<where>
+		<if test="voteId != null">
+		and vote_id = #{voteId}
+		</if>
+		</where> limit #{limit} offset #{offset}
+	</select>
+	<!-- 求投票下的投票选项的总条数 -->
+	<select id="queryBsVoteItemsByCount" parameterType="java.util.Map" resultType="int">
+	
+	select count(1) from bs_vote_item where vote_id = #{voteId}
+	</select>
+</mapper>
+	
