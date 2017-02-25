@@ -15,7 +15,7 @@
 	</properties>
 
 	<dependencies>
-		<!--shshhs  Servlet API and mock req/res -->
+		<!--Servlet API and mock req/res -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>javax.servlet-api</artifactId>
