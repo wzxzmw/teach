@@ -7,7 +7,7 @@
 	<version>0.0.1-SNAPSHOT</version>
 	<name>stpedu Maven Webapp</name>
 	<url>http://maven.apache.org</url>
-
+   <!--   zhangsan lisi-->
 	<properties>
 		<org.springframework-version>4.2.3.RELEASE</org.springframework-version>
 		<org.mybatis-version>3.2.8</org.mybatis-version>
