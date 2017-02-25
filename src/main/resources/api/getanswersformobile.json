@@ -1,51 +1,46 @@
 {
     "getAnswersForMobile": {
-    
-    	"request": {
-            ,"0": "start"
-            ,"1": "limit"
-            ,"2": "classType"
-            ,"3": "questionId"
-            ,"4": "inquireType"
-            ,"5": "_type"
-            ,"6": "answerId"
-        }
-        
-        ,"result": {
-        	"returnCount"	:"returnCount"
-        	,"allPage"		:"allPage"
-        	,"currentPage"	:"currentPage"
-        	,"answers"		:"answers"
-        }
-        
-        ,"answers": {
-        	"answerId"			: "answerId"
-        	,"answerBodyForM"		: "content"
-        	,"aCreaterId"		: "createUserId"
-        	,"aCreaterName"		: "aCreaterName"
-        	,"aCreaterHeadLink"	: "aCreaterHeadLink"
-        	,"aCreateDate"		: "createTime"
-        	,"supportCount"		: "praiseNum"
-        	,"links"			: "links"
-        	,"imgs"				: "imgs",
-        	"answerBodyFilterHtml":"answerBodyFilterHtml",
-        	"aCreaterNickname":"aCreaterNickname"
-        }
-        
-        ,"links": {
-        	"linkId"	:	"linkId"
-        	,"ref"		:	"ref"
-        	,"title"		:	"title"
-        	,"type"		:	"type"
-        	,"href"		:	"href"
-        }
-        
-        ,"imgs": {
-        	"ref"			:	"ref"
-        	,"pixel"			:	"pixel"
-        	,"alt"			:	"alt"
-        	,"src"			:	"src"
-        	,"photosetId"	:	"photosetId"
+        "request": {
+            "0": "start",
+            "1": "limit",
+            "2": "classType",
+            "3": "questionId",
+            "4": "inquireType",
+            "5": "_type",
+            "6": "answerId"
+        },
+        "result": {
+            "returnCount": "returnCount",
+            "allPage": "allPage",
+            "currentPage": "currentPage",
+            "answers": "answers"
+        },
+        "answers": {
+            "answerId": "answerId",
+            "answerBodyForM": "content",
+            "aCreaterId": "createUserId",
+            "aCreaterName": "aCreaterName",
+            "aCreaterHeadLink": "aCreaterHeadLink",
+            "aCreateDate": "createTime",
+            "supportCount": "praiseNum",
+            "links": "links",
+            "imgs": "imgs",
+            "answerBodyFilterHtml": "answerBodyFilterHtml",
+            "aCreaterNickname": "aCreaterNickname"
+        },
+        "links": {
+            "linkId": "linkId",
+            "ref": "ref",
+            "title": "title",
+            "type": "type",
+            "href": "href"
+        },
+        "imgs": {
+            "ref": "ref",
+            "pixel": "pixel",
+            "alt": "alt",
+            "src": "src",
+            "photosetId": "photosetId"
         }
     }
 }

@@ -13,10 +13,10 @@
             "9": "inquireType"
         },
         "result": {
-        	"returnCount": "returnCount",
-        	"allPage": "allPage",
-        	"currentPage": "currentPage",
-        	"topics": "topics"
+            "returnCount": "returnCount",
+            "allPage": "allPage",
+            "currentPage": "currentPage",
+            "topics": "topics"
         },
         "topics": {
             "topicId": "topicId",
@@ -31,7 +31,7 @@
             "topicContentFilterHtml": "topicContentFilterHtml",
             "topicContentForM": "topicContentForM",
             "links": "links",
-            "imgs": "imgs",
+            "imgs": "imgs"
         },
         "links": {
             "linkId": "linkId",

@@ -1,6 +1,6 @@
 {
     "getUsers": {
-    	"request": {
+        "request": {
             "0": "userType",
             "1": "userName",
             "2": "userId",
@@ -21,29 +21,21 @@
             "17": "gameEventId",
             "18": "taskId",
             "19": "classType",
-            "19": "classType",
             "20": "quizId"
         },
         "result": {
-        	"returnCount":"returnCount",
-        	"allPage":"allPage",
-        	"currentPage":"currentPage",
-        	"users":"users"
+            "returnCount": "returnCount",
+            "allPage": "allPage",
+            "currentPage": "currentPage",
+            "users": "users"
         },
-        "users":{
-        	"userId": "userId",
-			"realName": "realName",
-			"nickname": "nickname",
-			"desc": "desc",
-			"headLinkId": "headLinkId",
-			"headLink": "headLink"
+        "users": {
+            "userId": "userId",
+            "realName": "realName",
+            "nickname": "nickname",
+            "desc": "desc",
+            "headLinkId": "headLinkId",
+            "headLink": "headLink"
         }
     }
 }
-
-
-
-
-
-
-

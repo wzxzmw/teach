@@ -1,32 +1,28 @@
 {
     "getAnswersForMobile": {
-    
-    	"request": {
-            ,"0": "start"
-            ,"1": "limit"
-            ,"2": "classType"
-            ,"3": "questionId"
-            ,"4": "inquireType"
-            ,"5": "_type"
-             ,"6": "answerId"
+        "request": {
+            "0": "start",
+            "1": "limit",
+            "2": "classType",
+            "3": "questionId",
+            "4": "inquireType",
+            "5": "_type",
+            "6": "answerId"
+        },
+        "result": {
+            "returnCount": "returnCount",
+            "allPage": "allPage",
+            "currentPage": "currentPage",
+            "answers": "answers"
+        },
+        "answers": {
+            "answerId": "answerId",
+            "answerBody": "content",
+            "aCreaterId": "createUserId",
+            "aCreaterName": "aCreaterName",
+            "aCreaterHeadLink": "aCreaterHeadLink",
+            "aCreateDate": "createTime",
+            "supportCount": "praiseNum"
         }
-        
-        ,"result": {
-        	"returnCount"	:"returnCount"
-        	,"allPage"		:"allPage"
-        	,"currentPage"	:"currentPage"
-        	,"answers"		:"answers"
-        }
-        
-        ,"answers": {
-        	"answerId"			: "answerId"
-        	,"answerBody"		: "content"
-        	,"aCreaterId"		: "createUserId"
-        	,"aCreaterName"		: "aCreaterName"
-        	,"aCreaterHeadLink"	: "aCreaterHeadLink"
-        	,"aCreateDate"		: "createTime"
-        	,"supportCount"		: "praiseNum"
-        }
-        
     }
 }
