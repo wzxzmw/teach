@@ -15,6 +15,7 @@ public class GetClubsController implements IgetClubsService {
 	@Autowired
 	private GetClubsService getClubsService;
 	
+	
 	/* (non-Javadoc)
 	 * @see com.seentao.stpedu.club.controller.IgetClubsService#getClubs(java.lang.String, java.lang.String, java.lang.String, int, java.lang.String, java.lang.String, int, int, int)
 	 */
