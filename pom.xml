@@ -96,11 +96,11 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>1.2.2</version>
 		</dependency>
-		<!-- <dependency>
+		<dependency>
 		    <groupId>mysql</groupId>
 		    <artifactId>mysql-connector-java</artifactId>
 		    <version>5.1.39</version>
-		</dependency> -->
+		</dependency> 
 <!-- 		<dependency>
 			<groupId>postgresql</groupId>
 			<artifactId>postgresql</artifactId>
